@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["0.0.0.0", "e1r5p16"]
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'rkhilenksmtp@gmail.com'
+EMAIL_HOST_PASSWORD = 'asdQWE123'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 
 # Application definition
 
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'index',
 ]
 
 MIDDLEWARE = [
@@ -106,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
@@ -119,3 +126,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
