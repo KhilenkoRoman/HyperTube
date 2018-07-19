@@ -1,10 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static "index/favicon.ico"%}" />
+	<meta http-equiv="content-type" content="text/html" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>HyperTube</title>
+
+	<!-- Stylesheets
+	================================================= -->
+	<link rel="stylesheet" href="{% static "index/styles.css" %}" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
 <body>
+	<header></header>
+	<div id="main">
 
+	<!-- регистрировалка -->
+
+	<div class="cotn_principal">
+	<div class="cont_centrar">
+	<div class="cont_login">
+	<div class="cont_info_log_sign_up" id="forms_wrap">
+
+	<div class="col_md_login">
+	<div class="cont_ba_opcitiy">  
+		<h2>LOGIN</h2>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> 
+		<button class="btn_login" onclick="actvate_login()">LOGIN</button>
+	</div>
+	</div>
+
+	<div class="col_md_sign_up">
+	<div class="cont_ba_opcitiy">
+		<h2>SIGN UP</h2>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		<button class="btn_sign_up" onclick="activate_sign_up()">SIGN UP</button>
+	</div>
+	</div>
+		
+	</div>
+
+    
+	<div class="cont_back_info">
+		<div class="cont_img_back_grey">
+		<img src="{% static "index/wh.jpg" %}" alt="" />
+		</div>
+       
+    </div>
+	<div class="cont_forms" id="form">
+    <div class="cont_img_back_">
+	<img src="{% static "index/wh.jpg" %}" alt="" />
+	</div>
+
+	<div class="cont_form_login">
+	<a href="#" onclick="ocultar_login_sign_up()" ><i class="fas fa-times"></i></a>
+	<h2>LOGIN</h2>
+	<form>
+		<input class="input_index" type="text" placeholder="Email" />
+		<input class="input_index" type="password" placeholder="Password" />
+		<button class="btn_login" type="submit">LOGIN</button>
+	</form>
+	
+	<p onclick="actvate_forgot()">Forgot password</p>
+	<div id="oauth">
+		<img src="{% static "index/42_logo.png" %}" id="logo_42">
+		<i class="fab fa-google-plus-g"></i>
+		<i class="fab fa-instagram"></i>
+		<i class="fab fa-facebook-f"></i>
+	</div>
+	</div>
+
+	<div class="cont_form_forgot">
+	<a href="#" onclick="ocultar_login_sign_up()" ><i class="fas fa-times"></i></a>
+	<h2>FORGOT PASSWORD</h2>
+	<form>
+		<input class="input_index" type="email" placeholder="Email" />
+		<button class="btn_login" type="submit" >RECOVER</button>
+	</form>
+	<p onclick="return_login()">Return login</p>
+	</div>
+  
+	<div class="cont_form_sign_up">
+	<a href="#" onclick="ocultar_login_sign_up()"><i class="fas fa-times"></i></a>
+	<h2>SIGN UP</h2>
+	<form>
+	<input class="input_index" type="text" placeholder="Email" />
+	<input class="input_index" type="text" placeholder="User" />
+	<input class="input_index" type="password" placeholder="Password" />
+		<div class="pwd_bar">
+			<p class="pwd_complex">Password complexity</p>
+		<span class="pwd_fill"></span>
+		<span class="pwd_over" style="width: 100%"></span>
+		</div>
+	<input class="input_index" type="password" placeholder="Confirm Password" />
+	<button class="btn_sign_up" type="submit">SIGN UP</button>
+	</form>
+  </div>
+
+</div>
+    
+  </div>
+ </div>
+</div>
+
+
+	<!-- регистрировалка -->	
+	</div>
+	<footer>
+		<div>vibonar rkhilenk</div>
+	</footer>
+	<script src="{% static "index/jquery-3.3.1.min.js"%} "></script>
+	<script src="{% static "index/index.js" %} "></script>
 </body>
 </html>
