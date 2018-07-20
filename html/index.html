@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
-    <link rel="icon" type="image/png" href="{% static "index/favicon.ico"%}" />
 	<meta http-equiv="content-type" content="text/html" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>HyperTube</title>
+	<title>Hypertube index</title>
 
 	<!-- Stylesheets
 	================================================= -->
-	<link rel="stylesheet" href="{% static "index/styles.css" %}" />
+	<link rel="stylesheet" href="styles.css" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
 <body>
@@ -44,13 +42,13 @@
     
 	<div class="cont_back_info">
 		<div class="cont_img_back_grey">
-		<img src="{% static "index/wh.jpg" %}" alt="" />
+		<img src="wh.jpg" alt="" />
 		</div>
        
     </div>
 	<div class="cont_forms" id="form">
     <div class="cont_img_back_">
-	<img src="{% static "index/wh.jpg" %}" alt="" />
+	<img src="wh.jpg" alt="" />
 	</div>
 
 	<div class="cont_form_login">
@@ -64,7 +62,7 @@
 	
 	<p onclick="actvate_forgot()">Forgot password</p>
 	<div id="oauth">
-        <a href="https://api.intra.42.fr/oauth/authorize?client_id=294ac3444f3b2e734116f26c081bfd2cacf508fdbdce85665e049f0943c9d8d0&redirect_uri=https%3A%2F%2Flocalhost%3A8000%2F&response_type=code"><img src="{% static "index/42_logo.png" %}" id="logo_42"></a>
+		<img src="42_logo.png" id="logo_42">
 		<i class="fab fa-google-plus-g"></i>
 		<i class="fab fa-instagram"></i>
 		<i class="fab fa-facebook-f"></i>
@@ -108,10 +106,9 @@
 	<!-- регистрировалка -->	
 	</div>
 	<footer>
-        <div>vibonar rkhilenk</div><br>
-        {{ user.username }}
+		<div>vibonar rkhilenk</div>
 	</footer>
-	<script src="{% static "index/jquery-3.3.1.min.js"%} "></script>
-	<script src="{% static "index/index.js" %} "></script>
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="index.js"></script>
 </body>
 </html>

@@ -21,11 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'n15g5zr^#h%f1iy=t#b33h*g0@8g71=_3%*%+#xjbsfsx=s4b+'
+APP_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "e1r5p16"]
+ALLOWED_HOSTS = ["0.0.0.0", "e1r5p16", "localhost"]
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'rkhilenksmtp@gmail.com'
@@ -34,17 +35,35 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'index',
+    'django_extensions',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'provider42'
 ]
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,6 +93,15 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount'
+)
+
+SITE_ID = 1
 
 WSGI_APPLICATION = 'hypertube.wsgi.application'
 
