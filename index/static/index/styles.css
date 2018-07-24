@@ -508,6 +508,11 @@ font-weight: 400;
     font-size: 36px;
 }
 
+#oauth a
+{
+	color: black;
+}
+
 #oauth i, #oauth img
 {
 	margin: 0 10px;

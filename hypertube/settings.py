@@ -26,7 +26,7 @@ APP_PATH = os.path.dirname(os.path.abspath(__file__))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "e1r5p16", "localhost"]
+ALLOWED_HOSTS = ["*"]
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'rkhilenksmtp@gmail.com'
@@ -63,6 +63,7 @@ INSTALLED_APPS = [
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+LOGIN_REDIRECT_URL = '/'
 
 
 MIDDLEWARE = [
@@ -80,7 +81,7 @@ ROOT_URLCONF = 'hypertube.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {

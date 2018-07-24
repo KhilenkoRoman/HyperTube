@@ -1,3 +1,7 @@
+{% load i18n %}
+{% load account socialaccount %}
+{% get_providers as socialaccount_providers %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +16,12 @@
 	<link rel="stylesheet" href="{% static "index/styles.css" %}" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
+{% if user.is_authenticated %}
+ usver = {{ user.username }}
+{% endif %}
+
 <body>
+{% csrf_token %}
 	<header></header>
 	<div id="main">
 
@@ -56,26 +65,32 @@
 	<div class="cont_form_login">
 	<a href="#" onclick="ocultar_login_sign_up()" ><i class="fas fa-times"></i></a>
 	<h2>LOGIN</h2>
-	<form>
-		<input class="input_index" type="text" placeholder="Email" />
-		<input class="input_index" type="password" placeholder="Password" />
+
+
+	<form id="login_form">
+		<input id="id_login" class="input_index" type="text" placeholder="Login" />
+		<input id="id_password" class="input_index" type="password" placeholder="Password" />
 		<button class="btn_login" type="submit">LOGIN</button>
 	</form>
+
+
+
+
 	
 	<p onclick="actvate_forgot()">Forgot password</p>
 	<div id="oauth">
-        <a href="https://api.intra.42.fr/oauth/authorize?client_id=294ac3444f3b2e734116f26c081bfd2cacf508fdbdce85665e049f0943c9d8d0&redirect_uri=https%3A%2F%2Flocalhost%3A8000%2F&response_type=code"><img src="{% static "index/42_logo.png" %}" id="logo_42"></a>
-		<i class="fab fa-google-plus-g"></i>
-		<i class="fab fa-instagram"></i>
-		<i class="fab fa-facebook-f"></i>
+        <a href="{% provider_login_url socialaccount_providers.2.id process='login' scope=scope auth_params=auth_params %}"><img src="{% static "index/42_logo.png" %}" id="logo_42"></a>
+		<a href="{% provider_login_url socialaccount_providers.1.id process='login' scope=scope auth_params=auth_params %}"><i class="fab fa-google-plus-g"></i></a>
+        <a href="{% provider_login_url socialaccount_providers.0.id process='login' scope=scope auth_params=auth_params %}"><i class="fab fa-facebook-f"></i></a>
 	</div>
 	</div>
 
 	<div class="cont_form_forgot">
 	<a href="#" onclick="ocultar_login_sign_up()" ><i class="fas fa-times"></i></a>
 	<h2>FORGOT PASSWORD</h2>
-	<form>
-		<input class="input_index" type="email" placeholder="Email" />
+	<form id="login_forgot" method="POST" action="{% url 'account_reset_password' %}" class="password_reset">
+        {% csrf_token %}
+		<input class="input_index" type="email" placeholder="Email" id="forgot_email" name="email" required/>
 		<button class="btn_login" type="submit" >RECOVER</button>
 	</form>
 	<p onclick="return_login()">Return login</p>
@@ -84,18 +99,20 @@
 	<div class="cont_form_sign_up">
 	<a href="#" onclick="ocultar_login_sign_up()"><i class="fas fa-times"></i></a>
 	<h2>SIGN UP</h2>
-	<form>
-	<input class="input_index" type="text" placeholder="Email" />
-	<input class="input_index" type="text" placeholder="User" />
-	<input class="input_index" type="password" placeholder="Password" />
+
+	<form id="register_form">
+	<input class="input_index" type="text" placeholder="Login" id="register_login"/>
+	<input class="input_index" type="email" placeholder="Email" id="register_email"/>
+	<input class="input_index" type="password" placeholder="Password" id="register_pwd_1"/>
 		<div class="pwd_bar">
 			<p class="pwd_complex">Password complexity</p>
 		<span class="pwd_fill"></span>
 		<span class="pwd_over" style="width: 100%"></span>
 		</div>
-	<input class="input_index" type="password" placeholder="Confirm Password" />
+	<input class="input_index" type="password" placeholder="Confirm Password" id="register_pwd_2"/>
 	<button class="btn_sign_up" type="submit">SIGN UP</button>
 	</form>
+
   </div>
 
 </div>
@@ -113,5 +130,6 @@
 	</footer>
 	<script src="{% static "index/jquery-3.3.1.min.js"%} "></script>
 	<script src="{% static "index/index.js" %} "></script>
+
 </body>
 </html>
