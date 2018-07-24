@@ -79,7 +79,7 @@
 	
 	<p onclick="actvate_forgot()">Forgot password</p>
 	<div id="oauth">
-        <a href="{% provider_login_url socialaccount_providers.2.id process='login' scope=scope auth_params=auth_params %}"><img src="{% static "index/42_logo.png" %}" id="logo_42"></a>
+        <a style="margin-top: 12px;" href="{% provider_login_url socialaccount_providers.2.id process='login' scope=scope auth_params=auth_params %}"><img src="{% static "index/42_logo.png" %}" id="logo_42"></a>
 		<a href="{% provider_login_url socialaccount_providers.1.id process='login' scope=scope auth_params=auth_params %}"><i class="fab fa-google-plus-g"></i></a>
         <a href="{% provider_login_url socialaccount_providers.0.id process='login' scope=scope auth_params=auth_params %}"><i class="fab fa-facebook-f"></i></a>
 	</div>
