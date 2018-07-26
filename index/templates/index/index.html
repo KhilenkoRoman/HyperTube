@@ -23,7 +23,7 @@
 <body>
 {% csrf_token %}
 	<header></header>
-	<div id="main">
+
 
 	<!-- регистрировалка -->
 
@@ -103,6 +103,8 @@
 	<form id="register_form">
 	<input class="input_index" type="text" placeholder="Login" id="register_login"/>
 	<input class="input_index" type="email" placeholder="Email" id="register_email"/>
+    <input class="input_index" type="text" placeholder="First Name" id="register_first_name"/>
+    <input class="input_index" type="text" placeholder="Last Name" id="register_last_name"/>
 	<input class="input_index" type="password" placeholder="Password" id="register_pwd_1"/>
 		<div class="pwd_bar">
 			<p class="pwd_complex">Password complexity</p>
@@ -123,7 +125,7 @@
 
 
 	<!-- регистрировалка -->	
-	</div>
+
 	<footer>
         <div>vibonar rkhilenk</div><br>
         {{ user.username }}

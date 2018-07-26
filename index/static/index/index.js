@@ -134,6 +134,8 @@ $(document).on('submit', '#register_form', function(e){
     	url: '/ajax_register',
 		data: {login: document.getElementById('register_login').value,
     		email: document.getElementById('register_email').value,
+			first_name: document.getElementById('register_first_name').value,
+			last_name: document.getElementById('register_last_name').value,
 			pwd1: document.getElementById('register_pwd_1').value,
 			pwd2: document.getElementById('register_pwd_2').value,
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
