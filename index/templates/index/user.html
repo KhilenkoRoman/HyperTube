@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
 	<meta http-equiv="content-type" content="text/html" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Hypertube index</title>
+	<title>Usver profile</title>
 
+    <link rel="icon" type="image/png" href="{% static "index/favicon.ico"%}" />
 	<!-- Stylesheets
 	================================================= -->
-	<link rel="stylesheet" href="styles.css" />
+	<link rel="stylesheet" href="{% static "index/styles.css" %}" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
 <body>
@@ -25,17 +27,21 @@
 		<div id="sub_header">
 			<p>Name</p>
 			<p>Last name</p>
+
 			<a href="">Logout</a>
 		</div>
 		</div>
 	</header>
-	<div class="main" style="height: 1500px">
 
+
+	<div class="main" style="height: 1500px">
+        <p style="height: 200px"></p>
+        <p>_{{ profile_user.username }}_</p>
 	</div>
 	<footer>
 		<div>vibonar rkhilenk</div>
 	</footer>
-	<script src="jquery-3.3.1.min.js"></script>
-	<script src="user.js"></script>
+	<script src="{% static "index/jquery-3.3.1.min.js" %}"></script>
+	<script src="{% static "index/user.js" %}"></script>
 </body>
 </html>

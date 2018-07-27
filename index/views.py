@@ -3,12 +3,24 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
+from index.models import User
 
 
 def index(request):
 	context = {'APP_PATH': settings.APP_PATH}
 	return render(request, 'index/index.html', context)
+
+
+def user_profile(request, get_login):
+	user = User.objects.filter(username=get_login)
+	if len(user) == 1:
+		user = user[0]
+	else:
+		user = None
+	context = {'profile_user': user,
+	           'qwe': "asd",
+	           }
+	return render(request, 'index/user.html', context)
 
 
 # render_to_response('index/index.html', {}, context_instance=RequestContext(request))

@@ -16,7 +16,103 @@ footer {
     display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
+
 }
+
+.main{
+  /*position: absolute;*/
+  width: 100%;
+  /*height: 100%;*/
+  min-height: calc(100vh - 100px);
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cfd8dc+0,607d8b+100,b0bec5+100 */
+	background: #cfd8dc; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #cfd8dc 0%, #607d8b 100%, #b0bec5 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg,  #cfd8dc 0%,#607d8b 100%,#b0bec5 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg,  #cfd8dc 0%,#607d8b 100%,#b0bec5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfd8dc', endColorstr='#b0bec5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+#header-scroll {
+    height: 100px;
+    background-color: grey;
+    display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width:100%;
+    -ms-transition:     all 0.3s ease-out;
+    -moz-transition:    all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition:      all 0.3s ease-out;
+    transition:         all 0.3s ease-out;
+    left:0;
+    top:0;
+    float:left;
+    position:fixed;
+}
+
+#header-scroll h1{
+	font-family: Arial;
+	color: #403d3dc4;
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	margin-top: 20px;
+    margin-left: 20px;
+    -ms-transition:    all 0.3s ease-out;
+    -moz-transition:    all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition:      all 0.3s ease-out;
+    transition:         all 0.3s ease-out;
+}
+
+#sub_header{
+	display: flex;
+	align-items: center;
+}
+#sub_header p{
+	margin-right: 10px;
+	font-size: 24px;
+	-ms-transition:    all 0.3s ease-out;
+    -moz-transition:    all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition:      all 0.3s ease-out;
+    transition:         all 0.3s ease-out;
+}
+#sub_header a{
+	margin-right: 40px;
+	font-size: 24px;
+	-ms-transition:    all 0.3s ease-out;
+    -moz-transition:    all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition:      all 0.3s ease-out;
+    transition:         all 0.3s ease-out;
+}
+
+#header-scroll.small {
+	opacity: 0.8;
+    height: 50px;
+    line-height: 35px;
+}
+#header-scroll.small h1{
+    height: 70px;
+    line-height: 35px;
+    font-size: 25px;
+    margin-top: 7px;
+    margin-left: 10px;
+}
+
+#sub_header.small p{
+	margin-right: 10px;
+	font-size: 14px;
+}
+#sub_header.small a{
+	margin-right: 20px;
+	font-size: 14px;
+}
+
+
+
+
+
 
 .cotn_principal {
   /*position: absolute;*/
@@ -382,11 +478,9 @@ transform: scale(1.5); }
 }
 
 .cont_form_sign_up > h2 {
-	font-weight: 400;
-	color: #757575;
-	margin-top: 10px;
-    padding-right: 65px;
-	-webkit-margin-after: 0.03em;
+margin-top: 50px; 
+font-weight: 400;
+  color: #757575;
 }
 
 
@@ -411,8 +505,8 @@ font-weight: 400;
     font-size: 24px;
 	position: relative;
 	float: left;
+	margin: 10px;
 	margin-left: 30px;
-    margin-top: 10px;
 }
 
 .cont_form_forgot > input {
@@ -510,11 +604,6 @@ font-weight: 400;
     font-size: 36px;
 }
 
-#oauth a
-{
-	color: black;
-}
-
 #oauth i, #oauth img
 {
 	margin: 0 10px;
@@ -524,4 +613,88 @@ font-weight: 400;
 #logo_42
 {
 	width: 45px;
+}
+
+
+/*preloader*/
+
+#preloader{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #fff;
+	z-index: 9999999;
+	background: #cfd8dc; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #cfd8dc 0%, #607d8b 100%, #b0bec5 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg,  #cfd8dc 0%,#607d8b 100%,#b0bec5 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg,  #cfd8dc 0%,#607d8b 100%,#b0bec5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfd8dc', endColorstr='#b0bec5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+#loader {
+  position: absolute;
+  top: calc(40% - 128px);
+  left: calc(50% - 128px);
+  width: 256px;
+  height: 256px;
+  border-radius: 50%;
+  perspective: 800px;
+}
+
+.inner {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;  
+}
+
+.inner.one {
+  left: 0%;
+  top: 0%;
+  animation: rotate-one 1s linear infinite;
+  border-bottom: 3px solid #EFEFFA;
+}
+
+.inner.two {
+  right: 0%;
+  top: 0%;
+  animation: rotate-two 1s linear infinite;
+  border-right: 3px solid #EFEFFA;
+}
+
+.inner.three {
+  right: 0%;
+  bottom: 0%;
+  animation: rotate-three 1s linear infinite;
+  border-top: 3px solid #EFEFFA;
+}
+
+@keyframes rotate-one {
+  0% {
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+  }
+}
+
+@keyframes rotate-two {
+  0% {
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+  }
+}
+
+@keyframes rotate-three {
+  0% {
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+  }
 }
