@@ -196,7 +196,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfd8dc', end
 	visibility: visible;
 
 	box-shadow: 1px 10px 30px -10px rgba(0,0,0,0.5);
-	height: 520px;  
+	height: 620px;
 	top:120px;
 	left:470px;
 	-webkit-transition: all 0.5s;
@@ -324,6 +324,25 @@ width: 80%;
 margin-top: 15px;
  color: #fff;
 }
+
+.col_md_succses {
+  visibility:hidden;
+  opacity:0;
+  -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+	-ms-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+  position: relative;
+  float: left;
+  width: 100%;
+}
+
+.visible{
+     visibility:visible;
+     opacity:1;
+}
+
 /* ----------------------------------
 background text    
 ------------------------------------
@@ -348,6 +367,8 @@ background text
 	color: #fff;
 	margin-top: 10px;
 	cursor: pointer;
+    text-decoration: none;
+    decoration: none;
 }
 .btn_sign_up:active,
 .btn_sign_up:focus,
@@ -608,6 +629,12 @@ font-weight: 400;
 {
 	margin: 0 10px;
 	cursor: pointer;
+    color: black;
+}
+
+#oauth a:visited {
+    text-decoration: none;
+    decoration: none;
 }
 
 #logo_42
@@ -697,4 +724,65 @@ font-weight: 400;
   100% {
     transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
   }
+}
+
+.valid
+{
+	box-shadow: 0 0 10px rgba(42, 222, 31, 0.98);
+}
+
+.unvalid
+{
+	box-shadow: 0 0 10px rgb(241, 15, 15);
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.none
+{
+    display: none;!important;
+}
+
+#activation_text_box{
+    width: 940px;
+    height: 280px;
+    z-index: 1;
+    border-radius: 10px;
+    margin: 100px auto 0;
+    filter: grayscale(70%);
+    opacity: 0.8;
+}
+
+#activation_text_box p {
+    font-weight: 400;
+    font-size: 28px;
+    position: relative;
+    top: 75px;
+    margin: 0 auto;
+    color: #fff;
+    background: rgba(120, 144, 156, 0.79);
+    width: 500px;
+    border-radius: 5px;
+    height: 38px;
+}
+
+#activation_text_box::after {
+    content: "";
+    background: rgba(255,255,255, .1);
+    width: 940px;
+    height: 280px;
+    border-radius: 10px;
+    position: absolute;
+    right: -30px;
+    top: 167px;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.padding{
+    content: none;
+    padding-top: 200px;
+    /*height: 200px;*/
 }
