@@ -30,18 +30,6 @@ def index(request):
 	return render(request, 'index/index.html', context)
 
 
-def user_profile(request, get_login):
-	user = User.objects.filter(username=get_login)
-	if len(user) == 1:
-		user = user[0]
-	else:
-		user = None
-	context = {'profile_user': user,
-	           'qwe': "asd",
-	           }
-	return render(request, 'index/user.html', context)
-
-
 def activation(request):
 	if request.user.is_authenticated:
 		return redirect('index')
@@ -66,16 +54,34 @@ def activation(request):
 			login(request, user, 'django.contrib.auth.backends.ModelBackend')
 			a_response = "User activated"
 
-	# print(timezone.now())
-	# print(user.activation_key_time + timedelta(days=2))
-	# print(user.activation_key_time + timedelta(days=2) < timezone.now())
-
-
-
 	context = {'response': a_response}
 	return render(request, 'index/activation.html', context)
 
-# render_to_response('index/index.html', {}, context_instance=RequestContext(request))
+
+def reset_pwd(request):
+	if request.user.is_authenticated:
+		return redirect('index')
+
+	rc_key = request.GET.get('recovery_key')
+	rc_login = request.GET.get('user')
+
+	try:
+		user = User.objects.get(username=rc_login)
+	except:
+		context = {'response': "No such user"}
+		return render(request, 'index/reset_pwd.html', context)
+	a_response = "error"
+	if not user:
+		a_response = "No such user"
+	elif user.recovery_key != rc_key or user.recovery_key == "":
+		a_response = "wrong key"
+	else:
+		if user.recovery_key_time + timedelta(days=1) < timezone.now():
+			a_response = "Key is outdated"
+		else:
+			a_response = "sucsess"
+	context = {'response': a_response, 'username': rc_login, 'key': rc_key}
+	return render(request, 'index/reset_pwd.html', context)
 
 
 def ajax_login(request):
@@ -89,12 +95,52 @@ def ajax_login(request):
 		return HttpResponse("error")
 
 
+def ajax_new_pwd(request):
+	if request.method != 'POST':
+		return redirect('index')
+
+	if len(request.POST.get('pwd1')) < 4 or len(request.POST.get('pwd1')) > 100 or request.POST.get('pwd1') != request.POST.get('pwd2'):
+		return HttpResponse("error")
+	try:
+		user = User.objects.get(username=request.POST['username'])
+	except:
+		return HttpResponse("error")
+	if user.recovery_key == "":
+		return HttpResponse("error")
+	if user.recovery_key == request.POST['key']:
+		if user.recovery_key_time + timedelta(days=1) < timezone.now():
+			return HttpResponse("error")
+		else:
+			user.set_password(request.POST['pwd1'])
+			user.recovery_key = ""
+			user.save()
+			return HttpResponse("sucsess")
+
+
 def ajax_reset(request):
 	if request.method != 'POST':
 		return redirect('index')
-	user = User.objects.filter(email=request.POST.get('email'))
+	try:
+		user = User.objects.get(email=request.POST.get('email'), is_active=True)
+	except:
+		return HttpResponse("error")
 	if user:
-		return HttpResponse("sucsess")
+		user.recovery_key = md5((user.username + str(random.randrange(1234))).encode('utf-8')).hexdigest()
+		user.recovery_key_time = timezone.now()
+		user.save()
+		return_email = re.search(r'(@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$)', user.email).group(0)
+
+		recovery_link = "https://localhost:8000/reset_pwd?user=" + user.username + "&recovery_key=" + user.recovery_key
+		html_message = """
+					        <p>Hi %s %s</p>
+					        <p>To reset password follow the link</p>
+					        <a href="%s">Link</p>
+					        """ % (user.first_name, user.last_name, recovery_link)
+
+		send_mail('HyperTube pasword reset', "", 'rkhilenksmtp@gmail.com',
+		          [user.email, ], html_message=html_message, fail_silently=True)
+
+		return HttpResponse("https://" + return_email[1:])
 	else:
 		return HttpResponse("error")
 

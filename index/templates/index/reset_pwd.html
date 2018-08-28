@@ -4,7 +4,7 @@
     {% load static %}
 	<meta http-equiv="content-type" content="text/html" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Activation</title>
+	<title>Password recovery</title>
 
     <link rel="icon" type="image/png" href="{% static "index/favicon.ico"%}" />
 	<!-- Stylesheets
@@ -37,8 +37,30 @@
 	<div class="main" style="height: 1000px">
         <div class="padding"></div>
         <div id="activation_text_box" style="background-image: url({% static "index/warhammer-40000-octava.jpg"%})">
-            <p>{{ response }}, procede to index page</p>
-            <a class="btn_sign_up" href="{% url 'index' %}" id="go_home_btn">GO HOME</a>
+            {% if response == "sucsess" %}
+            <div id="recover_wrap">
+            <p>New password</p>
+            <div id="recover_input">
+                {% csrf_token %}
+                <input id="id_change_pwd1" class="input_index" type="password" placeholder="New Password">
+                <input id="id_change_pwd2" class="input_index" type="password" placeholder="Repeat Password">
+                <input class="none" id="reset_login" value="{{ username }}">
+                <input class="none" id="reset_key" value="{{ key }}">
+            </div>
+            <a class="btn_sign_up" id="change_pwd_btn">CHANGE</a>
+            </div>
+            <div id="responce_wrap" class="invisible none">
+                <p>Password changed</p>
+                <a class="btn_sign_up" href="{% url 'index' %}" id="go_home_btn">GO HOME</a>
+            </div>
+
+            {% else %}
+            <div id="responce_wrap">
+                <p>{{ response }}, procede to index page</p>
+                <a class="btn_sign_up" href="{% url 'index' %}" id="go_home_btn">GO HOME</a>
+            </div>
+            {% endif %}
+
         </div>
 
 	</div>

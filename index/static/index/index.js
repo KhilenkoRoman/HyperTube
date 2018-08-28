@@ -91,9 +91,6 @@ $(document).mouseup(function (e)
 		}
 });
 
-
-
-
 $(document).on('submit', '#login_form', function(e){
 	e.preventDefault();
 	$.ajax({
@@ -110,18 +107,37 @@ $(document).on('submit', '#login_form', function(e){
 });
 
 $(document).on('submit', '#login_forgot', function(e){
+    const forgot_email = document.getElementById('forgot_email');
+    const recover_btn = document.getElementById('recover_btn');
+    forgot_email.classList.remove('unvalid');
+    recover_btn.disabled = true;
+
 	$.ajax({
     	type:"POST",
     	url: '/ajax_reset',
-		data: {email: document.getElementById('forgot_email').value,
+		data: {email: forgot_email.value,
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-    		if (response === "sucsess")
-			{
-				document.getElementById('login_forgot').submit();
-			}
-    		console.log("1");
+    		if (response != "error"){
+    		    console.log(response);
+                $(".col_md_login").addClass("none");
+                $(".col_md_sign_up").addClass("none");
+                const col_md_recover = $(".col_md_recover");
+                col_md_recover.removeClass("none");
+                $("#go_to_recover_btn").attr('href', response);
+                ocultar_login_sign_up();
+
+                setTimeout(function(){
+	                col_md_recover.addClass("visible");
+	            },300);
+            }
+			else
+            {
+                forgot_email.classList.add('unvalid');
+                recover_btn.disabled = false;
+            }
+
 		}
 	});
 	e.preventDefault();
@@ -134,7 +150,9 @@ $(document).on('submit', '#register_form', function(e){
     const last_name = document.getElementById('register_last_name');
     const register_pwd_1 = document.getElementById('register_pwd_1');
     const register_pwd_2 = document.getElementById('register_pwd_2');
+    const register_btn = document.getElementById('register_btn');
 
+    register_btn.disabled = true;
     login.classList.remove('unvalid');
     email.classList.remove('unvalid');
     first_name.classList.remove('unvalid');
@@ -155,7 +173,7 @@ $(document).on('submit', '#register_form', function(e){
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-            console.log(response);
+            register_btn.disabled = false;
             if (response.includes("error_login"))
                 login.classList.add('unvalid');
             if (response.includes("error_email"))
@@ -185,12 +203,6 @@ $(document).on('submit', '#register_form', function(e){
 	});
 
 });
-
-
-// .visible{
-//     visibility:visible;
-//     opacity:1;
-// }
 
 $("#register_pwd_1").on("change paste keyup", function(key) {
 	let str = $('#register_pwd_1').val();

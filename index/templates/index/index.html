@@ -56,6 +56,15 @@
         <a class="btn_sign_up" href="" id="go_to_email_btn">GO TO EMAIL</a>
 	</div>
 	</div>
+
+    <div class="col_md_recover none">
+	<div class="cont_ba_opcitiy" style="width: 60%; padding: 40px 0px;">
+		<h2>PASSWORD RECOVERY INITIALIZED</h2>
+		<p>Go and check email</p>
+		<a href=""></a>
+        <a class="btn_sign_up" href="" id="go_to_recover_btn">GO TO EMAIL</a>
+	</div>
+	</div>
 		
 	</div>
 
@@ -100,7 +109,7 @@
 	<form id="login_forgot" method="POST" action="{% url 'account_reset_password' %}" class="password_reset">
         {% csrf_token %}
 		<input class="input_index" type="email" placeholder="Email" id="forgot_email" name="email" required/>
-		<button class="btn_login" type="submit" >RECOVER</button>
+		<button class="btn_login" type="submit" id="recover_btn">RECOVER</button>
 	</form>
 	<p onclick="return_login()">Return login</p>
 	</div>
@@ -121,7 +130,7 @@
 		<span class="pwd_over" style="width: 100%"></span>
 		</div>
 	<input class="input_index" type="password" placeholder="Confirm Password" id="register_pwd_2"/>
-	<button class="btn_sign_up" type="submit">SIGN UP</button>
+	<button class="btn_sign_up" type="submit" id="register_btn">SIGN UP</button>
 	</form>
 
   </div>

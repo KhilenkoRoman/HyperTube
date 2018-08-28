@@ -338,11 +338,28 @@ margin-top: 15px;
   width: 100%;
 }
 
+.col_md_recover {
+  visibility:hidden;
+  opacity:0;
+  -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+	-ms-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+  position: relative;
+  float: left;
+  width: 100%;
+}
+
 .visible{
      visibility:visible;
      opacity:1;
 }
 
+.invisible{
+    visibility:hidden;
+    opacity:0;
+}
 /* ----------------------------------
 background text    
 ------------------------------------
@@ -785,4 +802,28 @@ textarea:focus, input:focus{
     content: none;
     padding-top: 200px;
     /*height: 200px;*/
+}
+
+#go_home_btn, #change_pwd_btn{
+    position: relative;
+    top: 100px;
+}
+
+#recover_input{
+    position: relative;
+    top: 75px;
+}
+
+#recover_wrap{
+    -webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+#responce_wrap{
+    -webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
 }
