@@ -10,6 +10,7 @@
 	<!-- Stylesheets
 	================================================= -->
 	<link rel="stylesheet" href="{% static "index/styles.css" %}" />
+    <link rel="stylesheet" href="{% static "user/styles.css" %}" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
 <body>
@@ -34,9 +35,19 @@
 	</header>
 
 
-	<div class="main" style="height: 1500px">
-        <p style="height: 200px"></p>
-        <p>_{{ profile_user.username }}_</p>
+	<div class="main">
+        <p style="height: 150px"></p>
+        <div id="user_card_wrap">
+            <div id="personal_info">
+                <div id="photo_section">
+                    <img src="{% static "user/default_photo.jpg" %}">
+                </div>
+                <div id="info section">
+
+                </div>
+            </div>
+
+        </div>
 	</div>
 	<footer>
 		<div>vibonar rkhilenk</div>

@@ -1,0 +1,17 @@
+
+
+.main{
+    min-height: calc(100vh - 117px);
+}
+
+footer{
+    margin-top: -20px;
+    border-radius: 5px 5px 0 0;
+}
+
+#user_card_wrap{
+    border: 1px solid black;
+    width: 70%;
+    margin: 0 auto;
+    min-height: 100px;
+}
