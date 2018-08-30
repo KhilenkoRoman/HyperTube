@@ -1,13 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from index.models import User
 
 
-def user_profile(request, get_login):
-	user = User.objects.filter(username=get_login)
-	if len(user) == 1:
-		user = user[0]
-	else:
-		user = None
+def user_profile(request):
+	user = request.user
+	if user.id is None:
+		print('asdasd')
+		return redirect('index')
+
+	print(user.id)
+
 	context = {'profile_user': user,
 	           'qwe': "asd",
 	           }

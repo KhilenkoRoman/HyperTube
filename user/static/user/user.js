@@ -1,5 +1,5 @@
 $(window).scroll(function () {
-    var sc = $(window).scrollTop()
+    var sc = $(window).scrollTop();
     if (sc > 100) {
         $("#header-scroll").addClass("small");
         $("#sub_header").addClass("small");
@@ -57,3 +57,4 @@ $( "#change_pwd_btn" ).on( "click", function() {
     	}
 	});
 });
+

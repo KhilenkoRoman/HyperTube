@@ -34,8 +34,13 @@ def activation(request):
 	if request.user.is_authenticated:
 		return redirect('index')
 
-	activation_key = request.GET.get('activation_key')
-	a_login = request.GET.get('user')
+	if request.GET.get('activation_key') and request.GET.get('user'):
+		activation_key = request.GET.get('activation_key')
+		a_login = request.GET.get('user')
+	else:
+		context = {'response': "error"}
+		return render(request, 'index/activation.html', context)
+
 
 	user = User.objects.get(username=a_login)
 	print(user.activation_key)
