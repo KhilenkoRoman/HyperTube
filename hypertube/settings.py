@@ -63,6 +63,9 @@ INSTALLED_APPS = [
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 LOGIN_REDIRECT_URL = '/'
+# SOCIALACCOUNT_AUTO_SIGNUP = False
+SOCIALACCOUNT_ADAPTER = 'user.socialaccount_adapter.MySocialAccountAdapter'
+SOCIALACCOUNT_QUERY_EMAIL = True
 
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',

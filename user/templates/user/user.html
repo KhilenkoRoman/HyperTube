@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     {% load static %}
+    {% load socialaccount %}
+    {% load socialaccount %}
+    {% providers_media_js %}
+
 	<meta http-equiv="content-type" content="text/html" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Usver profile</title>
@@ -38,17 +42,7 @@
 
 	<div class="main">
         <p style="height: 150px"></p>
-{#        <div id="user_card_wrap">#}
-{#            <div id="personal_info">#}
-{#                <div id="photo_section">#}
-{#                    <img src="{% static "user/default_photo.jpg" %}">#}
-{#                </div>#}
-{#                <div id="info section">#}
-{##}
-{#                </div>#}
-{#            </div>#}
-{##}
-{#        </div>#}
+
 <div class="edit_tabs">
     <div class="tabs">
 
@@ -69,28 +63,68 @@
             <div id="names">
                 <div>
                     <p>First Name</p>
-                    <input id="f_name" class="input_index" type="text" placeholder="fitst name">
+                    <input id="f_name" class="input_index" type="text" placeholder="fitst name" value="{{ profile_user.first_name }}">
                 </div>
                 <div>
                     <p>Last Name</p>
-                    <input id="l_name" class="input_index" type="text" placeholder="last name">
+                    <input id="l_name" class="input_index" type="text" placeholder="last name" value="{{ profile_user.last_name }}">
                 </div>
             </div>
                 <div id="email_in">
                     <p>Email</p>
-                    <input id="email" class="input_index" type="email" placeholder="email">
+                    <input id="email" class="input_index" type="email" placeholder="email" value="{{ profile_user.email }}">
                 </div>
             <button>Save</button>
         </form>
     </div>
-
-
     </section>
 
     <section id="content2">
-        <p>
-          Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket meatloaf short ribs.
-        </p>
+        <div id="acc_section">
+        <form>
+            <div id="pass">
+                <div>
+                    <p>Password</p>
+                    <input id="f_name" class="input_index" type="text" placeholder="new password">
+                </div>
+                <div>
+                    <p>Onse more</p>
+                    <input id="l_name" class="input_index" type="text" placeholder="repeat password">
+                </div>
+            </div>
+            <button>Save</button>
+        </form>
+        </div>
+
+        <div id="social_section">
+            <p>Connect social accounts</p>
+            <table>
+            <tr>
+                {% if "provider42" in active_providers %}
+                <td><a  class="social_section_button active" disabled><img src="{% static "index/42_logo.png" %}" id="logo_42">Intra 42</a></td>
+                {% else %}
+                <td><a href="{% provider_login_url "provider42" process="connect" %}" class="social_section_button"><img src="{% static "index/42_logo.png" %}" id="logo_42">Intra 42</a></td>
+                {% endif %}
+
+                {% if "google" in active_providers %}
+                <td><a class="social_section_button active" disabled><i class="fab fa-google-plus-g"></i>Google</a></td>
+                {% else %}
+                <td><a href="{% provider_login_url "google" process="connect" %}" class="social_section_button"><i class="fab fa-google-plus-g"></i>Google</a></td>
+                {% endif %}
+
+            </tr>
+            <tr>
+                {% if "google" in active_providers %}
+                <td><a class="social_section_button active" disabled><i class="fab fa-facebook-f"></i>Facebook</a></td>
+                {% else %}
+                <td><a href="{% provider_login_url "facebook" process="connect" %}" class="social_section_button"><i class="fab fa-facebook-f"></i>Facebook</a></td>
+                {% endif %}
+
+{#                <td><a class="social_section_button"><i class="fab fa-github"></i>GitHub</a></td>#}
+            </tr>
+            </table>
+        </div>
+
       </section>
 
 

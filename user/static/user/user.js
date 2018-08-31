@@ -16,7 +16,7 @@ $(window).on('load', function() {
 
 	setTimeout(function(){
     	preloader.fadeOut(preloaderFadeOutTime);
-	}, 500);
+	}, 300);
 });
 
 

@@ -41,7 +41,6 @@ def activation(request):
 		context = {'response': "error"}
 		return render(request, 'index/activation.html', context)
 
-
 	user = User.objects.get(username=a_login)
 	print(user.activation_key)
 	print(activation_key)
