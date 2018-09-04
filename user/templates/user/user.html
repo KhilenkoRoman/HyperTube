@@ -2,15 +2,12 @@
 <html lang="en">
 <head>
     {% load static %}
+    <link rel="icon" type="image/png" href="{% static "index/favicon.ico" %}" />
     {% load socialaccount %}
-    {% load socialaccount %}
-    {% providers_media_js %}
 
 	<meta http-equiv="content-type" content="text/html" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Usver profile</title>
-
-    <link rel="icon" type="image/png" href="{% static "index/favicon.ico" %}" />
 	<!-- Stylesheets
 	================================================= -->
     <link rel="stylesheet" href="{% static "user/user_tabs.css" %}" />
@@ -40,16 +37,25 @@
 	</header>
 
 
-	<div class="main">
-        <p style="height: 150px"></p>
+<div class="main">
+
+{#popup#}
+<div class="b-container invisible">
+    <div class="b-popup-content">
+        <p id="popup_text">Text in Popup</p>
+        <button id="popup_ok">OK</button>
+    </div>
+</div>
+<div class="b-popup invisible"></div>
+{#popup end#}
 
 <div class="edit_tabs">
     <div class="tabs">
 
-    <input id="tab1" type="radio" name="tabs" checked>
+    <input id="tab1" type="radio" name="tabs" {% if not last_social_connect %}checked{% endif %}>
     <label for="tab1"><i class="fas fa-user-alt"></i> Profile</label>
 
-    <input id="tab2" type="radio" name="tabs">
+    <input id="tab2" type="radio" name="tabs" {% if last_social_connect %}checked{% endif %}>
     <label for="tab2"><i class="fas fa-lock"></i> Accounts</label>
 
 
@@ -59,7 +65,7 @@
         <button>Upload</button>
     </div>
     <div id="info_section">
-        <form>
+        <form onsubmit="info_change()">
             <div id="names">
                 <div>
                     <p>First Name</p>
@@ -141,5 +147,8 @@
 	</footer>
 	<script src="{% static "index/jquery-3.3.1.min.js" %}"></script>
 	<script src="{% static "user/user.js" %}"></script>
+
+    {% if last_social_connect %}<script>social_connect('{{ last_social_connect }}');</script>{% endif %}
+
 </body>
 </html>

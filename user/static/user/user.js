@@ -1,3 +1,5 @@
+var popup_active = false;
+
 $(window).scroll(function () {
     var sc = $(window).scrollTop();
     if (sc > 100) {
@@ -19,7 +21,7 @@ $(window).on('load', function() {
 	}, 300);
 });
 
-
+// for recover password
 $( "#change_pwd_btn" ).on( "click", function() {
     const pwd1 = document.getElementById('id_change_pwd1');
     const pwd2 = document.getElementById('id_change_pwd2');
@@ -58,3 +60,49 @@ $( "#change_pwd_btn" ).on( "click", function() {
 	});
 });
 
+function social_connect(provider) {
+    const container = document.getElementsByClassName('b-container')[0];
+    const shadow = document.getElementsByClassName('b-popup')[0];
+    const text = document.getElementById('popup_text');
+
+    if (provider == 'provider42')    {
+        text.innerText = "Activated Intra 42";
+    }
+    else {
+        text.innerText = "Activated " + provider;
+    }
+    container.classList.remove('invisible');
+    shadow.classList.remove('invisible');
+
+    setTimeout(function(){
+    	container.classList.add('invisible');
+    	shadow.classList.add('invisible');
+	}, 40000);
+}
+
+$(document).mouseup(function (e)
+{
+    const container = document.getElementsByClassName('b-container')[0];
+    const shadow = document.getElementsByClassName('b-popup')[0];
+
+    const div = $(".b-container");
+    const div2 = $("#popup_text");
+    if (!div.is(e.target) && div.has(e.target).length === 0
+        && !div2.is(e.target) && div2.has(e.target).length === 0)
+    {
+        container.classList.add('invisible');
+        shadow.classList.add('invisible');
+    }
+    popup_active = false;
+});
+
+$('#popup_ok').on( "click", function() {
+  document.getElementsByClassName('b-container')[0].classList.add('invisible');
+  document.getElementsByClassName('b-popup')[0].classList.add('invisible');
+  popup_active = false;
+});
+
+function info_change() {
+    event.preventDefault();
+    console.log("asd");
+}

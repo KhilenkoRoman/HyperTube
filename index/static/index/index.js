@@ -80,16 +80,16 @@ document.querySelector('.cont_form_forgot').style.display = "none";
   
 }
 
-$(document).mouseup(function (e)
-{
-		var div = $("#form"); 
-		var div2 = $("#forms_wrap");
-		if (!div.is(e.target) && div.has(e.target).length === 0 
-			&& !div2.is(e.target) && div2.has(e.target).length === 0)
-		{
-			ocultar_login_sign_up();
-		}
-});
+// $(document).mouseup(function (e)
+// {
+// 		var div = $("#form");
+// 		var div2 = $("#forms_wrap");
+// 		if (!div.is(e.target) && div.has(e.target).length === 0
+// 			&& !div2.is(e.target) && div2.has(e.target).length === 0)
+// 		{
+// 			ocultar_login_sign_up();
+// 		}
+// });
 
 $(document).on('submit', '#login_form', function(e){
 	e.preventDefault();
