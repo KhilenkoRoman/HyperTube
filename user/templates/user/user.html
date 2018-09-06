@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
 <body>
+    {% csrf_token %}
 	<div id="preloader">
 	<div id="loader">
 		<div class="inner one"></div>
@@ -61,44 +62,53 @@
 
     <section id="content1">
     <div id="photo_section">
-        <img src="{% static "user/default_photo.png" %}">
-        <button>Upload</button>
+        {% if profile_user.avatar %}
+            <img src="/media/{{ profile_user.avatar }}">
+        {% else %}
+            <img src="{% static "user/default_photo.png" %}">
+        {% endif %}
+
+        <label for="image_to_upload" class="custom-file-upload" id="image_to_upload_label">
+        Upload
+        </label>
+        <input id="image_to_upload" type="file"/>
+
     </div>
     <div id="info_section">
-        <form onsubmit="info_change()">
+        <form onsubmit="usr_info_change()">
             <div id="names">
                 <div>
                     <p>First Name</p>
-                    <input id="f_name" class="input_index" type="text" placeholder="fitst name" value="{{ profile_user.first_name }}">
+                    <input id="f_name" class="input_index" type="text" placeholder="fitst name" value="{{ profile_user.first_name }}" required>
                 </div>
                 <div>
                     <p>Last Name</p>
-                    <input id="l_name" class="input_index" type="text" placeholder="last name" value="{{ profile_user.last_name }}">
+                    <input id="l_name" class="input_index" type="text" placeholder="last name" value="{{ profile_user.last_name }}" required>
                 </div>
             </div>
                 <div id="email_in">
                     <p>Email</p>
-                    <input id="email" class="input_index" type="email" placeholder="email" value="{{ profile_user.email }}">
+                    <input id="email" class="input_index" type="email" placeholder="email" value="{{ profile_user.email }}" required>
                 </div>
-            <button>Save</button>
+            <button id="change_info_btn">Save</button>
         </form>
     </div>
     </section>
 
     <section id="content2">
         <div id="acc_section">
-        <form>
+        <form onsubmit="usr_pwd_change()">
             <div id="pass">
                 <div>
                     <p>Password</p>
-                    <input id="f_name" class="input_index" type="text" placeholder="new password">
+                    <input id="usr_pwd1" class="input_index" type="password" placeholder="new password" required>
                 </div>
                 <div>
                     <p>Onse more</p>
-                    <input id="l_name" class="input_index" type="text" placeholder="repeat password">
+                    <input id="usr_pwd2" class="input_index" type="password" placeholder="repeat password" required>
                 </div>
             </div>
-            <button>Save</button>
+            <button id="usr_pwd_btn">Save</button>
         </form>
         </div>
 
