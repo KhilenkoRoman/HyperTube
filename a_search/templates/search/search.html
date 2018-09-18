@@ -1,0 +1,143 @@
+{% extends 'index/base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static "search/styles.css" %}" />
+{% endblock %}
+
+{% block main %}
+
+<div class="main">
+
+{#popup#}
+<div class="b-container invisible">
+    <div class="b-popup-content">
+        <p id="popup_text">Text in Popup</p>
+        <button id="popup_ok">OK</button>
+    </div>
+</div>
+<div class="b-popup invisible"></div>
+{#popup end#}
+
+
+<div id="main_search">
+    <table>
+        <tr class="search_row">
+            <th class="search_item">
+                <a href="">
+                    <div>
+                        <img src="https://upload.wikimedia.org/wikipedia/ru/8/87/Ringstrilogyposter.jpg" class="poster">
+                    </div>
+                    <p>Lord of the Rings</p>
+                    <p>fantasy</p>
+                </a>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+        </tr>
+
+        <tr class="search_row">
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+        </tr>
+
+        <tr class="search_row">
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+
+            <th class="search_item">
+                <div >
+
+                </div>
+            </th>
+        </tr>
+    </table>
+
+    <div id="pagination">
+        <a class="p_item" id="next" href=""><i class="fas fa-angle-left"></i></a>
+        <a class="p_item active" href="" class="active">1</a>
+        <a class="p_item" href="">2</a>
+        <a class="p_item" href="">3</a>
+        <a class="p_item" href="">4</a>
+        <a class="p_item" id="prev" href=""><i class="fas fa-angle-right"></i></a>
+
+
+    </div>
+
+</div>
+</div>
+
+
+
+{% endblock %}
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static "index/favicon.ico" %}" />
+    {% load socialaccount %}
+
+	<meta http-equiv="content-type" content="text/html" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Search film</title>
+	<!-- Stylesheets
+	================================================= -->
+
+	<link rel="stylesheet" href="{% static "index/styles.css" %}" />
+    <link rel="stylesheet" href="{% static "user/styles.css" %}" />
+    {% block styles %}    {% endblock %}
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
+<body>
+    {% csrf_token %}
+	<div id="preloader">
+	<div id="loader">
+		<div class="inner one"></div>
+  		<div class="inner two"></div>
+		<div class="inner three"></div>
+	</div>
+	</div>
+
+	<header>
+		<div id="header-scroll">
+		<h1>HyperTube</h1>
+		<div id="sub_header">
+            <div id="search_head">
+                <input id="head_search_input" type="text" placeholder="film">
+                <button id="head_search_btn" type="submit">SEARCH</button>
+            </div>
+			<p>Name</p>
+			<p>Last name</p>
+
+			<a href="">Logout</a>
+		</div>
+		</div>
+	</header>
+
+{% block main %} {% endblock %}
+
+
+	<footer>
+		<div>vibonar rkhilenk</div>
+	</footer>
+	<script src="{% static "index/jquery-3.3.1.min.js" %}"></script>
+	<script src="{% static "user/user.js" %}"></script>
+</body>
+</html>
