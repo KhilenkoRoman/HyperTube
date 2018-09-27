@@ -23,7 +23,8 @@ class Provider42(OAuth2Provider):
         return str(data['id'])
 
     def extract_common_fields(self, data):
-        return dict(last_name=data.get('last_name'),
+        return dict(email=data.get('email'),
+                    last_name=data.get('last_name'),
                     first_name=data.get('first_name'))
 
     # with email get
