@@ -5,10 +5,13 @@ $(window).scroll(function () {
     if (sc > 100) {
         $("#header-scroll").addClass("small");
         $("#sub_header").addClass("small");
+        $("#head_logout_btn").addClass("small");
+
     }
     else {
         $("#header-scroll").removeClass("small");
-        $("#sub_header").removeClass("small")
+        $("#sub_header").removeClass("small");
+        $("#head_logout_btn").removeClass("small");
     }
 });
 

@@ -7,7 +7,7 @@
 
 	<meta http-equiv="content-type" content="text/html" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Search film</title>
+	<title>{% block title %}{% endblock %}</title>
 	<!-- Stylesheets
 	================================================= -->
 
@@ -29,16 +29,20 @@
 	<header>
 		<div id="header-scroll">
 		<h1>HyperTube</h1>
+        {% if user.is_authenticated %}
+
+
 		<div id="sub_header">
             <div id="search_head">
                 <input id="head_search_input" type="text" placeholder="film">
                 <button id="head_search_btn" type="submit">SEARCH</button>
             </div>
-			<p>Name</p>
-			<p>Last name</p>
+			<p>{{ user.first_name }}</p>
+			<p>{{ user.last_name }}</p>
 
-			<a href="">Logout</a>
+			<a id="head_logout_btn" href="/user/logout">Logout</a>
 		</div>
+        {% endif %}
 		</div>
 	</header>
 

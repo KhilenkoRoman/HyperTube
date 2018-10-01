@@ -70,8 +70,12 @@ footer {
 	align-items: center;
 }
 #sub_header p{
+	color: #4e4e4e;
 	margin-right: 10px;
 	font-size: 24px;
+	max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 	-ms-transition:    all 0.3s ease-out;
     -moz-transition:    all 0.3s ease-out;
     -webkit-transition: all 0.3s ease-out;
@@ -107,7 +111,7 @@ footer {
 }
 #sub_header.small a{
 	margin-right: 20px;
-	font-size: 14px;
+	font-size: 17px;
 }
 
 
@@ -838,6 +842,7 @@ textarea:focus, input:focus{
     border: none;
     color: #757575;
     margin-bottom: 3px;
+	display: inline;
 }
 
 #head_search_btn{
@@ -852,4 +857,36 @@ textarea:focus, input:focus{
     color: #fff;
     margin-top: 10px;
     cursor: pointer;
+}
+
+#head_logout_btn.small {
+    background-color: #cc15032e;
+    border: none;
+	margin-right: 40px;
+    width: 100px;
+	padding: 0px 0px 0px 2px;
+	border-radius: 3px;
+    box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
+    color: #849ba5;
+	margin-top: 0px;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 30px;
+}
+
+#head_logout_btn{
+    background-color: #cc15032e;
+    border: none;
+    padding: 3px;
+    margin-right: 40px;
+    width: 100px;
+    border-radius: 3px;
+    box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
+    color: #849ba5;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#head_logout_btn a{
+	text-decoration: none;
 }

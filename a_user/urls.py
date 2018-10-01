@@ -8,5 +8,6 @@ urlpatterns = [
 	path('ajax_user_change_pwd', views.ajax_user_change_pwd, name='ajax_user_change_pwd'),
 	path('ajax_user_change_info', views.ajax_user_change_info, name='ajax_user_change_info'),
 	path('ajax_change_avatar', views.ajax_change_avatar, name='ajax_change_avatar'),
+	path('logout',  views.logout_myself, name='logout_myself'),
 
 ]

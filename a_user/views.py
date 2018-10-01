@@ -4,6 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from a_index.views import html_escape
 from django.core.files.images import get_image_dimensions
+from a_user.models import CustomUserModel
+from django.contrib.auth import logout
 import re
 import os
 from django.conf import settings
@@ -72,7 +74,7 @@ def ajax_user_change_info(request):
 		errors.append("error_email")
 	elif not re.match("^[a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", email):
 		errors.append("error_email")
-	elif current_user.email != email and User.objects.filter(email=email):
+	elif current_user.email != email and CustomUserModel.objects.filter(email=email):
 		errors.append("error_email")
 	else:
 		current_user.email = email
@@ -104,7 +106,6 @@ def ajax_change_avatar(request):
 	if not avatar:
 		return HttpResponse("error")
 
-	print(type(avatar))
 	try:
 		w, h = get_image_dimensions(avatar)
 		if w > 1000 or h > 1000:
@@ -121,3 +122,8 @@ def ajax_change_avatar(request):
 	current_user.avatar = avatar
 	current_user.save()
 	return HttpResponse(current_user.avatar.url)
+
+
+def logout_myself(request):
+    logout(request)
+    return redirect('index')

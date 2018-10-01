@@ -26,8 +26,8 @@ def html_escape(text):
 
 
 def index(request):
-	if request.user:
-		return redirect('user_profile')
+	# if request.user:
+	# 	return redirect('user_profile')
 
 	context = {'APP_PATH': settings.APP_PATH}
 	return render(request, 'index/index.html', context)
