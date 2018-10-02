@@ -50,9 +50,19 @@
 
 
 	<footer>
+        <div class="lang_wrap">
+        {% if request.session.lang == 2 %}
+            <a><img class="flags" src="{% static "index/ru.png" %}"></a>
+            <a href="{% url 'change_lang' lang='en'%}"><img class="flags inactive_flag" src="{% static "index/gb.png" %}"></a>
+        {% else %}
+            <a href="{% url 'change_lang' lang='ru'%}"><img class="flags inactive_flag" src="{% static "index/ru.png" %}"></a>
+            <a><img class="flags" src="{% static "index/gb.png" %}"></a>
+        {% endif %}
+        </div>
 		<div>vibonar rkhilenk</div>
 	</footer>
 	<script src="{% static "index/jquery-3.3.1.min.js" %}"></script>
 	<script src="{% static "user/user.js" %}"></script>
+    {% block script %} {% endblock %}
 </body>
 </html>
