@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from allauth.socialaccount.models import SocialAccount
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth import update_session_auth_hash
 from a_index.views import html_escape
 from django.core.files.images import get_image_dimensions
@@ -25,12 +25,20 @@ def user_profile(request):
 	request.session['last_social_connect'] = None
 
 	context = {'profile_user': user,
-	           'active_providers': active_providers,
-	           'last_social_connect': last_social_connect,
-	           }
+			   'active_providers': active_providers,
+			   'last_social_connect': last_social_connect,
+			   }
 	print(user.avatar)
 
 	return render(request, 'user/user.html', context)
+
+
+def another_user_profile(request, user):
+	user = CustomUserModel.objects.filter(username=user)
+	if len(user) == 0:
+		return redirect('index')
+	context = {'profile_user': user[0]}
+	return render(request, 'user/another_user.html', context)
 
 
 def social_activated(request, provider):
@@ -125,5 +133,8 @@ def ajax_change_avatar(request):
 
 
 def logout_myself(request):
-    logout(request)
-    return redirect('index')
+	logout(request)
+	return redirect('index')
+
+
+

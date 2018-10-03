@@ -101,7 +101,7 @@ $(document).on('submit', '#login_form', function(e){
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-        	alert(response);
+        	window.location.replace("/user");
     	}
 	});
 });

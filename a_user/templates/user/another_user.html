@@ -1,0 +1,65 @@
+{% extends 'index/base.html' %}
+{% load static %}
+{% block title %}{{ profile_user.username }} profile{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static "user/user_tabs.css" %}" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+{% endblock %}
+
+{% block main %}
+
+<div class="main">
+{#popup#}
+<div class="b-container invisible">
+    <div class="b-popup-content">
+        <p id="popup_text">Text in Popup</p>
+        <button id="popup_ok">OK</button>
+    </div>
+</div>
+<div class="b-popup invisible"></div>
+{#popup end#}
+
+<div class="edit_tabs">
+    <div class="tabs">
+
+    <input id="tab1" type="radio" name="tabs" {% if not last_social_connect %}checked{% endif %}>
+    <label for="tab1"><i class="fas fa-user-alt"></i> Profile</label>
+
+    <section id="content1">
+    <div id="photo_section">
+        {% if profile_user.avatar %}
+            <img src="/media/{{ profile_user.avatar }}">
+        {% else %}
+            <img src="{% static "user/default_photo.png" %}">
+        {% endif %}
+    </div>
+    <div id="info_section">
+        <form>
+            <div id="names">
+                <div>
+                    <p>First Name</p>
+                    <input id="f_name" class="input_index" type="text" placeholder="fitst name" value="{{ profile_user.first_name }}" required disabled>
+                </div>
+                <div>
+                    <p>Last Name</p>
+                    <input id="l_name" class="input_index" type="text" placeholder="last name" value="{{ profile_user.last_name }}" required disabled>
+                </div>
+            </div>
+                <div id="email_in">
+                    <p>Email</p>
+                    <input id="email" class="input_index" type="email" placeholder="email" value="{{ profile_user.email }}" required disabled>
+                </div>
+        </form>
+    </div>
+    </section>
+
+
+    </div>
+    <div class="background">
+        <img src="{% static "user/wh_landscape.jpg" %}">
+    </div>
+
+</div>
+</div>
+
+{% endblock %}
