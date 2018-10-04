@@ -4,10 +4,14 @@
 {% block styles %}
 <link rel="stylesheet" href="{% static "search/styles.css" %}" />
 {% endblock %}
+{% block script %}
+<script src="{% static "search/search.js" %}"></script>
+{% endblock %}
 
 {% block main %}
 
 <div class="main">
+{% csrf_token %}
 
 {#popup#}
 <div class="b-container invisible">
@@ -21,6 +25,12 @@
 
 
 <div id="main_search">
+
+    <form id="search_form">
+        <input id="head_search_input" type="text" placeholder="film">
+        <button id="head_search_btn" type="submit">SEARCH</button>
+    </form>
+
     <table>
         <tr class="search_row">
             <th class="search_item">

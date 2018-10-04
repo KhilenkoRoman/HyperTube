@@ -114,7 +114,7 @@ $(document).on('submit', '#login_forgot', function(e){
 
 	$.ajax({
     	type:"POST",
-    	url: '/ajax_reset',
+    	url: '/ajax_search_request',
 		data: {email: forgot_email.value,
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},

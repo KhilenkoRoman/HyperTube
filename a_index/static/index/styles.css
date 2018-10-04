@@ -33,6 +33,15 @@ footer {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfd8dc', endColorstr='#b0bec5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
+button:active,
+button:focus,
+button.active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
 #header-scroll {
     height: 100px;
     background-color: grey;
@@ -864,7 +873,7 @@ textarea:focus, input:focus{
     background-color: #cc15032e;
     border: none;
 	margin-right: 40px;
-    width: 100px;
+    width: 30px;
 	padding: 0px 0px 0px 2px;
 	border-radius: 3px;
     box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
@@ -876,14 +885,13 @@ textarea:focus, input:focus{
 }
 
 #head_logout_btn{
-    background-color: #cc15032e;
+    background-color: #cc1503ab;
     border: none;
     padding: 3px;
-    margin-right: 40px;
-    width: 100px;
+    width: 40px;
     border-radius: 3px;
     box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
-    color: #849ba5;
+    color: #a1daf3;
     cursor: pointer;
     text-decoration: none;
 }
@@ -906,3 +914,4 @@ textarea:focus, input:focus{
 	cursor: pointer;
 	opacity: 0.2;
 }
+
