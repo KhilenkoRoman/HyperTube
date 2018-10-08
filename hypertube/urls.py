@@ -29,6 +29,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('search/', include('a_search.urls')),
     path('user/', include('a_user.urls')),
+    path('player/', include('a_player.urls')),
     path('', include('a_index.urls')),
 ]
 
