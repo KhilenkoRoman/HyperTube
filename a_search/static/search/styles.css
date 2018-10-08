@@ -83,3 +83,28 @@
     background-color: #2644da29;
     cursor: default;
 }
+.results{
+    list-style: none;
+    margin: 0;
+    padding: 0 16px;
+    overflow: hidden;
+}
+
+.results-item-wrap, .spacer {
+    vertical-align: top;
+    text-align: justify;
+    display: inline-block;
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+.results-wrap {
+    position: relative;
+    padding: .8rem 0 60px;
+}
+div {
+    display: block;
+}
+ul{
+	padding: 0px;
+}
