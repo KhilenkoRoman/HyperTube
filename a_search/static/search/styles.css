@@ -1,6 +1,4 @@
 #main_search{
-    width: 1280px;
-    height: 1000px;
     border-radius: 5px;
     /*background: #82535314;*/
     margin: 0 auto 20px;
@@ -92,6 +90,8 @@
 
 .results-item-wrap, .spacer {
     vertical-align: top;
+    width: 200px;
+    overflow:hidden;
     text-align: justify;
     display: inline-block;
     margin: 5px;
