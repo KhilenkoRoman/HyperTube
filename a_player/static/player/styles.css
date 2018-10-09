@@ -36,7 +36,6 @@
 .film_info{
 	width: 29%;
     background: #abdcab2e;
-    height: 100px;
 }
 
 .leave_comment{
@@ -139,3 +138,20 @@
 	margin-right: 10px;
 }
 
+.info_list {
+list-style: none;
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.info_label{
+	border-bottom: 1px solid #888585b3;
+
+}
+
+.info_body{
+	font-size: 13px;
+    color: #484848;
+	margin: 0;
+}
