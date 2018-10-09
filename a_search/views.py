@@ -6,7 +6,6 @@ from a_player.models import FilmModel
 import urllib
 import json
 
-
 # from urllib import parse
 
 
