@@ -28,11 +28,13 @@ def ajax_search_request(request):
     resp = requests.get(url=url, params=params)
 
     data = resp.json()
-    print(data['data'])
+
+    # save films in db
     if data['data']['movie_count'] > 0:
         for i in range(data['data']['movie_count']):
-            FilmModel.objects.create(
-                name=data['data']['movies'][i]['title'],
-                imdb_id=data['data']['movies'][i]['imdb_code'],)
+            if len(FilmModel.objects.filter(imdb_id=data['data']['movies'][i]['imdb_code'])) == 0:
+                FilmModel.objects.create(
+                    name=data['data']['movies'][i]['title'],
+                    imdb_id=data['data']['movies'][i]['imdb_code'],)
 
     return JsonResponse(data, safe=False)
