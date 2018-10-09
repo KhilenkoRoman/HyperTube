@@ -97,6 +97,12 @@
     margin: 5px;
     box-sizing: border-box;
 }
+.results-item-wrap:hover {
+  -webkit-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
 
 .results-wrap {
     position: relative;
