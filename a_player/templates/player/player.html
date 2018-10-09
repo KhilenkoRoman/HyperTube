@@ -1,0 +1,108 @@
+{% extends 'index/base.html' %}
+{% load static %}
+{% block title %}todo film name{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static "search/styles.css" %}" />
+    <link rel="stylesheet" href="{% static "player/styles.css" %}" />
+{% endblock %}
+{% block script %}
+<script src="{% static "search/search.js" %}"></script>
+{% endblock %}
+
+{% block main %}
+
+<div class="main_player">
+{% csrf_token %}
+
+{#popup#}
+<div class="b-container invisible">
+    <div class="b-popup-content">
+        <p id="popup_text">Text in Popup</p>
+        <button id="popup_ok">OK</button>
+    </div>
+</div>
+<div class="b-popup invisible"></div>
+{#popup end#}
+
+
+<div id="main_player">
+
+<video controls id="player">
+    <source src="/media/video/trailer.mp4" type='video/mp4'>
+</video>
+
+<div class="info_wrap">
+    <div class="comments_wrap">
+        <form class="leave_comment">
+            <img src="{% static "user/default_photo.png" %}">
+            <textarea id="comment_text"></textarea>
+            <button>add comment</button>
+        </form>
+        <ul class="comments">
+            <li class="comment">
+                <img src="{% static "user/default_photo.png" %}">
+                <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>qweqwe</div>
+                <p>comment text</p>
+            </li>
+            <li class="comment">
+                <img src="{% static "user/default_photo.png" %}">
+                <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>qweqwe</div>
+                <p>comment text</p>
+            </li>
+            <li class="comment">
+                <img src="{% static "user/default_photo.png" %}">
+                <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>qweqwe</div>
+                <p>comment text</p>
+            </li>
+            <li class="comment">
+                <img src="{% static "user/default_photo.png" %}">
+                <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>qweqwe</div>
+                <p>comment text</p>
+            </li>
+        </ul>
+    </div>
+    <div class="film_info">
+        <ul class="info_list">
+            <li class="info_elem">
+                <p class="info_label">label</p>
+                <p class="info_body">asdasdasdasdasdasdasdasd</p>
+            </li>
+            <li class="info_elem">
+                <p class="info_label">label</p>
+                <p class="info_body">asdasdasdasdasdasdasdasd</p>
+            </li>
+            <li class="info_elem">
+                <p class="info_label">label</p>
+                <p class="info_body">asdasdasdasdasdasdasdasd</p>
+            </li>
+            <li class="info_elem">
+                <p class="info_label">label</p>
+                <p class="info_body">asdasdasdasdasdasdasdasd</p>
+            </li>
+            <li class="info_elem">
+                <p class="info_label">label</p>
+                <p class="info_body">asdasdasdasdasdasdasdasd</p>
+            </li>
+            <li class="info_elem">
+                <p class="info_label">label</p>
+                <p class="info_body">asdasdasdasdasdasdasdasd</p>
+            </li>
+            <li class="info_elem">
+                <p class="info_label">label</p>
+                <p class="info_body">asdasdasdasdasdasdasdasd</p>
+            </li>
+            <li class="info_elem">
+                <p class="info_label">label</p>
+                <p class="info_body">asdasdasdasdasdasdasdasd</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</div>
+</div>
+
+
+
+{% endblock %}
+

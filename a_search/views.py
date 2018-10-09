@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import JsonResponse
 import requests
+from a_player.models import FilmModel
 import urllib
 import json
 
@@ -25,6 +26,13 @@ def ajax_search_request(request):
     )
 
     resp = requests.get(url=url, params=params)
+
     data = resp.json()
+    print(data['data'])
+    if data['data']['movie_count'] > 0:
+        for i in range(data['data']['movie_count']):
+            FilmModel.objects.create(
+                name=data['data']['movies'][i]['title'],
+                imdb_id=data['data']['movies'][i]['imdb_code'],)
 
     return JsonResponse(data, safe=False)

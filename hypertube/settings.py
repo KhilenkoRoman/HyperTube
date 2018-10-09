@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'a_user',
     'a_index',
     'a_search',
+    'a_player',
 
 ]
 
@@ -166,6 +167,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'a_index/static/'),
     os.path.join(BASE_DIR, 'a_user/static/'),
     os.path.join(BASE_DIR, 'a_search/static/'),
+    os.path.join(BASE_DIR, 'a_player/static/'),
 ]
 
 # load https server
