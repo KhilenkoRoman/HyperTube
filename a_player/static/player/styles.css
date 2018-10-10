@@ -105,14 +105,14 @@
     flex-direction: column;
 }
 
-.comment img{
-	height: 80px;
+.comment_avatar{
+    height: 80px;
     width: 80px;
     border-radius: 50%;
-    position: relative;
-    top: 40px;
     right: 40px;
-	border: 1px solid #c7c7c7;
+    top: 40px;
+    border: 1px solid #8c8a8a3b;
+    position: relative;
 }
 
 .comment p{
