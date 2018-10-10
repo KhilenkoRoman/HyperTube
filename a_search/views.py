@@ -8,23 +8,17 @@ import json
 
 # from urllib import parse
 
-
-def search(request):
-    context = {'APP_PATH': settings.APP_PATH}
-    return render(request, 'search/search.html', context)
-
-
-def ajax_search_request(request):
+def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_by="rating"):
     url = "https://yts.am/api/v2/list_movies.json"
     params = dict(
-        query_term=request.POST.get('search_field'),
-        limit=30,
-        page=request.POST.get('page'),
-        quality="All",
-        genre="",
-        sort_by="seeds"
+        query_term=query_term,
+        limit=limit,
+        page= page,
+        quality=quality,
+        genre=genre,
+        sort_by=sort_by,
+        with_rt_rating=1,
     )
-
     resp = requests.get(url=url, params=params)
 
     data = resp.json()
@@ -41,4 +35,27 @@ def ajax_search_request(request):
                     name=data['data']['movies'][i]['title'],
                     imdb_id=data['data']['movies'][i]['imdb_code'], )
 
+    return data
+
+
+def search(request):
+
+    context = {
+        'APP_PATH': settings.APP_PATH,
+        'data': api_request()
+    }
+    return render(request, 'search/search.html', context)
+
+
+def filmSearch(request, film_name=""):
+    context = {
+        'APP_PATH': settings.APP_PATH,
+        'data': api_request(film_name)
+    }
+
+    return render(request, 'search/search.html', context)
+
+
+def ajax_search_request(request):
+    data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'))
     return JsonResponse(data, safe=False)

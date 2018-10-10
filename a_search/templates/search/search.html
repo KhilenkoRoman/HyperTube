@@ -30,9 +30,33 @@
         <input id="head_search_input" type="text" placeholder="film">
         <button id="head_search_btn" type="submit">SEARCH</button>
     </form>
+    <select name="genre" form="search_form" id="genre_select">
+        <option value="">default</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+        <option value="Horror">Horror</option>
+        <option value="Romance">Romance</option>
+        <option value="Action">Action</option>
+        <option value="Thriller">Thriller</option>
+        <option value="Drama">Drama</option>
+        <option value="Crime">Crime</option>
+        <option value="Animation">Animation</option>
+        <option value="Adventure">Adventure</option>
+        <option value="Fantasy">Fantasy</option>
+    </select>
     <div class="results-wrap">
         <ul class="result">
-            <li class="results-item-wrap">Тhere must be films</li>
+            {% if data.data.movie_count > 0 %}
+                {% for movie in data.data.movies %}
+                    <li class="results-item-wrap"> <a href=""> <div> <img src="{{ movie.medium_cover_image }}" class="poster"></div><p>{{ movie.title_english }}</p><p>
+                        {% for genre in movie.genres %}
+                            {{ genre }}
+                        {% endfor %}
+                </p></a></th>
+                {% endfor %}
+            {% else %}
+                 <li class="results-item-wrap">Тhere must be films</li>
+            {% endif %}
         </ul>
     </div>
 </div>
