@@ -17,7 +17,7 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
         quality=quality,
         genre=genre,
         sort_by=sort_by,
-        with_rt_rating=1,
+        with_rt_ratings=1,
     )
     resp = requests.get(url=url, params=params)
 

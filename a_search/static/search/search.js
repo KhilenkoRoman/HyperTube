@@ -61,9 +61,6 @@ $('#search_form').on('submit', function(e) {
     curLoc = search_field.value + "?genere=" + genre_select.value;
     page = 1;
     search(page, search_field, genre_select.value);
-    if(curLoc == "")
-       window.history.pushState("", "Search", "/search/film/");
-    else
-        window.history.pushState("", "Search", curLoc);
+    window.history.pushState("", "Search", "/search/film/" + curLoc);
     page++;
 });
