@@ -9,6 +9,9 @@ from django.contrib.auth import logout
 import re
 import os
 from django.conf import settings
+from PIL import Image
+
+from PIL import ImageFilter
 
 
 def user_profile(request):
@@ -116,7 +119,7 @@ def ajax_change_avatar(request):
 
 	try:
 		w, h = get_image_dimensions(avatar)
-		if w > 1000 or h > 1000:
+		if w > 1000 or h > 1000 or w < 200 or h < 200:
 			return HttpResponse("img_size_error")
 		main, sub = avatar.content_type.split('/')
 		if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
@@ -129,12 +132,27 @@ def ajax_change_avatar(request):
 		os.remove(path)
 	current_user.avatar = avatar
 	current_user.save()
+
+	if w == h:
+		return HttpResponse(current_user.avatar.url)
+
+	saved_path = settings.PROJECT_PATH + current_user.avatar.url
+	im = Image.open(saved_path)
+	if w > h:
+		y1 = 0
+		y2 = h
+		x1 = (w - h) / 2
+		x2 = (w + h) / 2
+	else:
+		x1 = 0
+		x2 = w
+		y1 = (h - w) / 2
+		y2 = (h + w) / 2
+	im.crop((x1, y1, x2, y2)).save(saved_path)
+
 	return HttpResponse(current_user.avatar.url)
 
 
 def logout_myself(request):
 	logout(request)
 	return redirect('index')
-
-
-

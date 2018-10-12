@@ -20,6 +20,10 @@ footer {
 
 }
 
+.none{
+	display: none !important;
+}
+
 .main{
   /*position: absolute;*/
   width: 100%;

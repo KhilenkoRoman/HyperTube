@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static "player/styles.css" %}" />
 {% endblock %}
 {% block script %}
-<script src="{% static "search/search.js" %}"></script>
+<script src="{% static "player/player.js" %}"></script>
 {% endblock %}
 
 {% block main %}
@@ -33,32 +33,19 @@
 
 <div class="info_wrap">
     <div class="comments_wrap">
-        <form class="leave_comment">
+        <form class="leave_comment" onsubmit=add_comment()>
             <img src="{% static "user/default_photo.png" %}">
             <textarea id="comment_text"></textarea>
-            <button>add comment</button>
+            <button type="submit">add comment</button>
         </form>
         <ul class="comments">
+            {% for comment in comments %}
             <li class="comment">
-                <img src="{% static "user/default_photo.png" %}">
-                <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>qweqwe</div>
-                <p>comment text</p>
+            <img class="comment_avatar" src="/media/{{ comment.user.avatar }}">
+            <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>{{ comment.user.first_name }} {{ comment.user.last_name }}</div>
+            <p>{{ comment.text }}</p>
             </li>
-            <li class="comment">
-                <img src="{% static "user/default_photo.png" %}">
-                <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>qweqwe</div>
-                <p>comment text</p>
-            </li>
-            <li class="comment">
-                <img src="{% static "user/default_photo.png" %}">
-                <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>qweqwe</div>
-                <p>comment text</p>
-            </li>
-            <li class="comment">
-                <img src="{% static "user/default_photo.png" %}">
-                <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>qweqwe</div>
-                <p>comment text</p>
-            </li>
+            {% endfor %}
         </ul>
     </div>
     <div class="film_info">
@@ -101,7 +88,7 @@
 
 </div>
 </div>
-
+<div class="none" id="imdb_id">{{ film_id }}</div>
 
 
 {% endblock %}
