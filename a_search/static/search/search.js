@@ -5,7 +5,7 @@ var predoh = 0;
 var curLoc = location.href;
 var box = document.body.getBoundingClientRect();
 
-function search(page, search_field, genre){
+function search(page, search_field, genre, sort_by){
 
     $.ajax({
     	type:"POST",
@@ -14,6 +14,7 @@ function search(page, search_field, genre){
     		search_field: search_field.value,
 			page:page,
 			genre:genre,
+			sort_by:sort_by,
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
@@ -56,11 +57,13 @@ window.onscroll = function() {
 $('#search_form').on('submit', function(e) {
     event.preventDefault();
     curLoc = "";
+
     const search_field = document.getElementById('head_search_input');
     const genre_select = document.getElementById('genre_select');
-    curLoc = search_field.value + "?genere=" + genre_select.value;
+    const sort_by_select = document.getElementById('sort_by_select');
+    curLoc = search_field.value + "?genere=" + genre_select.value + "&sort_by=" + sort_by_select.value;
     page = 1;
-    search(page, search_field, genre_select.value);
+    search(page, search_field, genre_select.value, sort_by_select.value);
     window.history.pushState("", "Search", "/search/film/" + curLoc);
     page++;
 });

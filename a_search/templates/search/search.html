@@ -31,7 +31,7 @@
         <button id="head_search_btn" type="submit">SEARCH</button>
     </form>
     <select name="genre" form="search_form" id="genre_select">
-        <option value="">default</option>
+        <option value="All">Default</option>
         <option value="Comedy">Comedy</option>
         <option value="Sci-Fi">Sci-Fi</option>
         <option value="Horror">Horror</option>
@@ -43,6 +43,17 @@
         <option value="Animation">Animation</option>
         <option value="Adventure">Adventure</option>
         <option value="Fantasy">Fantasy</option>
+    </select>
+    <select name="sort_by" form="search_form" id="sort_by_select">
+        <option value="Rating">Default</option>
+        <option value="title">Title</option>
+        <option value="year">Year</option>
+        <option value="rating">Rating</option>
+        <option value="peers">Peers</option>
+        <option value="seeds">Seeds</option>
+        <option value="download_count">Download count</option>
+        <option value="like_count">Like count</option>
+        <option value="date_added">Date added</option>
     </select>
     <div class="results-wrap">
         <ul class="result">
