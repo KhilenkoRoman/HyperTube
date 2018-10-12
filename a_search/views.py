@@ -18,7 +18,11 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
         with_rt_ratings=1,
     )
     resp = requests.get(url=url, params=params)
-    data = resp.json()
+
+    try:
+        data = resp.json()
+    except:
+        return 0
     movie_count = len(data['data']['movies'])
     if movie_count > 0:
         for i in range(movie_count):
@@ -27,19 +31,6 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
                     name=data['data']['movies'][i]['title'],
                     imdb_id=data['data']['movies'][i]['imdb_code'], )
     return data
-
-
-def search(request):
-    data = api_request()
-    context = {'APP_PATH': settings.APP_PATH,
-               'data': data}
-    return render(request, 'search/search.html', context)
-
-
-def ajax_search_request(request):
-    if request.method != 'POST':
-        return JsonResponse(['error'], safe=False)
-
 
 def search(request):
     context = {
@@ -52,13 +43,11 @@ def search(request):
 def filmSearch(request, film_name=""):
     context = {
         'APP_PATH': settings.APP_PATH,
-        'data': api_request(film_name)
+        'data': api_request(film_name, 30, request.GET.get('page'), "All", request.GET.get('genre'), request.GET.get('sort_by'))
     }
-
     return render(request, 'search/search.html', context)
 
 
 def ajax_search_request(request):
-    data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'),
-                       request.POST.get('sort_by'))
+    data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'), request.POST.get('sort_by'))
     return JsonResponse(data, safe=False)
