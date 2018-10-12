@@ -3,27 +3,9 @@ from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 import requests
 from a_player.models import FilmModel, CommentModel
-import urllib
-import json
 
 
-# from urllib import parse
-
-
-def search(request):
-    context = {'APP_PATH': settings.APP_PATH}
-    return render(request, 'search/search.html', context)
-
-
-# from urllib import parse
-
-
-def ajax_search_request(request):
-    if request.method != 'POST':
-        return JsonResponse(['error'], safe=False)
-
-
-def api_request(query_term="0", limit=30, page=1, quality="All", genre="All", sort_by="rating", order_by="desc"):
+def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_by="rating", order_by="desc"):
     url = "https://yts.am/api/v2/list_movies.json"
     params = dict(
         query_term=query_term,
@@ -36,26 +18,27 @@ def api_request(query_term="0", limit=30, page=1, quality="All", genre="All", so
         with_rt_ratings=1,
     )
     resp = requests.get(url=url, params=params)
-    print(resp)
     data = resp.json()
-    print(data)
-    print("++++++++++++++++++++++++++++++++")
-    # save films in db
-    # print(data)
-
-    if data['data']['movie_count'] > 0:
-        if data['data']['movie_count'] > data['data']['limit']:
-            counter = data['data']['limit']
-        else:
-            counter = data['data']['movie_count']
-        print(counter)
-
-        for i in range(counter):
+    movie_count = len(data['data']['movies'])
+    if movie_count > 0:
+        for i in range(movie_count):
             if len(FilmModel.objects.filter(imdb_id=data['data']['movies'][i]['imdb_code'])) == 0:
                 FilmModel.objects.create(
                     name=data['data']['movies'][i]['title'],
                     imdb_id=data['data']['movies'][i]['imdb_code'], )
     return data
+
+
+def search(request):
+    data = api_request()
+    context = {'APP_PATH': settings.APP_PATH,
+               'data': data}
+    return render(request, 'search/search.html', context)
+
+
+def ajax_search_request(request):
+    if request.method != 'POST':
+        return JsonResponse(['error'], safe=False)
 
 
 def search(request):
