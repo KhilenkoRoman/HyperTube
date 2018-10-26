@@ -14,7 +14,6 @@ from datetime import datetime
 from datetime import timedelta
 
 
-
 def html_escape(text):
     html_escape_table = {
         "&": "&amp;",

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 import requests
+import json
 from a_player.models import FilmModel, CommentModel
 
 
@@ -29,7 +30,11 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
             if len(FilmModel.objects.filter(imdb_id=data['data']['movies'][i]['imdb_code'])) == 0:
                 FilmModel.objects.create(
                     name=data['data']['movies'][i]['title'],
-                    imdb_id=data['data']['movies'][i]['imdb_code'], )
+                    imdb_id=data['data']['movies'][i]['imdb_code'],
+                    film_id=data['data']['movies'][i]['id'],
+                    data=json.dumps(data['data']['movies'][i]))
+
+    # print(data['data']['movies'][3])
     return data
 
 def search(request):
