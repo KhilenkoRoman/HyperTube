@@ -9,9 +9,11 @@ from a_player.models import FilmModel, CommentModel, TorrentModel
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, render_to_response, redirect
 from django.core.files.temp import NamedTemporaryFile
+from a_player.torrent_handler import add_torrent, torrent_info
 
 
 # https://localhost:8000/player/3175
+# https://localhost:8000/player/7893
 
 def player(request, film_id):
     film = FilmModel.objects.filter(film_id=film_id)
@@ -42,6 +44,8 @@ def player(request, film_id):
         torrent.file_name = fname
         torrent.save()
 
+    add_torrent(torrent)
+
     context = {'film_id': film_id,
                'comments': comments,
                'title': data['title'],
@@ -68,3 +72,8 @@ def ajax_comment(request):
         date=timezone.now()
     )
     return HttpResponse("sucsess")
+
+
+def test(request):
+    torrent_info()
+    return HttpResponse("qweqwe")

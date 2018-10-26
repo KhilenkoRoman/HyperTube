@@ -16,6 +16,7 @@ class FilmModel(models.Model):
 def torrent_path(instance, filename):
     return 'torrent_files/{0}'.format(filename)
 
+
 class TorrentModel(models.Model):
     quality_choises = (
         (0, '720p'),

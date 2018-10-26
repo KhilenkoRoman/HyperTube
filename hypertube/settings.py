@@ -174,7 +174,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'a_player/static/'),
 ]
 
-
+TORRENT_SESION = None
+TORRENTS = []
 # load https server
 # runserver_plus localhost:8000 --cert-file /tmp/cer
 
