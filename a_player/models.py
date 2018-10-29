@@ -8,6 +8,7 @@ class FilmModel(models.Model):
     film_id = models.CharField(max_length=32, unique=True)
     imdb_id = models.CharField(max_length=32, unique=True)
     data = models.TextField()
+    cover = models.ImageField(upload_to="covers", blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -25,7 +26,7 @@ class TorrentModel(models.Model):
     file_name = models.CharField(max_length=200, null=True)
     film = models.ForeignKey(FilmModel, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
-    torrent_file = models.FileField(upload_to=torrent_path, blank=True, null=True, )
+    torrent_file = models.FileField(upload_to=torrent_path, blank=True, null=True)
     quality = models.DecimalField(max_digits=1, decimal_places=0, choices=quality_choises)
 
     def __str__(self):

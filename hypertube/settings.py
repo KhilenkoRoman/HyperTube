@@ -176,6 +176,9 @@ STATICFILES_DIRS = [
 
 TORRENT_SESION = None
 TORRENTS = []
+SCRAPER_SESION = None
+
+TMD_API_KEY = "eea706492c53f7f2c1f750564baee937"
 # load https server
 # runserver_plus localhost:8000 --cert-file /tmp/cer
 
