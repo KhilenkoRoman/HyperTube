@@ -15,8 +15,13 @@ footer {
 
     display: flex;
 	flex-direction: row;
-	justify-content: flex-end;
+	justify-content: space-between;
+	align-items: center;
 
+}
+
+.none{
+	display: none !important;
 }
 
 .main{
@@ -30,6 +35,15 @@ footer {
 	background: -webkit-linear-gradient(-45deg,  #cfd8dc 0%,#607d8b 100%,#b0bec5 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(135deg,  #cfd8dc 0%,#607d8b 100%,#b0bec5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfd8dc', endColorstr='#b0bec5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+button:active,
+button:focus,
+button.active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 #header-scroll {
@@ -70,8 +84,12 @@ footer {
 	align-items: center;
 }
 #sub_header p{
+	color: #4e4e4e;
 	margin-right: 10px;
 	font-size: 24px;
+	max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 	-ms-transition:    all 0.3s ease-out;
     -moz-transition:    all 0.3s ease-out;
     -webkit-transition: all 0.3s ease-out;
@@ -107,7 +125,7 @@ footer {
 }
 #sub_header.small a{
 	margin-right: 20px;
-	font-size: 14px;
+	font-size: 17px;
 }
 
 
@@ -119,7 +137,7 @@ footer {
   /*position: absolute;*/
   width: 100%;
   /*height: 100%;*/
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 85px);
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cfd8dc+0,607d8b+100,b0bec5+100 */
 background: #cfd8dc; /* Old browsers */
 background: -moz-linear-gradient(-45deg,  #cfd8dc 0%, #607d8b 100%, #b0bec5 100%); /* FF3.6-15 */
@@ -838,6 +856,7 @@ textarea:focus, input:focus{
     border: none;
     color: #757575;
     margin-bottom: 3px;
+	display: inline;
 }
 
 #head_search_btn{
@@ -853,3 +872,50 @@ textarea:focus, input:focus{
     margin-top: 10px;
     cursor: pointer;
 }
+
+#head_logout_btn.small {
+    background-color: #cc15032e;
+    border: none;
+	margin-right: 40px;
+    width: 30px;
+	padding: 0px 0px 0px 2px;
+	border-radius: 3px;
+    box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
+    color: #849ba5;
+	margin-top: 0px;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 30px;
+}
+
+#head_logout_btn{
+    background-color: #cc1503ab;
+    border: none;
+    padding: 3px;
+    width: 40px;
+    border-radius: 3px;
+    box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
+    color: #a1daf3;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#head_logout_btn a{
+	text-decoration: none;
+}
+
+.lang_wrap{
+	margin-left: 30px;
+}
+
+.flags{
+	cursor: default;
+	max-height: 30px;
+	margin-left: 10px;
+}
+
+.inactive_flag{
+	cursor: pointer;
+	opacity: 0.2;
+}
+

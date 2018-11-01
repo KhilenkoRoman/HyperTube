@@ -60,11 +60,12 @@ INSTALLED_APPS = [
     'a_user',
     'a_index',
     'a_search',
+    'a_player',
 
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/user/'
 # SOCIALACCOUNT_AUTO_SIGNUP = False
 SOCIALACCOUNT_ADAPTER = 'a_user.socialaccount_adapter.MySocialAccountAdapter'
 SOCIALACCOUNT_QUERY_EMAIL = True
@@ -160,13 +161,26 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'a_index/static/'),
     os.path.join(BASE_DIR, 'a_user/static/'),
     os.path.join(BASE_DIR, 'a_search/static/'),
+    os.path.join(BASE_DIR, 'a_player/static/'),
 ]
 
+TORRENT_SESION = None
+TORRENTS = []
+SCRAPER_SESION = None
+
+TMD_API_KEY = "eea706492c53f7f2c1f750564baee937"
 # load https server
 # runserver_plus localhost:8000 --cert-file /tmp/cer
+
+# install libtorrent on mac
+# brew install boost --build-from-source --with-python --universal

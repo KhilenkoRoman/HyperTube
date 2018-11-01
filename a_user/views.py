@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 from allauth.socialaccount.models import SocialAccount
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth import update_session_auth_hash
 from a_index.views import html_escape
 from django.core.files.images import get_image_dimensions
+from a_user.models import CustomUserModel
+from django.contrib.auth import logout
 import re
 import os
 from django.conf import settings
+from PIL import Image
+
+from PIL import ImageFilter
 
 
 def user_profile(request):
@@ -23,12 +28,20 @@ def user_profile(request):
 	request.session['last_social_connect'] = None
 
 	context = {'profile_user': user,
-	           'active_providers': active_providers,
-	           'last_social_connect': last_social_connect,
-	           }
+			   'active_providers': active_providers,
+			   'last_social_connect': last_social_connect,
+			   }
 	print(user.avatar)
 
 	return render(request, 'user/user.html', context)
+
+
+def another_user_profile(request, user):
+	user = CustomUserModel.objects.filter(username=user)
+	if len(user) == 0:
+		return redirect('index')
+	context = {'profile_user': user[0]}
+	return render(request, 'user/another_user.html', context)
 
 
 def social_activated(request, provider):
@@ -72,7 +85,7 @@ def ajax_user_change_info(request):
 		errors.append("error_email")
 	elif not re.match("^[a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", email):
 		errors.append("error_email")
-	elif current_user.email != email and User.objects.filter(email=email):
+	elif current_user.email != email and CustomUserModel.objects.filter(email=email):
 		errors.append("error_email")
 	else:
 		current_user.email = email
@@ -104,10 +117,9 @@ def ajax_change_avatar(request):
 	if not avatar:
 		return HttpResponse("error")
 
-	print(type(avatar))
 	try:
 		w, h = get_image_dimensions(avatar)
-		if w > 1000 or h > 1000:
+		if w > 1000 or h > 1000 or w < 200 or h < 200:
 			return HttpResponse("img_size_error")
 		main, sub = avatar.content_type.split('/')
 		if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
@@ -120,4 +132,27 @@ def ajax_change_avatar(request):
 		os.remove(path)
 	current_user.avatar = avatar
 	current_user.save()
+
+	if w == h:
+		return HttpResponse(current_user.avatar.url)
+
+	saved_path = settings.PROJECT_PATH + current_user.avatar.url
+	im = Image.open(saved_path)
+	if w > h:
+		y1 = 0
+		y2 = h
+		x1 = (w - h) / 2
+		x2 = (w + h) / 2
+	else:
+		x1 = 0
+		x2 = w
+		y1 = (h - w) / 2
+		y2 = (h + w) / 2
+	im.crop((x1, y1, x2, y2)).save(saved_path)
+
 	return HttpResponse(current_user.avatar.url)
+
+
+def logout_myself(request):
+	logout(request)
+	return redirect('index')

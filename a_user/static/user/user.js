@@ -5,10 +5,13 @@ $(window).scroll(function () {
     if (sc > 100) {
         $("#header-scroll").addClass("small");
         $("#sub_header").addClass("small");
+        $("#head_logout_btn").addClass("small");
+
     }
     else {
         $("#header-scroll").removeClass("small");
-        $("#sub_header").removeClass("small")
+        $("#sub_header").removeClass("small");
+        $("#head_logout_btn").removeClass("small");
     }
 });
 
@@ -71,7 +74,7 @@ function usr_pwd_change(){
 
     $.ajax({
     	type:"POST",
-    	url: '/a_user/ajax_user_change_pwd',
+    	url: '/user/ajax_user_change_pwd',
 		data: {pwd1: pwd1.value,
 			pwd2: pwd2.value,
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
@@ -114,7 +117,7 @@ function usr_info_change(){
 
     $.ajax({
     	type:"POST",
-    	url: '/a_user/ajax_user_change_info',
+    	url: '/user/ajax_user_change_info',
 		data: {first_name: first_name.value,
 			last_name: last_name.value,
             email: email.value,
@@ -204,7 +207,7 @@ $("#image_to_upload").on("change", function() {
 
         input.disabled = true;
         $.ajax({
-            url: "/a_user/ajax_change_avatar",
+            url: "/user/ajax_change_avatar",
             type: "POST",
             data: formdata,
             processData: false,
