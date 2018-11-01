@@ -11,21 +11,19 @@ import re
 
 
 def save_cover(film, cover_url):
-    print(type(film))
-    print(cover_url)
-    print("-----")
-    print(re.search('/(?:.(?!/))+$', cover_url).group(0))
+    if not settings.SCRAPER_SESION:
+        settings.SCRAPER_SESION = cfscrape.create_scraper()
 
-    # if not settings.SCRAPER_SESION:
-    #     settings.SCRAPER_SESION = cfscrape.create_scraper()
-    #
-    # r = settings.SCRAPER_SESION.get(cover_url)
-    # temp_file = NamedTemporaryFile(delete=True)
-    # temp_file.write(r.content)
-    # temp_file.flush()
-    # fname = str(film.name) + str(re.search('/.+$', cover_url))
-    # film.cover.save(fname, File(temp_file), save=True)
-    # film.save()
+    r = settings.SCRAPER_SESION.get(cover_url)
+    if r == 200:
+        temp_file = NamedTemporaryFile(delete=True)
+        temp_file.write(r.content)
+        temp_file.flush()
+
+        name = re.search('/(?:.(?!/))+$', cover_url).group(0)
+        fname = film.name + name.strip('/')
+        film.cover.save(fname, File(temp_file), save=True)
+        film.save()
 
 
 def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_by="rating", order_by="desc"):
@@ -44,6 +42,8 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
         settings.SCRAPER_SESION = cfscrape.create_scraper()
     resp = settings.SCRAPER_SESION.get(url=url, params=params)
     data = resp.json()
+
+    # save films to db
     movie_count = len(data['data']['movies'])
     if movie_count > 0:
         for i in range(movie_count):
@@ -54,7 +54,13 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
                     film_id=data['data']['movies'][i]['id'],
                     data=json.dumps(data['data']['movies'][i]))
                 save_cover(film, data['data']['movies'][i]['medium_cover_image'])
-    # print(data['data']['movies'][3])
+
+    # adding saved covers to response
+    for i in range(movie_count):
+        film = FilmModel.objects.get(imdb_id=data['data']['movies'][i]['imdb_code'])
+        data['data']['movies'][i]['upl_cover'] = str(film.cover)
+        print(data['data']['movies'][i]['upl_cover'])
+
     return data
 
 
@@ -62,19 +68,6 @@ def search(request):
     data = api_request()
     context = {'APP_PATH': settings.APP_PATH,
                'data': data}
-    return render(request, 'search/search.html', context)
-
-
-def ajax_search_request(request):
-    if request.method != 'POST':
-        return JsonResponse(['error'], safe=False)
-
-
-def search(request):
-    context = {
-        'APP_PATH': settings.APP_PATH,
-        'data': api_request()
-    }
     return render(request, 'search/search.html', context)
 
 
