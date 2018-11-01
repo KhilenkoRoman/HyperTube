@@ -10,6 +10,8 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, render_to_response, redirect
 from django.core.files.temp import NamedTemporaryFile
 from a_player.torrent_handler import add_torrent, torrent_info
+import cfscrape
+from django.conf import settings
 
 
 # https://localhost:8000/player/3175
@@ -75,5 +77,61 @@ def ajax_comment(request):
 
 
 def test(request):
-    torrent_info()
+    # query_term=""
+    # limit=30
+    # page=1
+    # quality="All"
+    # genre=""
+    # sort_by="rating"
+    # order_by="desc"
+    #
+    #
+    #
+    # url = "https://yts.am/api/v2/list_movies.json"
+    # params = dict(
+    #     query_term=query_term,
+    #     limit=limit,
+    #     page=page,
+    #     quality=quality,
+    #     genre=genre,
+    #     sort_by=sort_by,
+    #     order_by=order_by,
+    #     with_rt_ratings=1,
+    # )
+    #
+    # scraper = cfscrape.create_scraper()
+    # resp = scraper.get(url=url, params=params)
+    # data = resp.json()
+    # print(data)
+
+    # https: // localhost: 8000 / player / 3175
+
+    # imdb_id = 'tt0468569'
+    # url = 'https://api.themoviedb.org/3/find/{}?api_key={}&language=en-US&external_source=imdb_id'.format(imdb_id, settings.TMD_API_KEY)
+
+    url = 'https://api.themoviedb.org/3/movie/155/credits?api_key={}&language=ru'.format(settings.TMD_API_KEY)
+
+    print(requests.get(url).content)
+    # print(requests.get("https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8"))
+
+    # scraper = cfscrape.create_scraper()
+    # print(scraper.get("https://yts.am/api/v2/list_movies.json").content)
+
+    # r = requests.get('http://en.wikipedia.org/wiki/Monty_Python')
+    # print(requests.get('http://en.wikipedia.org/wiki/Monty_Python'))
+    # data = resp.json()
+    # print(data)
+    # movie_count = len(data['data']['movies'])
+    # if movie_count > 0:
+    #     for i in range(movie_count):
+    #         if len(FilmModel.objects.filter(imdb_id=data['data']['movies'][i]['imdb_code'])) == 0:
+    #             FilmModel.objects.create(
+    #                 name=data['data']['movies'][i]['title'],
+    #                 imdb_id=data['data']['movies'][i]['imdb_code'],
+    #                 film_id=data['data']['movies'][i]['id'],
+    #                 data=json.dumps(data['data']['movies'][i]))
+    #
+    # # print(data['data']['movies'][3])
+    # return data
+
     return HttpResponse("qweqwe")

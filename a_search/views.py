@@ -1,9 +1,29 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 import requests
 import json
 from a_player.models import FilmModel, CommentModel
+import cfscrape
+import re
+
+
+def save_cover(film, cover_url):
+    if not settings.SCRAPER_SESION:
+        settings.SCRAPER_SESION = cfscrape.create_scraper()
+
+    r = settings.SCRAPER_SESION.get(cover_url)
+    if r == 200:
+        temp_file = NamedTemporaryFile(delete=True)
+        temp_file.write(r.content)
+        temp_file.flush()
+
+        name = re.search('/(?:.(?!/))+$', cover_url).group(0)
+        fname = film.name + name.strip('/')
+        film.cover.save(fname, File(temp_file), save=True)
+        film.save()
 
 
 def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_by="rating", order_by="desc"):
@@ -18,24 +38,31 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
         order_by=order_by,
         with_rt_ratings=1,
     )
-    resp = requests.get(url=url, params=params)
+    if not settings.SCRAPER_SESION:
+        settings.SCRAPER_SESION = cfscrape.create_scraper()
+    resp = settings.SCRAPER_SESION.get(url=url, params=params)
+    data = resp.json()
 
-    try:
-        data = resp.json()
-    except:
-        return 0
+    # save films to db
     movie_count = len(data['data']['movies'])
     if movie_count > 0:
         for i in range(movie_count):
             if len(FilmModel.objects.filter(imdb_id=data['data']['movies'][i]['imdb_code'])) == 0:
-                FilmModel.objects.create(
+                film = FilmModel.objects.create(
                     name=data['data']['movies'][i]['title'],
                     imdb_id=data['data']['movies'][i]['imdb_code'],
                     film_id=data['data']['movies'][i]['id'],
                     data=json.dumps(data['data']['movies'][i]))
+                save_cover(film, data['data']['movies'][i]['medium_cover_image'])
 
-    # print(data['data']['movies'][3])
+    # adding saved covers to response
+    for i in range(movie_count):
+        film = FilmModel.objects.get(imdb_id=data['data']['movies'][i]['imdb_code'])
+        data['data']['movies'][i]['upl_cover'] = str(film.cover)
+        print(data['data']['movies'][i]['upl_cover'])
+
     return data
+
 
 def search(request):
     context = {
