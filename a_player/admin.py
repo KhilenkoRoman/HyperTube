@@ -3,6 +3,7 @@ from a_player.models import FilmModel, CommentModel, TorrentModel
 
 
 class FilmModelAdmin(admin.ModelAdmin):
+    search_fields = ['name']
     pass
 
 

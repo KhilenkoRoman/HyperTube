@@ -60,7 +60,11 @@
             {% if data.data.movie_count > 0 %}
                 {% for movie in data.data.movies %}
                     <li class="results-item-wrap">
-                        <a href=""> <div> <img src="{{ movie.medium_cover_image }}" class="poster"></div><p>{{ movie.title_english }}</p>
+                        {% if movie.upl_cover %}
+                            <a href=""> <div> <img src="/media/{{ movie.upl_cover }}" class="poster"></div><p>{{ movie.title_english }}</p>
+                        {% else %}
+                            <a href=""> <div> <img src="{% static "search/nocover.png" %}" class="poster"></div><p>{{ movie.title_english }}</p>
+                        {% endif %}
                         <p>
                         {% for genre in movie.genres %}
                             {{ genre }}
