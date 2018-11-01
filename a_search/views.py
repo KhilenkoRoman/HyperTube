@@ -65,22 +65,21 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
 
 
 def search(request):
-    data = api_request()
-    context = {'APP_PATH': settings.APP_PATH,
-               'data': data}
+    context = {
+        'APP_PATH': settings.APP_PATH,
+        'data': api_request()
+    }
     return render(request, 'search/search.html', context)
 
 
 def filmSearch(request, film_name=""):
     context = {
         'APP_PATH': settings.APP_PATH,
-        'data': api_request(film_name)
+        'data': api_request(film_name, 30, request.GET.get('page'), "All", request.GET.get('genre'), request.GET.get('sort_by'))
     }
-
     return render(request, 'search/search.html', context)
 
 
 def ajax_search_request(request):
-    data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'),
-                       request.POST.get('sort_by'))
+    data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'), request.POST.get('sort_by'))
     return JsonResponse(data, safe=False)

@@ -23,19 +23,15 @@ function search(page, search_field, genre, sort_by){
     		{
                   let i = 0;
                   if (page == 1) {
-                  		if (response['data']['movies'][i]['upl_cover'] != ""){
-							$(".result").html('<li class="results-item-wrap"> <a href=""> <div> <img src="/media/' + response['data']['movies'][i]['upl_cover'] + '" class="poster"></div><p>' + response['data']['movies'][i]['title_english'] + '</p><p>' + response['data']['movies'][i]['genres'] + '</p></a></th>');}
-						else {
-							$(".result").html('<li class="results-item-wrap"> <a href=""> <div> <img src="/static/search/nocover.png" class="poster"></div><p>' + response['data']['movies'][i]['title_english'] + '</p><p>' + response['data']['movies'][i]['genres'] + '</p></a></th>');}
+
+                      $(".result").html('<li class="results-item-wrap"> <a href=""> <div> <img src="/media/' + response['data']['movies'][i]['upl_cover'] + '" class="poster"></div><div class="results-item-title">' + response['data']['movies'][i]['title_english'] + '</div><span class="results-item-rating"><i class="far fa-star"></i>' + response['data']['movies'][i]['rating'] + '</span> <span class="results-item-year">' + response['data']['movies'][i]['year'] + ' </span></a>');
                       i++;
                   }
                   while(i < response['data']['movie_count'] && i < response['data']['limit'])
 				  {
-				  	if (response['data']['movies'][i]['upl_cover'] != ""){
-							$(".result").html('<li class="results-item-wrap"> <a href=""> <div> <img src="/media/' + response['data']['movies'][i]['upl_cover'] + '" class="poster"></div><p>' + response['data']['movies'][i]['title_english'] + '</p><p>' + response['data']['movies'][i]['genres'] + '</p></a></th>');}
-						else {
-							$(".result").html('<li class="results-item-wrap"> <a href=""> <div> <img src="/static/search/nocover.png" class="poster"></div><p>' + response['data']['movies'][i]['title_english'] + '</p><p>' + response['data']['movies'][i]['genres'] + '</p></a></th>');}
-				  i++;
+
+				  	$( ".result").html($( ".result").html() + '<li class="results-item-wrap"> <a href=""> <div> <img src="/media/' + response['data']['movies'][i]['upl_cover'] + '" class="poster"></div><div class="results-item-title">' + response['data']['movies'][i]['title_english'] + '</div><span class="results-item-rating"><i class="far fa-star"></i>' + response['data']['movies'][i]['rating'] + '</span> <span class="results-item-year">' + response['data']['movies'][i]['year'] + ' </span></a>');
+				  	i++;
 				  }
     		}else{
     			$(".result").html('<li>The search has not given any results\n</li>');
