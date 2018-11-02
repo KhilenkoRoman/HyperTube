@@ -1,6 +1,6 @@
 {% extends 'index/base.html' %}
 {% load static %}
-{% block title %}{{ title }}{% endblock %}
+{% block title %}{{ film.name }}{% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{% static "search/styles.css" %}" />
     <link rel="stylesheet" href="{% static "player/styles.css" %}" />
@@ -24,12 +24,17 @@
 <div class="b-popup invisible"></div>
 {#popup end#}
 
-
 <div id="main_player">
 
 <video controls id="player">
-    <source src="/media/video/trailer.mp4" type='video/mp4'>
+{#    <source src="/media/video/trailer.mp4" type='video/mp4'>#}
+{#    <source src="/media/video/The Mountain II_720p/The.Mountain.II.2016.720p.WEBRip.x264-[YTS.AM].mp4" type='video/mp4'>#}
+
 </video>
+
+<div id="torrent_info">
+    <p></p>
+</div>
 
 <div class="info_wrap">
     <div class="comments_wrap">
@@ -88,7 +93,10 @@
 
 </div>
 </div>
-<div class="none" id="imdb_id">{{ film_id }}</div>
+<div class="none" id="film_id">{{ film.film_id }}</div>
+<div class="none" id="imdb_id">{{ film.imdb_id }}</div>
+<div class="none" id="torrent_downloaded">{{ torrent.downloaded }}</div>
+<div class="none" id="quality">{{ torrent.quality }}</div>
 
 
 {% endblock %}

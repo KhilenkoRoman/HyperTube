@@ -59,7 +59,6 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
     for i in range(movie_count):
         film = FilmModel.objects.get(imdb_id=data['data']['movies'][i]['imdb_code'])
         data['data']['movies'][i]['upl_cover'] = str(film.cover)
-        print(data['data']['movies'][i]['upl_cover'])
 
     return data
 
@@ -81,5 +80,6 @@ def filmSearch(request, film_name=""):
 
 
 def ajax_search_request(request):
-    data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'), request.POST.get('sort_by'))
+    data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'),
+                       request.POST.get('sort_by'))
     return JsonResponse(data, safe=False)
