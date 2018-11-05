@@ -15,7 +15,8 @@ def save_cover(film, cover_url):
         settings.SCRAPER_SESION = cfscrape.create_scraper()
 
     r = settings.SCRAPER_SESION.get(cover_url)
-    if r == 200:
+    if r.status_code == 200:
+        print("qweqwe")
         temp_file = NamedTemporaryFile(delete=True)
         temp_file.write(r.content)
         temp_file.flush()

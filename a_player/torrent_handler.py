@@ -85,4 +85,11 @@ def torrent_status(film_id, quality):
     response['upload_rate'] = s.upload_rate
     response['num_peers'] = s.num_peers
     response['state'] = s.state
+
+    if settings.DEBUG:
+        alerts = settings.TORRENT_SESION.pop_alerts()
+        for a in alerts:
+            if a.category() & lt.alert.category_t.error_notification:
+                print(a)
+
     return response

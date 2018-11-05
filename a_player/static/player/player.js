@@ -19,6 +19,7 @@ function add_comment() {
 window.onload = function(){
 	const film_id = $("#film_id").html();
 	const quality = $("#quality").html();
+	let flag = false;
 	let video = document.getElementById('player');
 	let source = document.createElement('source');
 	let downloaded = 0;
@@ -37,7 +38,8 @@ window.onload = function(){
             	json_resp = JSON.parse(response);
             	console.log(json_resp);
 
-            	if (json_resp['film_file']){
+            	if (json_resp['film_file'] && flag==0){
+            		flag = true;
             		source.setAttribute('src', "/media" + json_resp['film_file']);
 					video.appendChild(source);
 					video.play();

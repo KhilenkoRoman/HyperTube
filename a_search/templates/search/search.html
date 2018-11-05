@@ -66,9 +66,9 @@
                 {% for movie in data.data.movies %}
                     <li class="results-item-wrap">
                         {% if movie.upl_cover %}
-                            <a href=""> <div> <img src="/media/{{ movie.upl_cover }}" class="poster"></div><p>{{ movie.title_english }}</p>
+                            <a href="/player/{{ movie.id }}"> <div> <img src="/media/{{ movie.upl_cover }}" class="poster"></div><p>{{ movie.title_english }}</p>
                         {% else %}
-                            <a href=""> <div> <img src="{% static "search/nocover.png" %}" class="poster"></div><p>{{ movie.title_english }}</p>
+                            <a href="/player/{{ movie.id }}"> <div> <img src="{% static "search/nocover.png" %}" class="poster"></div><p>{{ movie.title_english }}</p>
                         {% endif %}
                         <p>
                         {% for genre in movie.genres %}
