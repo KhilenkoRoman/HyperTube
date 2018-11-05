@@ -9,9 +9,10 @@ from a_player.models import FilmModel, CommentModel, TorrentModel
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, render_to_response, redirect
 from django.core.files.temp import NamedTemporaryFile
-from a_player.torrent_handler import add_torrent, torrent_info
+from a_player.torrent_handler import add_torrent, torrent_info, torrent_status
 import cfscrape
 from django.conf import settings
+import os
 
 
 # https://localhost:8000/player/3175
@@ -23,10 +24,9 @@ def player(request, film_id):
         return redirect('index')
     film = film[0]
     comments = CommentModel.objects.filter(film=film)
-    data = json.loads(film.data)
     quality = 0
 
-    # save torrent file
+    # get torrent
     if len(TorrentModel.objects.filter(film=film, quality=quality)) == 0:
         torrent = TorrentModel.objects.create(
             film=film,
@@ -35,8 +35,15 @@ def player(request, film_id):
     else:
         torrent = TorrentModel.objects.get(film=film, quality=quality)
 
+
+    # save torrent file
     if not torrent.torrent_file:
-        r = requests.get(data['torrents'][quality]['url'])
+        if not settings.SCRAPER_SESION:
+            settings.SCRAPER_SESION = cfscrape.create_scraper()
+        film_data = json.loads(film.data)
+        r = settings.SCRAPER_SESION.get(film_data['torrents'][quality]['url'])
+        if r.status_code != 200:
+            return HttpResponse("error " + str(r.status_code))
         temp_file = NamedTemporaryFile(delete=True)
         temp_file.write(r.content)
         temp_file.flush()
@@ -46,11 +53,14 @@ def player(request, film_id):
         torrent.file_name = fname
         torrent.save()
 
-    add_torrent(torrent)
+    # add torrent to torrent session
+    if not settings.TORRENTS.get(film.film_id):
+        add_torrent(torrent)
 
     context = {'film_id': film_id,
                'comments': comments,
-               'title': data['title'],
+               'film': film,
+               'torrent': torrent,
                }
     return render(request, 'player/player.html', context)
 
@@ -74,6 +84,47 @@ def ajax_comment(request):
         date=timezone.now()
     )
     return HttpResponse("sucsess")
+
+
+def ajax_torr_info(request):
+    if request.method != 'POST':
+        return HttpResponse("error1")
+
+    film_id = request.POST.get('film_id')
+    quality = request.POST.get('quality')
+
+    response = torrent_status(film_id, quality)
+    film = FilmModel.objects.get(film_id=film_id)
+    torrent = TorrentModel.objects.get(film=film, quality=quality)
+
+    if response.get("progress") > 0.2 and not torrent.film_file:
+        if torrent.quality == 0:
+            folder_name = "/video/" + torrent.film.name + "_720p"
+        else:
+            folder_name = "/video/" + torrent.film.name + "_1080p"
+
+        directry = os.listdir(settings.MEDIA_ROOT + folder_name)
+        size = 0
+        file_path = ""
+        for item in directry:
+            tmp_size = os.path.getsize(settings.MEDIA_ROOT + folder_name + "/" + item)
+            if tmp_size > size:
+                size = tmp_size
+                file_path = folder_name + "/" + item
+        torrent.film_file = file_path
+        torrent.save()
+
+    if torrent.film_file:
+        response["film_file"] = torrent.film_file
+    else:
+        response["film_file"] = ""
+
+    if response.get("progress") == 1:
+        torrent.downloaded = True
+        torrent.save()
+
+    return JsonResponse(json.dumps(response), safe=False)
+
 
 
 def test(request):
@@ -109,9 +160,18 @@ def test(request):
     # imdb_id = 'tt0468569'
     # url = 'https://api.themoviedb.org/3/find/{}?api_key={}&language=en-US&external_source=imdb_id'.format(imdb_id, settings.TMD_API_KEY)
 
-    url = 'https://api.themoviedb.org/3/movie/155/credits?api_key={}&language=ru'.format(settings.TMD_API_KEY)
+    # url = 'https://api.themoviedb.org/3/movie/155/credits?api_key={}&language=ru'.format(settings.TMD_API_KEY)
+    #
+    # print(requests.get(url).content)
 
-    print(requests.get(url).content)
+    print(settings.MEDIA_ROOT)
+    directry = os.listdir(settings.MEDIA_ROOT + "/video/The Mountain II_720p/")
+
+    for item in directry:
+        print(item)
+        print(os.path.getsize(settings.MEDIA_ROOT + "/video/The Mountain II_720p/" + item))
+    # print(torrent_status(7893, 0))
+    # print(torrent_status(789113, 1))
     # print(requests.get("https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8"))
 
     # scraper = cfscrape.create_scraper()

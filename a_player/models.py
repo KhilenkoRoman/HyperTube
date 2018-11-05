@@ -27,7 +27,9 @@ class TorrentModel(models.Model):
     film = models.ForeignKey(FilmModel, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
     torrent_file = models.FileField(upload_to=torrent_path, blank=True, null=True)
+    film_file = models.CharField(max_length=420, blank=True, null=True)
     quality = models.DecimalField(max_digits=1, decimal_places=0, choices=quality_choises)
+    downloaded = models.BooleanField(default=False)
 
     def __str__(self):
         return self.film.name
