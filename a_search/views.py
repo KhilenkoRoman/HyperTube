@@ -28,6 +28,7 @@ def save_cover(film, cover_url):
     # film.save()
 
 
+
 def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_by="rating", order_by="desc"):
     url = "https://yts.am/api/v2/list_movies.json"
     params = dict(
