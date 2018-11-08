@@ -23,13 +23,26 @@ function search(page, search_field, genre, sort_by){
     		{
                   let i = 0;
                   if (page == 1) {
-
-                      $(".result").html('' +
+						if (response['data']['movies'][i]['upl_cover']) {
+							$(".result").html('' +
+							  '<li class="results-item-wrap">' +
+									'<a href="">' +
+										'<div class="div_poster">' +
+											'<img src="/media/' + response['data']['movies'][i]['upl_cover'] + '" class="poster">' +
+										'</div>' +
+										'<div class="results-item-title">' + response['data']['movies'][i]['title_english'] + '</div>' +
+										'<span class="results-item-rating">' +
+											'<i class="far fa-star"></i>' + response['data']['movies'][i]['rating'] +
+										'</span>' +
+										'<span class="results-item-year">' + response['data']['movies'][i]['year'] + '</span>' +
+									'</a>' +
+							  '</li>');
+						}
+						else {
+							$(".result").html('' +
 						  '<li class="results-item-wrap">' +
 								'<a href="">' +
-									'<div class="div_poster">' +
-										'<img src="/media/' + response['data']['movies'][i]['upl_cover'] + '" class="poster">' +
-									'</div>' +
+									'<div class="div_poster no_poster"><div>' +
 									'<div class="results-item-title">' + response['data']['movies'][i]['title_english'] + '</div>' +
 									'<span class="results-item-rating">' +
 										'<i class="far fa-star"></i>' + response['data']['movies'][i]['rating'] +
@@ -37,12 +50,15 @@ function search(page, search_field, genre, sort_by){
 									'<span class="results-item-year">' + response['data']['movies'][i]['year'] + '</span>' +
 								'</a>' +
 						  '</li>');
+						}
+
+
                       i++;
                   }
                   while(i < response['data']['movie_count'] && i < response['data']['limit'])
 				  {
-
-				  	$( ".result").html($( ".result").html() +
+				  	if (response['data']['movies'][i]['upl_cover']) {
+				  		$( ".result").html($( ".result").html() +
 						'<li class="results-item-wrap">' +
 							'<a href="">' +
 								'<div class="div_poster">' +
@@ -55,6 +71,22 @@ function search(page, search_field, genre, sort_by){
 								'<span class="results-item-year">' + response['data']['movies'][i]['year'] + ' </span>' +
 							'</a>' +
 						'</li>');
+					}
+					else {
+						$( ".result").html($( ".result").html() +
+						'<li class="results-item-wrap">' +
+							'<a href="">' +
+								'<div class="div_poster no_poster"></div>' +
+								'<div class="results-item-title">' + response['data']['movies'][i]['title_english'] + '</div>' +
+								'<span class="results-item-rating">' +
+									'<i class="far fa-star"></i>' + response['data']['movies'][i]['rating'] +
+								'</span>' +
+								'<span class="results-item-year">' + response['data']['movies'][i]['year'] + ' </span>' +
+							'</a>' +
+						'</li>');
+					}
+
+
 				  	i++;
 				  }
     		}else{

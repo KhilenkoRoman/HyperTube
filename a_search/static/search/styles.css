@@ -161,9 +161,15 @@ ul {
 }
 
 .poster {
+    height: 100%;
+    width: 100%;
     overflow: hidden;
     -moz-transition:    all 0.3s ease-out;
     -webkit-transition: all 0.3s ease-out;
     -o-transition:      all 0.3s ease-out;
     transition:         all 0.3s ease-out;
+}
+
+.no_poster {
+    background: url("nocover.png") center no-repeat;
 }

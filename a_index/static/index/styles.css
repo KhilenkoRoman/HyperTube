@@ -174,7 +174,7 @@ button.active {
 	visibility: visible;
 	box-shadow: 1px 10px 30px -10px rgba(0,0,0,0.5);
 	height: 620px;
-	top:120px;
+	top:0;
 	left: 0;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
@@ -188,7 +188,7 @@ button.active {
 	visibility: visible;
 	box-shadow: 1px 10px 30px -10px rgba(0,0,0,0.5);
 	height: 620px;
-	top:120px;
+	top:0;
 	left:470px;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
@@ -984,10 +984,11 @@ textarea:focus, input:focus {
 
     .cont_forms {
         left: 0;
+		max-width: 100%;
     }
 
     .cont_forms_active_login, .cont_forms_active_sign_up {
-        top: 100px;
+        top: 0;
         left: 0;
         right: 0;
         max-width: 100%;
