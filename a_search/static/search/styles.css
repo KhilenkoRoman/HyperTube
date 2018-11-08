@@ -23,6 +23,7 @@ a {
     position: absolute;
     bottom: 0;
     right: 0;
+    padding: 0 10px 10px 0;
 }
 
 .search_row{
@@ -85,6 +86,7 @@ a {
     text-align: left;
     overflow: hidden;
     height: 36px;
+    padding: 10px 10px 0;
 }
 
 .results-item-rating {
@@ -92,6 +94,7 @@ a {
     color: #FFFF00;
     position: absolute;
     bottom: 0;
+    padding: 0 0 10px 10px;
 }
 
 .active {
@@ -121,13 +124,14 @@ a {
     overflow:hidden;
     text-align: justify;
     display: inline-block;
-    margin: 5px;
+    margin: 10px;
     box-sizing: border-box;
     position: relative;
 }
 
 .results-item-wrap {
-    height: 400px;
+    height: 420px;
+    box-shadow:0 0 30px 10px #607D8B;
 }
 
 .results-item-wrap:hover {
