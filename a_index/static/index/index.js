@@ -130,13 +130,13 @@ $(document).on('submit', '#login_forgot', function(e){
 
 	$.ajax({
     	type:"POST",
-    	url: '/ajax_search_request',
+    	url: '/ajax_reset',
 		data: {email: forgot_email.value,
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
     		if (response != "error"){
-    		    console.log(response);
+    		    // console.log(response);
                 $(".col_md_login").addClass("none");
                 $(".col_md_sign_up").addClass("none");
                 const col_md_recover = $(".col_md_recover");

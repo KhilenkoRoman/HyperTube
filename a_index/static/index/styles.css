@@ -749,14 +749,16 @@ textarea:focus, input:focus {
 
 #activation_text_box {
 	z-index: 1;
-	margin: 200px auto;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
     border-radius: 5px;
-	position: relative;
-	/*float: left;*/
+	position: absolute;
+	/*!*float: left;*!*/
 	width: 940px;
 	height: 280px;
 	overflow: hidden;
-	background-color: #fff;
+	/*background-color: #fff;*/
 	box-shadow: 1px 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
@@ -891,7 +893,7 @@ textarea:focus, input:focus {
 	position: absolute;
 	width: 100%;
 	height: 280px;
-	top: 200px;
+	/*top: 200px;*/
 	z-index: 1;
     display: flex;
     align-items: center;
@@ -900,12 +902,13 @@ textarea:focus, input:focus {
 .cont_back_info {
 	border-radius: 5px;
 	position: relative;
-	float: left;
+	/*float: left;*/
 	width: 940px;
 	height: 280px;
 	overflow: hidden;
 	background-color: #fff;
-	margin-top: 200px;
+	/*margin-top: 200px;*/
+	margin: 200px auto 0;
 	box-shadow: 1px 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
@@ -957,7 +960,7 @@ textarea:focus, input:focus {
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
-        top: 100px;
+        /*top: 200px;*/
         height: 530px;
         background: rgba(255,255,255, .1);
         border-radius: 0;
@@ -973,14 +976,10 @@ textarea:focus, input:focus {
         width: 90%;
     }
 
-    .col_md_recover .cont_ba_opcitiy{
-        display: none;
-    }
-
     .cont_back_info {
         width: 100%;
         height: 530px;
-        margin-top: 100px;
+        /*margin-top: 200px;*/
     }
 
     .cont_forms {
@@ -1000,6 +999,12 @@ textarea:focus, input:focus {
     }
 
     #activation_text_box {
-        max-width: 100%;
+        max-width: 90%;
+		height: 530px;
     }
+
+	#activation_text_box::after {
+		top: 300px;
+		height: 530px;
+	}
 }
