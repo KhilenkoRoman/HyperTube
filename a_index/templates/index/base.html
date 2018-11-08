@@ -26,9 +26,13 @@
             {% if user.is_authenticated %}
 
                 <div id="sub_header">
-
-                    <p>{{ user.first_name }}</p>
-                    <p>{{ user.last_name }}</p>
+{##}
+{#                    <p>{{ user.first_name }}</p>#}
+{#                    <p>{{ user.last_name }}</p>#}
+                    <div id="menu">
+                        <a href="/user/"><i class="fas fa-user-alt"></i>Profile</a>
+                        <a href="/search/"><i class="fas fa-search"></i>Search</a>
+                    </div>
 
                     <a id="head_logout_btn" href="/user/logout"><i class="fas fa-sign-out-alt"></i></a>
                 </div>

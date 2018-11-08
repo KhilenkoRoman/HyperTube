@@ -383,22 +383,22 @@ background text
     z-index: 2;
 }
 
-/*@-webkit-keyframes animar_fondo {*/
-    /*from {*/
-        /*-webkit-transform: scale(1) translate(0px);*/
-        /*-moz-transform: scale(1) translate(0px);*/
-        /*-ms-transform: scale(1) translate(0px);*/
-        /*-o-transform: scale(1) translate(0px);*/
-        /*transform: scale(1) translate(0px);*/
-    /*}*/
-    /*to {*/
-        /*-webkit-transform: scale(1.5) translate(50px);*/
-        /*-moz-transform: scale(1.5) translate(50px);*/
-        /*-ms-transform: scale(1.5) translate(50px);*/
-        /*-o-transform: scale(1.5) translate(50px);*/
-        /*transform: scale(1.5) translate(50px);*/
-    /*}*/
-/*}*/
+@-webkit-keyframes animar_fondo {
+    from {
+        -webkit-transform: scale(1) translate(0px);
+        -moz-transform: scale(1) translate(0px);
+        -ms-transform: scale(1) translate(0px);
+        -o-transform: scale(1) translate(0px);
+        transform: scale(1) translate(0px);
+    }
+    to {
+        -webkit-transform: scale(1.5) translate(50px);
+        -moz-transform: scale(1.5) translate(50px);
+        -ms-transform: scale(1.5) translate(50px);
+        -o-transform: scale(1.5) translate(50px);
+        transform: scale(1.5) translate(50px);
+    }
+}
 
 @-o-keyframes identifier {
     from {
@@ -907,6 +907,22 @@ textarea:focus, input:focus {
 	background-color: #fff;
 	margin-top: 200px;
 	box-shadow: 1px 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+#menu a{
+	color: black;
+	text-decoration: none;
+	font-family: Font Awesome\ 5 Free;
+	font-weight: 900;
+}
+
+#menu a i {
+	margin-right: 5px;
+}
+
+#menu a:hover{
+	/*color: black;*/
+	opacity: 0.5;
 }
 
 @media only screen and (max-width: 1000px) {
