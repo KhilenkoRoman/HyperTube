@@ -2,11 +2,17 @@
 {% load static %}
 {% block title %}{{ film.name }}{% endblock %}
 {% block styles %}
-<link rel="stylesheet" href="{% static "search/styles.css" %}" />
+
+
     <link rel="stylesheet" href="{% static "player/styles.css" %}" />
+    <link rel="stylesheet" href="{% static "player/video-js.css" %}" />
+    <link rel="stylesheet" href="{% static "search/styles.css" %}" />
 {% endblock %}
 {% block script %}
-<script src="{% static "player/player.js" %}"></script>
+{#    <script src="https://vjs.zencdn.net/7.2.4/video.js"></script>#}
+    <script src="{% static "player/videojs-resolution-switcher.js" %}"></script>
+    <script src="{% static "player/player.js" %}"></script>
+{#    <script src="videojs-resolution-switcher.js"></script>#}
 {% endblock %}
 
 {% block main %}
@@ -25,15 +31,25 @@
 {#popup end#}
 
 <div id="main_player">
+<div id="player_wrap">
+<video id="player" class="video-js" controls preload="auto" poster="{% static "player/iron_man.jpg" %}" data-setup="{}">
+    {% if torrent.downloaded %}
+{#        <source src="/media/{{ torrent.film_file }}" type='video/mp4'>#}
 
-<video controls id="player">
-{#    <source src="/media/video/trailer.mp4" type='video/mp4'>#}
-{#    <source src="/media/video/The Mountain II_720p/The.Mountain.II.2016.720p.WEBRip.x264-[YTS.AM].mp4" type='video/mp4'>#}
-
+        <source src="/media/{{ torrent.film_file }}?sd" type='video/mp4' label='SD' res='480' />
+        <source src="/media/{{ torrent.film_file }}?hd" type='video/mp4' label='HD' res='720'/>
+    {% endif %}
+    <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/eng/vtt' srclang='en' label='English' />
+    <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/spa/vtt' srclang='es' label='Spanish' />
 </video>
+</div>
 
 <div id="torrent_info">
-    <p></p>
+    {% if torrent.downloaded %}
+        <p>ready</p>
+    {% else %}
+        <p>starting download</p>
+    {% endif %}
 </div>
 
 <div class="info_wrap">
@@ -55,38 +71,25 @@
     </div>
     <div class="film_info">
         <ul class="info_list">
-            <li class="info_elem">
-                <p class="info_label">label</p>
-                <p class="info_body">asdasdasdasdasdasdasdasd</p>
-            </li>
-            <li class="info_elem">
-                <p class="info_label">label</p>
-                <p class="info_body">asdasdasdasdasdasdasdasd</p>
-            </li>
-            <li class="info_elem">
-                <p class="info_label">label</p>
-                <p class="info_body">asdasdasdasdasdasdasdasd</p>
-            </li>
-            <li class="info_elem">
-                <p class="info_label">label</p>
-                <p class="info_body">asdasdasdasdasdasdasdasd</p>
-            </li>
-            <li class="info_elem">
-                <p class="info_label">label</p>
-                <p class="info_body">asdasdasdasdasdasdasdasd</p>
-            </li>
-            <li class="info_elem">
-                <p class="info_label">label</p>
-                <p class="info_body">asdasdasdasdasdasdasdasd</p>
-            </li>
-            <li class="info_elem">
-                <p class="info_label">label</p>
-                <p class="info_body">asdasdasdasdasdasdasdasd</p>
-            </li>
-            <li class="info_elem">
-                <p class="info_label">label</p>
-                <p class="info_body">asdasdasdasdasdasdasdasd</p>
-            </li>
+            {% for actor in cast %}
+                {% if actor.cycle_tag == 0 %}
+                    <li class="info_elem">
+                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}">
+                    <div>
+                        <p class="info_label">{{ actor.name }}</p>
+                        <p class="info_body">as: {{ actor.character }}</p>
+                    </div>
+                    </li>
+                {% else %}
+                    <li class="info_elem">
+                    <div>
+                        <p class="info_label">{{ actor.name }}</p>
+                        <p class="info_body">as: {{ actor.character }}</p>
+                    </div>
+                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}">
+                    </li>
+                {% endif %}
+            {% endfor %}
         </ul>
     </div>
 </div>

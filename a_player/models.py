@@ -8,6 +8,7 @@ class FilmModel(models.Model):
     film_id = models.CharField(max_length=32, unique=True)
     imdb_id = models.CharField(max_length=32, unique=True)
     data = models.TextField()
+    cast = models.TextField(blank=True, null=True)
     cover = models.ImageField(upload_to="covers", blank=True, null=True)
 
     def __str__(self):
