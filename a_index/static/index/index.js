@@ -92,6 +92,15 @@ document.querySelector('.cont_form_forgot').style.display = "none";
 // });
 
 $(document).on('submit', '#login_form', function(e){
+
+	const login = document.getElementById('id_login');
+    const password = document.getElementById('id_password');
+    const login_btn = document.getElementById('login_button');
+
+    login_btn.disabled = true;
+    login.classList.remove('unvalid');
+    password.classList.remove('unvalid');
+
 	e.preventDefault();
 	$.ajax({
     	type:"POST",
@@ -101,7 +110,14 @@ $(document).on('submit', '#login_form', function(e){
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-        	window.location.replace("/user");
+    		login_btn.disabled = false;
+    		if (response.includes("error_login"))
+                login.classList.add('unvalid');
+            if (response.includes("error_password"))
+                password.classList.add('unvalid');
+            if (response.includes("success")){
+        		window.location.replace("/user");
+            }
     	}
 	});
 });

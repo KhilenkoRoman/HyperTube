@@ -99,7 +99,7 @@
                         <form id="login_form">
                             <input id="id_login" class="input_index" type="text" placeholder="Логин" />
                             <input id="id_password" class="input_index" type="password" placeholder="Пароль" />
-                            <button class="btn_login" type="submit">АВТОРИЗАЦИЯ</button>
+                            <button class="btn_login" id="login_button" type="submit">АВТОРИЗАЦИЯ</button>
                         </form>
                         <p onclick="actvate_forgot()">Неужели пароль забыли ?</p>
                     {% else %}
@@ -107,7 +107,7 @@
                         <form id="login_form">
                             <input id="id_login" class="input_index" type="text" placeholder="Login" />
                             <input id="id_password" class="input_index" type="password" placeholder="Password" />
-                            <button class="btn_login" type="submit">LOG IN</button>
+                            <button class="btn_login" id="login_button" type="submit">LOG IN</button>
                         </form>
                         <p onclick="actvate_forgot()">Forgot password</p>
                     {% endif %}
