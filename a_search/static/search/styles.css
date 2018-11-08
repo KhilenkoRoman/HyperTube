@@ -4,7 +4,6 @@ a {
 
 #main_search{
     border-radius: 5px;
-    /*background: #82535314;*/
     margin: 0 auto 20px;
 }
 
@@ -17,9 +16,13 @@ a {
 }
 
 .results-item-year {
-    margin-left: 100px;
     font-size: 1.1rem;
-    color: #2E9AFE;
+    /*color: #2E9AFE;*/
+    color: white;
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .search_row{
@@ -28,7 +31,7 @@ a {
     display: flex;
 }
 
-.search_item{
+.search_item {
     margin: 5px;
     width: 19%;
     height: 300px;
@@ -38,30 +41,18 @@ a {
     border-radius: 2px;
 }
 
-.search_item div{
+.search_item div {
     position: relative;
-
 }
 
-
-.search_item img{
+.search_item img {
     left: 50%;
     margin-left: -100%;
     position: relative;
 }
 
-.search_item p{
+.search_item p {
     position: relative;
-}
-
-.poster{
-    max-height: 400px;
-    /*transition: all 550ms cubic-bezier(0.03, 1.07, 0.4, 0.99);*/
-
-        -moz-transition:    all 0.3s ease-out;
-    -webkit-transition: all 0.3s ease-out;
-    -o-transition:      all 0.3s ease-out;
-    transition:         all 0.3s ease-out;
 }
 
 .search_item:hover .poster{
@@ -90,18 +81,24 @@ a {
 .results-item-title {
     font-size: 1.1rem;
     line-height: 1;
+    color: white;
+    text-align: left;
+    overflow: hidden;
+    height: 36px;
 }
 
 .results-item-rating {
     font-size: 1.1rem;
     color: #FFFF00;
+    position: absolute;
+    bottom: 0;
 }
 
-.active{
+.active {
     background-color: #2644da29;
     cursor: default;
 }
-.results{
+.results {
     list-style: none;
     margin: 0;
     padding: 0 16px;
@@ -126,21 +123,43 @@ a {
     display: inline-block;
     margin: 5px;
     box-sizing: border-box;
+    position: relative;
 }
+
+.results-item-wrap {
+    height: 400px;
+}
+
 .results-item-wrap:hover {
   -webkit-transform: scale(1.05);
   -ms-transform: scale(1.05);
   transform: scale(1.05);
 }
 
-
 .results-wrap {
     position: relative;
     padding: .8rem 0 60px;
 }
+
 div {
     display: block;
 }
-ul{
-	padding: 0px;
+
+ul {
+	padding: 0;
+}
+
+.div_poster {
+    display: flex;
+    height: 345px;
+    justify-content: center;
+    align-items: center;
+}
+
+.poster {
+    overflow: hidden;
+    -moz-transition:    all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition:      all 0.3s ease-out;
+    transition:         all 0.3s ease-out;
 }

@@ -12,115 +12,115 @@
 {% csrf_token %}
 <div class="main">
 {#popup#}
-<div class="b-container invisible">
-    <div class="b-popup-content">
-        <p id="popup_text">Text in Popup</p>
-        <button id="popup_ok">OK</button>
+    <div class="b-container invisible">
+        <div class="b-popup-content">
+            <p id="popup_text">Text in Popup</p>
+            <button id="popup_ok">OK</button>
+        </div>
     </div>
-</div>
-<div class="b-popup invisible"></div>
+    <div class="b-popup invisible"></div>
 {#popup end#}
 
-<div class="edit_tabs">
-    <div class="tabs">
+    <div class="edit_tabs">
+        <div class="tabs">
 
-    <input id="tab1" type="radio" name="tabs" {% if not last_social_connect %}checked{% endif %}>
-    <label for="tab1"><i class="fas fa-user-alt"></i> Profile</label>
+            <input id="tab1" type="radio" name="tabs" {% if not last_social_connect %}checked{% endif %}>
+            <label for="tab1"><i class="fas fa-user-alt"></i> Profile</label>
 
-    <input id="tab2" type="radio" name="tabs" {% if last_social_connect %}checked{% endif %}>
-    <label for="tab2"><i class="fas fa-lock"></i> Accounts</label>
+            <input id="tab2" type="radio" name="tabs" {% if last_social_connect %}checked{% endif %}>
+            <label for="tab2"><i class="fas fa-lock"></i> Accounts</label>
 
 
-    <section id="content1">
-    <div id="photo_section">
-        {% if profile_user.avatar %}
-            <img src="/media/{{ profile_user.avatar }}">
-        {% else %}
-            <img src="{% static "user/default_photo.png" %}">
-        {% endif %}
+            <section id="content1">
+                <div id="photo_section">
+                    {% if profile_user.avatar %}
+                        <img src="/media/{{ profile_user.avatar }}">
+                    {% else %}
+                        <img src="{% static "user/default_photo.png" %}">
+                    {% endif %}
 
-        <label for="image_to_upload" class="custom-file-upload" id="image_to_upload_label">
-        Upload
-        </label>
-        <input id="image_to_upload" type="file"/>
+                    <label for="image_to_upload" class="custom-file-upload" id="image_to_upload_label">
+                    Upload
+                    </label>
+                    <input id="image_to_upload" type="file"/>
 
-    </div>
-    <div id="info_section">
-        <form onsubmit="usr_info_change()">
-            <div id="names">
-                <div>
-                    <p>First Name</p>
-                    <input id="f_name" class="input_index" type="text" placeholder="fitst name" value="{{ profile_user.first_name }}" required>
                 </div>
-                <div>
-                    <p>Last Name</p>
-                    <input id="l_name" class="input_index" type="text" placeholder="last name" value="{{ profile_user.last_name }}" required>
+                <div id="info_section">
+                    <form onsubmit="usr_info_change()">
+                        <div id="names">
+                            <div>
+                                <p>First Name</p>
+                                <input id="f_name" class="input_index" type="text" placeholder="fitst name" value="{{ profile_user.first_name }}" required>
+                            </div>
+                            <div>
+                                <p>Last Name</p>
+                                <input id="l_name" class="input_index" type="text" placeholder="last name" value="{{ profile_user.last_name }}" required>
+                            </div>
+                        </div>
+                            <div id="email_in">
+                                <p>Email</p>
+                                <input id="email" class="input_index" type="email" placeholder="email" value="{{ profile_user.email }}" required>
+                            </div>
+                        <button id="change_info_btn">Save</button>
+                    </form>
                 </div>
-            </div>
-                <div id="email_in">
-                    <p>Email</p>
-                    <input id="email" class="input_index" type="email" placeholder="email" value="{{ profile_user.email }}" required>
-                </div>
-            <button id="change_info_btn">Save</button>
-        </form>
-    </div>
-    </section>
+            </section>
 
-    <section id="content2">
-        <div id="acc_section">
-        <form onsubmit="usr_pwd_change()">
-            <div id="pass">
-                <div>
-                    <p>Password</p>
-                    <input id="usr_pwd1" class="input_index" type="password" placeholder="new password" required>
+            <section id="content2">
+                <div id="acc_section">
+                    <form onsubmit="usr_pwd_change()">
+                        <div id="pass">
+                            <div>
+                                <p>Password</p>
+                                <input id="usr_pwd1" class="input_index" type="password" placeholder="new password" required>
+                            </div>
+                            <div>
+                                <p>Onse more</p>
+                                <input id="usr_pwd2" class="input_index" type="password" placeholder="repeat password" required>
+                            </div>
+                        </div>
+                        <button id="usr_pwd_btn">Save</button>
+                    </form>
                 </div>
-                <div>
-                    <p>Onse more</p>
-                    <input id="usr_pwd2" class="input_index" type="password" placeholder="repeat password" required>
+
+                <div id="social_section">
+                    <p>Connect social accounts</p>
+                    <table>
+                        <tr>
+                            {% if "provider42" in active_providers %}
+                            <td><a  class="social_section_button active" disabled><img src="{% static "index/42_logo.png" %}" id="logo_42">Intra 42</a></td>
+                            {% else %}
+                            <td><a href="{% provider_login_url "provider42" process="connect" %}" class="social_section_button"><img src="{% static "index/42_logo.png" %}" id="logo_42">Intra 42</a></td>
+                            {% endif %}
+
+                            {% if "google" in active_providers %}
+                            <td><a class="social_section_button active" disabled><i class="fab fa-google-plus-g"></i>Google</a></td>
+                            {% else %}
+                            <td><a href="{% provider_login_url "google" process="connect" %}" class="social_section_button"><i class="fab fa-google-plus-g"></i>Google</a></td>
+                            {% endif %}
+
+                        </tr>
+                        <tr>
+                            {% if "facebook" in active_providers %}
+                            <td><a class="social_section_button active" disabled><i class="fab fa-facebook-f"></i>Facebook</a></td>
+                            {% else %}
+                            <td><a href="{% provider_login_url "facebook" process="connect" %}" class="social_section_button"><i class="fab fa-facebook-f"></i>Facebook</a></td>
+                            {% endif %}
+
+            {#                <td><a class="social_section_button"><i class="fab fa-github"></i>GitHub</a></td>#}
+                        </tr>
+                    </table>
                 </div>
-            </div>
-            <button id="usr_pwd_btn">Save</button>
-        </form>
+
+            </section>
+
+
+        </div>
+        <div class="background">
+            <img src="{% static "user/user_back.jpg" %}">
         </div>
 
-        <div id="social_section">
-            <p>Connect social accounts</p>
-            <table>
-            <tr>
-                {% if "provider42" in active_providers %}
-                <td><a  class="social_section_button active" disabled><img src="{% static "index/42_logo.png" %}" id="logo_42">Intra 42</a></td>
-                {% else %}
-                <td><a href="{% provider_login_url "provider42" process="connect" %}" class="social_section_button"><img src="{% static "index/42_logo.png" %}" id="logo_42">Intra 42</a></td>
-                {% endif %}
-
-                {% if "google" in active_providers %}
-                <td><a class="social_section_button active" disabled><i class="fab fa-google-plus-g"></i>Google</a></td>
-                {% else %}
-                <td><a href="{% provider_login_url "google" process="connect" %}" class="social_section_button"><i class="fab fa-google-plus-g"></i>Google</a></td>
-                {% endif %}
-
-            </tr>
-            <tr>
-                {% if "facebook" in active_providers %}
-                <td><a class="social_section_button active" disabled><i class="fab fa-facebook-f"></i>Facebook</a></td>
-                {% else %}
-                <td><a href="{% provider_login_url "facebook" process="connect" %}" class="social_section_button"><i class="fab fa-facebook-f"></i>Facebook</a></td>
-                {% endif %}
-
-{#                <td><a class="social_section_button"><i class="fab fa-github"></i>GitHub</a></td>#}
-            </tr>
-            </table>
-        </div>
-
-      </section>
-
-
     </div>
-    <div class="background">
-        <img src="{% static "user/wh_landscape.jpg" %}">
-    </div>
-
-</div>
 </div>
 
 {% endblock %}
