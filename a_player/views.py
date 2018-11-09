@@ -14,19 +14,12 @@ import cfscrape
 from django.conf import settings
 import os
 
-
 # https://localhost:8000/player/3175
 # https://localhost:8000/player/7893
+# https://localhost:8000/player/3709
 
-def player(request, film_id):
-    film = FilmModel.objects.filter(film_id=film_id)
-    if len(film) == 0:
-        return redirect('index')
-    film = film[0]
-    comments = CommentModel.objects.filter(film=film)
-    quality = 0
 
-    # get torrent
+def get_torrent_model(film, quality):
     if len(TorrentModel.objects.filter(film=film, quality=quality)) == 0:
         torrent = TorrentModel.objects.create(
             film=film,
@@ -34,7 +27,6 @@ def player(request, film_id):
         )
     else:
         torrent = TorrentModel.objects.get(film=film, quality=quality)
-
 
     # save torrent file
     if not torrent.torrent_file:
@@ -54,13 +46,60 @@ def player(request, film_id):
         torrent.save()
 
     # add torrent to torrent session
-    if not settings.TORRENTS.get(film.film_id):
+    if not settings.TORRENTS.get(film.film_id + str(quality)):
         add_torrent(torrent)
+
+    return torrent
+
+
+def player(request, film_id):
+    film = FilmModel.objects.filter(film_id=film_id)
+    if len(film) == 0:
+        return redirect('index')
+    film = film[0]
+    comments = CommentModel.objects.filter(film=film)
+
+    # search for cast
+    if not film.cast:
+        flag = False
+        url = 'https://api.themoviedb.org/3/find/{}'.format(film.imdb_id)
+        params = dict(
+            api_key=settings.TMD_API_KEY,
+            language='en-US',
+            external_source='imdb_id',
+        )
+        r = requests.get(url=url, params=params)
+        if r.status_code == 200:
+            tmd_id = r.json()['movie_results'][0]['id']
+            url = 'https://api.themoviedb.org/3/movie/{}/credits?'.format(tmd_id)
+            params = dict(
+                api_key=settings.TMD_API_KEY,
+                language='en-US',
+            )
+            r = requests.get(url=url, params=params)
+            if r.status_code == 200:
+                cast = r.json()['cast']
+                flag = True
+        if flag:
+            cast_len = len(cast)
+            if cast_len > 10:
+                cast_len = 10
+            cast = cast[:cast_len]
+            for i in range(len(cast)):
+                cast[i]["cycle_tag"] = i % 2
+            film.cast = json.dumps(cast)
+            film.save()
+
+    if film.cast:
+        cast = json.loads(film.cast)
+    else:
+        cast = None
 
     context = {'film_id': film_id,
                'comments': comments,
                'film': film,
-               'torrent': torrent,
+               'cast': cast,
+               'film_data': json.loads(film.data)
                }
     return render(request, 'player/player.html', context)
 
@@ -126,7 +165,6 @@ def ajax_torr_info(request):
     return JsonResponse(json.dumps(response), safe=False)
 
 
-
 def test(request):
     # query_term=""
     # limit=30
@@ -164,12 +202,6 @@ def test(request):
     #
     # print(requests.get(url).content)
 
-    print(settings.MEDIA_ROOT)
-    directry = os.listdir(settings.MEDIA_ROOT + "/video/The Mountain II_720p/")
-
-    for item in directry:
-        print(item)
-        print(os.path.getsize(settings.MEDIA_ROOT + "/video/The Mountain II_720p/" + item))
     # print(torrent_status(7893, 0))
     # print(torrent_status(789113, 1))
     # print(requests.get("https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8"))

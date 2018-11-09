@@ -171,6 +171,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'a_user/static/'),
     os.path.join(BASE_DIR, 'a_search/static/'),
     os.path.join(BASE_DIR, 'a_player/static/'),
+    os.path.join(BASE_DIR, 'node_modules/'),
 ]
 
 TORRENT_SESION = None
