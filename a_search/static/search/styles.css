@@ -2,19 +2,6 @@ a {
     text-decoration: none;
 }
 
-#main_search{
-    border-radius: 5px;
-    margin: 0 auto 20px;
-}
-
-#main_search table{
-    width: 100%;
-}
-
-.main{
-    padding-bottom: 50px;
-}
-
 .results-item-year {
     font-size: 1.1rem;
     /*color: #2E9AFE;*/
@@ -24,59 +11,6 @@ a {
     bottom: 0;
     right: 0;
     padding: 0 10px 10px 0;
-}
-
-.search_row{
-    margin-bottom: 10px;
-    width: 100%;
-    display: flex;
-}
-
-.search_item {
-    margin: 5px;
-    width: 19%;
-    height: 300px;
-    display: block;
-    background: #82535314;
-    overflow: hidden;
-    border-radius: 2px;
-}
-
-.search_item div {
-    position: relative;
-}
-
-.search_item img {
-    left: 50%;
-    margin-left: -100%;
-    position: relative;
-}
-
-.search_item p {
-    position: relative;
-}
-
-.search_item:hover .poster{
-    max-height: 200px;
-}
-
-#pagination{
-    margin-top: 10px;
-}
-
-.p_item{
-    background-color: #26C6DA;
-    border: none;
-    padding: 10px;
-    border-radius: 3px;
-    box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
-    color: #fff;
-    margin-top: 10px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 23px;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
 .results-item-title {
@@ -101,24 +35,8 @@ a {
     background-color: #2644da29;
     cursor: default;
 }
-.results {
-    list-style: none;
-    margin: 0;
-    padding: 0 16px;
-    overflow: hidden;
-}
 
-.styled-select select {
-    margin-top: 7px;
-    background: #26C6DA;
-    width: 268px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #26C6DA;
-    height: 34px;
-}
-
-.results-item-wrap, .spacer {
+.results-item-wrap {
     vertical-align: top;
     width: 200px;
     overflow:hidden;
@@ -127,9 +45,6 @@ a {
     margin: 10px;
     box-sizing: border-box;
     position: relative;
-}
-
-.results-item-wrap {
     height: 420px;
     box-shadow:0 0 30px 10px #607D8B;
 }
@@ -172,4 +87,56 @@ ul {
 
 .no_poster {
     background: url("nocover.png") center no-repeat;
+}
+
+#head_search_input{
+	border-radius: 5px;
+	text-align: left;
+	padding: 12px 5px;
+	margin-left: 10px;
+	width: 260px;
+	border: none;
+	color: #757575;
+	margin-bottom: 3px;
+	display: inline;
+}
+
+#head_search_btn {
+	background-color: #26C6DA;
+	border: none;
+	padding: 10px;
+	margin-right: 40px;
+	width: 100px;
+	/*padding-left: 2px;*/
+	border-radius: 3px;
+	box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
+	color: #fff;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+.styled-select select {
+    margin-top: 7px;
+    height: 37px;
+    border-radius: 5px;
+	text-align: left;
+	padding: 12px 5px;
+	width: 260px;
+	border: none;
+	color: #757575;
+	margin-bottom: 3px;
+	display: inline;
+    background: white;
+}
+
+@media only screen and (max-width: 539px) {
+    #search_form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #head_search_btn {
+        margin: 5px 0 0 0;
+    }
 }

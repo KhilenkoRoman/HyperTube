@@ -33,7 +33,7 @@
     <div class="styled-select">
         <select name="genre" form="search_form" id="genre_select">
             <option value="" selected disabled>Select genre</option>
-            <option value="">Default</option>
+            <option value="">All</option>
             <option value="Comedy">Comedy</option>
             <option value="Sci-Fi">Sci-Fi</option>
             <option value="Horror">Horror</option>
@@ -45,20 +45,24 @@
             <option value="Animation">Animation</option>
             <option value="Adventure">Adventure</option>
             <option value="Fantasy">Fantasy</option>
-    </select>
+        </select>
 
-    <select name="sort_by" form="search_form" id="sort_by_select">
+        <select name="sort_by" form="search_form" id="sort_by_select">
             <option value="" selected disabled>Sort by</option>
-            <option value="Rating">Default</option>
-            <option value="title">Title</option>
-            <option value="year">Year</option>
-            <option value="rating">Rating</option>
-            <option value="peers">Peers</option>
-            <option value="seeds">Seeds</option>
-            <option value="download_count">Download count</option>
-            <option value="like_count">Like count</option>
-            <option value="date_added">Date added</option>
-    </select>
+            <option value="rating_desc">Rating: from high to low</option>
+            <option value="rating_asc">Rating: from low to high</option>
+            <option value="title_asc">Title: A-Z</option>
+            <option value="title_desc">Title: Z-A</option>
+            <option value="year_desc">Year: from new to old</option>
+            <option value="year_asc">Year: from old to new</option>
+
+{#            <option value="peers">Peers</option>#}
+{#            <option value="seeds">Seeds</option>#}
+{#            <option value="download_count">Download count</option>#}
+{#            <option value="like_count">Like count</option>#}
+{#            <option value="date_added">Date added</option>#}
+        </select>
+
     </div>
     <div class="results-wrap">
         <ul class="result">
@@ -82,7 +86,6 @@
                                 {{ movie.year }}
                             </span>
                         </a>
-                    </li>
                 {% endfor %}
             {% else %}
                  <li class="results-item-wrap">Тhere must be films</li>

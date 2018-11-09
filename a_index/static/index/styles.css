@@ -817,32 +817,6 @@ textarea:focus, input:focus {
 	transition: all 0.5s;
 }
 
-#head_search_input{
-	border-radius: 5px;
-	text-align: left;
-	padding: 12px 5px;
-	margin-left: 10px;
-	width: 260px;
-	border: none;
-	color: #757575;
-	margin-bottom: 3px;
-	display: inline;
-}
-
-#head_search_btn {
-	background-color: #26C6DA;
-	border: none;
-	padding: 10px;
-	margin-right: 40px;
-	width: 100px;
-	padding-left: 2px;
-	border-radius: 3px;
-	box-shadow: 1px 5px 20px -5px rgba(0,0,0,0.4);
-	color: #fff;
-	margin-top: 10px;
-	cursor: pointer;
-}
-
 #head_logout_btn.small {
 	background-color: #cc15032e;
 	border: none;
@@ -1007,5 +981,10 @@ textarea:focus, input:focus {
 	#activation_text_box::after {
 		top: 300px;
 		height: 530px;
+	}
+
+	#menu a{
+		font-size: 16px;
+		margin-right: 10px;
 	}
 }
