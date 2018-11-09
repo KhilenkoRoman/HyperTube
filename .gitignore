@@ -1,5 +1,6 @@
 
 pass.txt
+node_modules
 
 # User-specific stuff
 .idea/**/workspace.xml

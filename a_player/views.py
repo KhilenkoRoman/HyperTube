@@ -14,10 +14,10 @@ import cfscrape
 from django.conf import settings
 import os
 
-
 # https://localhost:8000/player/3175
 # https://localhost:8000/player/7893
 # https://localhost:8000/player/3709
+
 
 def get_torrent_model(film, quality):
     if len(TorrentModel.objects.filter(film=film, quality=quality)) == 0:
@@ -58,9 +58,6 @@ def player(request, film_id):
         return redirect('index')
     film = film[0]
     comments = CommentModel.objects.filter(film=film)
-    quality = 0
-
-    torrent = get_torrent_model(film, quality)
 
     # search for cast
     if not film.cast:
@@ -98,13 +95,11 @@ def player(request, film_id):
     else:
         cast = None
 
-    print(cast)
-
     context = {'film_id': film_id,
                'comments': comments,
                'film': film,
-               'torrent': torrent,
-               'cast': cast
+               'cast': cast,
+               'film_data': json.loads(film.data)
                }
     return render(request, 'player/player.html', context)
 
