@@ -30,18 +30,24 @@
 <div class="b-popup invisible"></div>
 {#popup end#}
 
-<div id="main_player">
-<div id="ytplayer"></div>
-<div id="player_wrap">
 
+
+<div id="main_player">
+
+
+
+<div id="player_wrap">
+<iframe width="640" height="480" id="trailer_player"
+    src="https://www.youtube.com/embed/{{ film_data.yt_trailer_code }}">
+</iframe>
 <video id="player" class="video-js none" controls preload="auto" poster="{% static "player/iron_man.jpg" %}" data-setup="{}">
-{#    {% if torrent.downloaded %}#}
-{#        <source src="/media{{ torrent.film_file }}" type='video/mp4'/>#}
-{#    {% endif %}#}
 {#    <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/eng/vtt' srclang='en' label='English' />#}
 {#    <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/spa/vtt' srclang='es' label='Spanish' />#}
 </video>
 </div>
+
+<button class="download_btn" onclick="download_torrent({{ film.film_id }}, '0')">Load 720</button>
+<button class="download_btn" onclick="download_torrent({{ film.film_id }}, '1')">Load 1080</button>
 
 <div id="torrent_info">
     {% if torrent.downloaded %}

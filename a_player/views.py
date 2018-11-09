@@ -19,7 +19,9 @@ import os
 # https://localhost:8000/player/3709
 
 
-def get_torrent_model(film, quality):
+def add_torrent_model(film_id, quality):
+    quality = int(quality)
+    film = FilmModel.objects.get(film_id=film_id)
     if len(TorrentModel.objects.filter(film=film, quality=quality)) == 0:
         torrent = TorrentModel.objects.create(
             film=film,
@@ -48,8 +50,6 @@ def get_torrent_model(film, quality):
     # add torrent to torrent session
     if not settings.TORRENTS.get(film.film_id + str(quality)):
         add_torrent(torrent)
-
-    return torrent
 
 
 def player(request, film_id):
@@ -133,6 +133,10 @@ def ajax_torr_info(request):
     quality = request.POST.get('quality')
 
     response = torrent_status(film_id, quality)
+    if response['error'] == 1:
+        add_torrent_model(film_id, quality)
+        response = torrent_status(film_id, quality)
+
     film = FilmModel.objects.get(film_id=film_id)
     torrent = TorrentModel.objects.get(film=film, quality=quality)
 
