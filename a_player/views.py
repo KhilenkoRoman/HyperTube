@@ -81,6 +81,7 @@ def player(request, film_id):
                 cast = r.json()['cast']
                 flag = True
         if flag:
+            cycle_tag = 0
             cast_len = len(cast)
             if cast_len > 10:
                 cast_len = 10
