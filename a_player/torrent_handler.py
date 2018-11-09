@@ -78,7 +78,7 @@ def torrent_status(film_id, quality):
     thd = settings.TORRENTS.get(str(film_id) + str(quality))
     if not thd:
         response['error'] = 1
-        return json.dumps(response)
+        return response
     s = thd.status()
     response['progress'] = s.progress
     response['download_rate'] = s.download_rate
