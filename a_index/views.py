@@ -95,12 +95,24 @@ def reset_pwd(request):
 def ajax_login(request):
     if request.method != 'POST':
         return redirect('index')
-    user = authenticate(username=request.POST.get('login'), password=request.POST.get('password'))
-    if user is not None:
-        login(request, user)
-        return HttpResponse("sucses")
-    else:
-        return HttpResponse("error")
+
+    lgn = request.POST.get('login')
+    paswd = request.POST.get('password')
+
+    user = authenticate(username=lgn, password=paswd)
+
+    errors = []
+    if not lgn:
+        errors.append("error_login")
+    if not paswd:
+        errors.append("error_password")
+    if len(errors) == 0:
+        try:
+            login(request, user)
+            return JsonResponse(["success"], safe=False)
+        except:
+            errors.append("error_log_in")
+    return JsonResponse(list(set(errors)), safe=False)
 
 
 def ajax_new_pwd(request):

@@ -22,18 +22,21 @@
 
 	<header>
 		<div id="header-scroll">
-		<h1>HyperTube</h1>
-        {% if user.is_authenticated %}
+		    <h1>HyperTube</h1>
+            {% if user.is_authenticated %}
 
+                <div id="sub_header">
+{##}
+{#                    <p>{{ user.first_name }}</p>#}
+{#                    <p>{{ user.last_name }}</p>#}
+                    <div id="menu">
+                        <a href="/user/"><i class="fas fa-user-alt"></i>Profile</a>
+                        <a href="/search/"><i class="fas fa-search"></i>Search</a>
+                    </div>
 
-		<div id="sub_header">
-
-			<p>{{ user.first_name }}</p>
-			<p>{{ user.last_name }}</p>
-
-			<a id="head_logout_btn" href="/user/logout"><i class="fas fa-sign-out-alt"></i></a>
-		</div>
-        {% endif %}
+                    <a id="head_logout_btn" href="/user/logout"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            {% endif %}
 		</div>
 	</header>
 
@@ -50,7 +53,7 @@
             <a><img class="flags" src="{% static "index/gb.png" %}"></a>
         {% endif %}
         </div>
-		<div>vibonar rkhilenk</div>
+		<div style="margin-right: 5px">rkhilenk vibonar anaumenk</div>
 	</footer>
 	<script src="{% static "index/jquery-3.3.1.min.js" %}"></script>
 	<script src="{% static "user/user.js" %}"></script>

@@ -61,7 +61,6 @@ INSTALLED_APPS = [
     'a_index',
     'a_search',
     'a_player',
-
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
@@ -184,4 +183,4 @@ TMD_API_KEY = "eea706492c53f7f2c1f750564baee937"
 # runserver_plus localhost:8000 --cert-file /tmp/cer
 
 # install libtorrent on mac
-# brew install boost --build-from-source --with-python --universal
+# brew install libtorrent-rasterbar --build-from-source --with-python --universal

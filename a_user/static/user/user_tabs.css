@@ -1,89 +1,72 @@
 .edit_tabs {
-  min-width: 320px;
-  max-width: 800px;
-  margin: 0 auto;
-  background: #fff;
-  height: 465px;
-        overflow: hidden;
+    /*min-width: 320px;*/
+    width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    height: 465px;
+    overflow: hidden;
     border-radius: 3px;
 }
 
 section {
-  display: none;
-  border-top: 2px solid #c5bebd;
-  height: 415px;
+    display: none;
+    border-top: 2px solid #c5bebd;
+    height: 415px;
 }
 
 input {
-  display: none;
+    display: none;
 }
 
 label {
-  display: inline-block;
-  margin: 0 0 -1px;
-  padding: 15px 25px;
-  font-weight: 600;
-  text-align: center;
-  color: #696666;
-  border: 1px solid transparent;
+    display: inline-block;
+    margin: 0 0 -1px;
+    padding: 15px 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #696666;
+    border: 1px solid transparent;
 }
 
 label:before {
-  font-family: fontawesome;
-  font-weight: normal;
-  margin-right: 10px;
+    font-family: fontawesome;
+    font-weight: normal;
+    margin-right: 10px;
 }
 
 label:hover {
-  color: #888;
-  cursor: pointer;
+    color: #888;
+    cursor: pointer;
 }
 
 input:checked + label {
-  color: #272424;
-
-  border-top: 2px solid #ff6600;
+    color: #272424;
+    border-top: 2px solid #ff6600;
 }
 
 #tab1:checked ~ #content1,
 #tab2:checked ~ #content2,
 #tab3:checked ~ #content3,
 #tab4:checked ~ #content4 {
-  display: flex;
-}
-
-@media screen and (max-width: 650px) {
-  label {
-    font-size: 0;
-  }
-  label:before {
-    margin: 0;
-    font-size: 18px;
-  }
+    display: flex;
 }
 
 #content2{
     flex-direction: column;
 }
 
-@media screen and (max-width: 400px) {
-  label {
-    padding: 15px;
-  }
-}
-
 .background{
     position: relative;
     top: -470px;
     left: -10px;
-    opacity: 0.5;
+    /*opacity: 0.5;*/
 }
 
 .background img{
     width: 120%;
     /* height: 100%; */
     filter: grayscale(-30%);
-    opacity: 0.8;
+    /*opacity: 0.8;*/
     animation-name: animar_fondo;
     animation-duration: 80s;
     animation-timing-function: cubic-bezier(0, 0, 1, 1);
@@ -103,10 +86,10 @@ input:checked + label {
     height: 437px;
     border-radius: 10px;
     position: absolute;
-    /*right: 326px;*/
-    top: 218px;
+    /*right: -150px;*/
+    top: 205px;
     transform: translateX(-47%);
-    /* z-a_index: -1; */
+    z-index: -1;
 }
 
 #photo_section{
@@ -243,39 +226,38 @@ input:checked + label {
     text-decoration: none;
 }
 
-#social_section{
+#social_section {
     margin-top: 25px;
 }
 
-#social_section p{
+#social_section p {
     display: block;
     margin-bottom: 10px;
     font-size: 19px;
     color: #333131d9;
 }
 
-#social_section i{
+#social_section i {
     margin-right: 10px;
 }
 
-#content2{
+#content2 {
     align-items: center;
 }
 
-#social_section #logo_42{
+#social_section #logo_42 {
     width: 20px;
     filter: invert(100%);
     margin-bottom: -5px;
     margin-right: 10px;
 }
 
-.active{
+.active {
     background-color: #00800069;
     cursor: auto;
 }
 
-.custom-file-upload
-{
+.custom-file-upload {
     background-color: #26c6dac7;
     border: none;
     padding: 10px;
@@ -295,4 +277,90 @@ input:checked + label {
 .custom-file-upload:hover {
     color: #fff;
     cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+    .edit_tabs {
+        /*background: none;*/
+        max-width: 800px;
+        width: 95%;
+        height: 500px;
+    }
+
+    .edit_tabs::after {
+        max-width: 810px;
+        width: 94%;
+        height: 500px;
+        top: 180px;
+    }
+
+    #photo_section {
+        margin-left: 30px;
+    }
+
+    #info_section {
+        width: 100%;
+    }
+
+    #info_section form {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    #names {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #social_section table tbody tr:first-child{
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .background img{
+        width: 160%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .edit_tabs {
+        height: 700px;
+    }
+
+    .edit_tabs::after {
+        height: 700px;
+    }
+
+    #content1 {
+        flex-direction: column;
+        align-items: center;
+        /*height: 100%;*/
+    }
+
+    #photo_section {
+        display: block;
+        margin-left: 0;
+    }
+
+    #info_section {
+        margin-top: 0;
+    }
+
+    #pass{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .background {
+        top: -714px;
+    }
+
+    .background img{
+        height: 100%;
+        width: auto;
+    }
 }
