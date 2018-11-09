@@ -15,7 +15,8 @@ def save_cover(film, cover_url):
         settings.SCRAPER_SESION = cfscrape.create_scraper()
 
     r = settings.SCRAPER_SESION.get(cover_url)
-    if r == 200:
+    if r.status_code == 200:
+        print("qweqwe")
         temp_file = NamedTemporaryFile(delete=True)
         temp_file.write(r.content)
         temp_file.flush()
@@ -59,7 +60,6 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
     for i in range(movie_count):
         film = FilmModel.objects.get(imdb_id=data['data']['movies'][i]['imdb_code'])
         data['data']['movies'][i]['upl_cover'] = str(film.cover)
-        print(data['data']['movies'][i]['upl_cover'])
 
     return data
 
@@ -81,5 +81,6 @@ def filmSearch(request, film_name=""):
 
 
 def ajax_search_request(request):
-    data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'), request.POST.get('sort_by'))
+    data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'),
+                       request.POST.get('sort_by'))
     return JsonResponse(data, safe=False)

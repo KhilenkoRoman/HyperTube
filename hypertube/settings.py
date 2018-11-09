@@ -172,10 +172,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'a_user/static/'),
     os.path.join(BASE_DIR, 'a_search/static/'),
     os.path.join(BASE_DIR, 'a_player/static/'),
+    os.path.join(BASE_DIR, 'node_modules/'),
 ]
 
 TORRENT_SESION = None
-TORRENTS = []
+TORRENTS = {}
 SCRAPER_SESION = None
 
 TMD_API_KEY = "eea706492c53f7f2c1f750564baee937"

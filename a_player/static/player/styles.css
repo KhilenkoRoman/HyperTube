@@ -11,8 +11,11 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfd8dc', endColorstr='#b0bec5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-#player{
-	border-radius: 3px;
+#player_wrap{
+	display: flex;
+    margin: 0 auto;
+    width: 90%;
+    justify-content: center;
 }
 
 .info_wrap{
@@ -154,4 +157,13 @@ list-style: none;
 	font-size: 13px;
     color: #484848;
 	margin: 0;
+}
+
+.info_elem{
+    display: flex;
+    margin: 2px;
+}
+
+.info_elem img{
+    height: 100px;
 }
