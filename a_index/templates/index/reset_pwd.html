@@ -34,38 +34,58 @@
 	</header>
 
 
-	<div class="main" style="height: 1000px">
-        <div class="padding"></div>
-        <div id="activation_text_box" style="background-image: url({% static "index/warhammer-40000-octava.jpg"%})">
+	<div class="main">
+{#        <div class="padding"></div>#}
+
+
+
+
+        <div id="activation_text_box">
             {% if response == "sucsess" %}
-            <div id="recover_wrap">
-            <p>New password</p>
-            <div id="recover_input">
-                {% csrf_token %}
-                <input id="id_change_pwd1" class="input_index" type="password" placeholder="New Password">
-                <input id="id_change_pwd2" class="input_index" type="password" placeholder="Repeat Password">
-                <input class="none" id="reset_login" value="{{ username }}">
-                <input class="none" id="reset_key" value="{{ key }}">
-            </div>
-            <a class="btn_sign_up" id="change_pwd_btn">CHANGE</a>
-            </div>
-            <div id="responce_wrap" class="invisible none">
-                <p>Password changed</p>
-                <a class="btn_sign_up" href="{% url 'index' %}" id="go_home_btn">GO HOME</a>
-            </div>
+                <div id="recover_wrap">
+                    <p>New password</p>
+                    <div id="recover_input">
+                        {% csrf_token %}
+                        <input id="id_change_pwd1" class="input_index" type="password" placeholder="New Password">
+                        <input id="id_change_pwd2" class="input_index" type="password" placeholder="Repeat Password">
+                        <input class="none" id="reset_login" value="{{ username }}">
+                        <input class="none" id="reset_key" value="{{ key }}">
+                    </div>
+                    <a class="btn_sign_up" id="change_pwd_btn">CHANGE</a>
+                </div>
+                <div id="responce_wrap" class="invisible none">
+                    <p>Password changed</p>
+                    <a class="btn_sign_up" href="{% url 'index' %}" id="go_home_btn">GO HOME</a>
+                </div>
 
             {% else %}
-            <div id="responce_wrap">
-                <p>{{ response }}, procede to index page</p>
-                <a class="btn_sign_up" href="{% url 'index' %}" id="go_home_btn">GO HOME</a>
-            </div>
+                <div id="responce_wrap">
+                    <p>{{ response }}, procede to index page</p>
+                    <a class="btn_sign_up" href="{% url 'index' %}" id="go_home_btn">GO HOME</a>
+                </div>
             {% endif %}
-
         </div>
+
+        <div class="cont_back_info" style="max-width: 90%">
+            <div class="cont_img_back_grey">
+                <img src="{% static "index/forest.jpg" %}" alt="" />
+            </div>
+        </div>
+
+
 
 	</div>
 	<footer>
-		<div>vibonar rkhilenk</div>
+        <div class="lang_wrap">
+        {% if request.session.lang == 2 %}
+            <a><img class="flags" src="{% static "index/ru.png" %}"></a>
+            <a href="{% url 'change_lang' lang='en'%}"><img class="flags inactive_flag" src="{% static "index/gb.png" %}"></a>
+        {% else %}
+            <a href="{% url 'change_lang' lang='ru'%}"><img class="flags inactive_flag" src="{% static "index/ru.png" %}"></a>
+            <a><img class="flags" src="{% static "index/gb.png" %}"></a>
+        {% endif %}
+        </div>
+		<div style="margin-right: 5px">rkhilenk vibonar anaumenk</div>
 	</footer>
 	<script src="{% static "index/jquery-3.3.1.min.js" %}"></script>
 	<script src="{% static "user/user.js" %}"></script>

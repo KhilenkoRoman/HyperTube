@@ -173,12 +173,12 @@ $(document).mouseup(function (e)
 
     const div = $(".b-container");
     const div2 = $("#popup_text");
-    if (!div.is(e.target) && div.has(e.target).length === 0
-        && !div2.is(e.target) && div2.has(e.target).length === 0)
-    {
-        container.classList.add('invisible');
-        shadow.classList.add('invisible');
-    }
+//    if (!div.is(e.target) && div.has(e.target).length === 0
+//        && !div2.is(e.target) && div2.has(e.target).length === 0)
+//    {
+////        container.classList.add('invisible');
+////        shadow.classList.add('invisible');
+//    }
     popup_active = false;
 });
 

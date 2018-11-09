@@ -12,179 +12,179 @@
 	<!-- регистрировалка -->
 
 	<div class="cotn_principal">
-	<div class="cont_centrar">
-	<div class="cont_login">
-	<div class="cont_info_log_sign_up" id="forms_wrap">
+	    <div class="cont_centrar">
+	        <div class="cont_login">
+	            <div class="cont_info_log_sign_up" id="forms_wrap">
 
-	<div class="col_md_login">
-	<div class="cont_ba_opcitiy">
-        {% if request.session.lang == 2 %}
-            <h2>ЛОГИН</h2>
-		    <p>Добро пожаловать</p>
-            <button class="btn_login" onclick="actvate_login()">ЛОГИН</button>
-        {% else %}
-            <h2>LOGIN</h2>
-		    <p>Welcome back</p>
-            <button class="btn_login" onclick="actvate_login()">LOGIN</button>
-        {% endif %}
+	                <div class="col_md_login">
+	                    <div class="cont_ba_opcitiy">
+                            {% if request.session.lang == 2 %}
+                                 <h2>ЛОГИН</h2>
+                                 <p>Добро пожаловать</p>
+                                 <button class="btn_login" onclick="actvate_login()">ЛОГИН</button>
+                            {% else %}
+                                 <h2>LOG IN</h2>
+		                         <p>Welcome back</p>
+                                 <button class="btn_login" onclick="actvate_login()">LOG IN</button>
+                            {% endif %}
 
 
-	</div>
-	</div>
+	                    </div>
+	            </div>
 
-	<div class="col_md_sign_up">
-	<div class="cont_ba_opcitiy">
-        {% if request.session.lang == 2 %}
-            <h2>РЕГИСТРАЦИЯ</h2>
-		    <p>Захади не бойся !!</p>
-		    <button class="btn_sign_up" onclick="activate_sign_up()">РЕГИСТРАЦИЯ</button>
-        {% else %}
-            <h2>SIGN UP</h2>
-		    <p>Hello, wor... New user !!!</p>
-		    <button class="btn_sign_up" onclick="activate_sign_up()">SIGN UP</button>
-        {% endif %}
-	</div>
-	</div>
+	            <div class="col_md_sign_up">
+	                <div class="cont_ba_opcitiy">
+                        {% if request.session.lang == 2 %}
+                            <h2>РЕГИСТРАЦИЯ</h2>
+                            <p>Захади не бойся !!</p>
+		                    <button class="btn_sign_up" onclick="activate_sign_up()">РЕГИСТРАЦИЯ</button>
+                        {% else %}
+                            <h2>SIGN UP</h2>
+		                    <p>Hello, wor... New user !!!</p>
+		                    <button class="btn_sign_up" onclick="activate_sign_up()">SIGN UP</button>
+                        {% endif %}
+	                </div>
+	            </div>
 
-    <div class="col_md_succses none">
-	<div class="cont_ba_opcitiy" style="width: 60%; padding: 40px 0px;">
-        {% if request.session.lang == 2 %}
-		    <h2>РЕГИСТРАЦИЯ ЗАВЕРШЕНА ... ну почти</h2>
-		    <p>Продолжение истории на почте</p>
-		    <a href=""></a>
-            <a class="btn_sign_up" href="" id="go_to_email_btn">ЗДЕСЬ наверно</a>
-        {% else %}
-            <h2>REGISTRATION COMPLETE allmost ...</h2>
-		    <p>Go and check for activation email</p>
-		    <a href=""></a>
-            <a class="btn_sign_up" href="" id="go_to_email_btn">GO TO EMAIL</a>
-        {% endif %}
-	</div>
-	</div>
+                <div class="col_md_succses none">
+	                <div class="cont_ba_opcitiy">
+                        {% if request.session.lang == 2 %}
+                            <h2>РЕГИСТРАЦИЯ ЗАВЕРШЕНА ... ну почти</h2>
+                            <p>Продолжение истории на почте</p>
+                            <a href=""></a>
+                            <a class="btn_sign_up" href="" id="go_to_email_btn">ЗДЕСЬ наверно</a>
+                        {% else %}
+                            <h2>REGISTRATION COMPLETE allmost ...</h2>
+                            <p>Go and check for activation email</p>
+                            <a href=""></a>
+                            <a class="btn_sign_up" href="" id="go_to_email_btn">GO TO EMAIL</a>
+                        {% endif %}
+	                </div>
+	            </div>
 
-    <div class="col_md_recover none">
-	<div class="cont_ba_opcitiy" style="width: 60%; padding: 40px 0px;">
-        {% if request.session.lang == 2 %}
-            <h2>ВОСТАНОВЛЕНИЕ ПАРОЛЯ</h2>
-            <p>Инструкции как обычно на почте</p>
-            <a href=""></a>
-            <a class="btn_sign_up" href="" id="go_to_recover_btn">ТУДА</a>
-        {% else %}
-            <h2>PASSWORD RECOVERY INITIALIZED</h2>
-            <p>Go and check email</p>
-            <a href=""></a>
-            <a class="btn_sign_up" href="" id="go_to_recover_btn">GO TO EMAIL</a>
-        {% endif %}
-	</div>
-	</div>
+                <div class="col_md_recover none">
+	                <div class="cont_ba_opcitiy" style="width: 60%; padding: 40px 0px;">
+                        {% if request.session.lang == 2 %}
+                            <h2>ВОСТАНОВЛЕНИЕ ПАРОЛЯ</h2>
+                            <p>Инструкции как обычно на почте</p>
+                            <a href=""></a>
+                            <a class="btn_sign_up" href="" id="go_to_recover_btn">ТУДА</a>
+                        {% else %}
+                            <h2>PASSWORD RECOVERY INITIALIZED</h2>
+                            <p>Go and check email</p>
+                            <a href=""></a>
+                            <a class="btn_sign_up" href="" id="go_to_recover_btn">GO TO EMAIL</a>
+                        {% endif %}
+	                </div>
+	            </div>
 		
-	</div>
+	        </div>
 
     
-	<div class="cont_back_info">
-		<div class="cont_img_back_grey">
-		<img src="{% static "index/wh.jpg" %}" alt="" />
-		</div>
+	        <div class="cont_back_info">
+		        <div class="cont_img_back_grey">
+		            <img src="{% static "index/forest.jpg" %}" alt="" />
+		        </div>
        
-    </div>
-	<div class="cont_forms" id="form">
-    <div class="cont_img_back_">
-	<img src="{% static "index/wh.jpg" %}" alt="" />
-	</div>
+            </div>
+	        <div class="cont_forms" id="form">
+                <div class="cont_img_back_">
+	                <img src="{% static "index/forest.jpg" %}" alt="" />
+	            </div>
 
-	<div class="cont_form_login">
-	<a href="#" onclick="ocultar_login_sign_up()" ><i class="fas fa-times"></i></a>
-    {% if request.session.lang == 2 %}
-	    <h2>АВТОРИЗАЦИЯ</h2>
-	    <form id="login_form">
-		<input id="id_login" class="input_index" type="text" placeholder="Логин" />
-		<input id="id_password" class="input_index" type="password" placeholder="Пароль" />
-		<button class="btn_login" type="submit">АВТОРИЗАЦИЯ</button>
-	    </form>
-	    <p onclick="actvate_forgot()">Неужели пароль забыли ?</p>
-    {% else %}
-        <h2>LOGIN</h2>
-	    <form id="login_form">
-		<input id="id_login" class="input_index" type="text" placeholder="Login" />
-		<input id="id_password" class="input_index" type="password" placeholder="Password" />
-		<button class="btn_login" type="submit">LOGIN</button>
-	    </form>
-	    <p onclick="actvate_forgot()">Forgot password</p>
-    {% endif %}
+	            <div class="cont_form_login">
+	                <a href="#" onclick="ocultar_login_sign_up()" ><i class="fas fa-times"></i></a>
+                    {% if request.session.lang == 2 %}
+                        <h2>АВТОРИЗАЦИЯ</h2>
+                        <form id="login_form">
+                            <input id="id_login" class="input_index" type="text" placeholder="Логин" />
+                            <input id="id_password" class="input_index" type="password" placeholder="Пароль" />
+                            <button class="btn_login" id="login_button" type="submit">АВТОРИЗАЦИЯ</button>
+                        </form>
+                        <p onclick="actvate_forgot()">Неужели пароль забыли ?</p>
+                    {% else %}
+                        <h2>LOG IN</h2>
+                        <form id="login_form">
+                            <input id="id_login" class="input_index" type="text" placeholder="Login" />
+                            <input id="id_password" class="input_index" type="password" placeholder="Password" />
+                            <button class="btn_login" id="login_button" type="submit">LOG IN</button>
+                        </form>
+                        <p onclick="actvate_forgot()">Forgot password</p>
+                    {% endif %}
 
-	<div id="oauth">
-        <a style="margin-top: 12px;" href="{% provider_login_url socialaccount_providers.2.id process='login' scope=scope auth_params=auth_params %}"><img src="{% static "index/42_logo.png" %}" id="logo_42"></a>
-		<a href="{% provider_login_url socialaccount_providers.1.id process='login' scope=scope auth_params=auth_params %}"><i class="fab fa-google-plus-g"></i></a>
-        <a href="{% provider_login_url socialaccount_providers.0.id process='login' scope=scope auth_params=auth_params %}"><i class="fab fa-facebook-f"></i></a>
-	</div>
-	</div>
+	                <div id="oauth">
+                        <a style="margin-top: 12px;" href="{% provider_login_url socialaccount_providers.2.id process='login' scope=scope auth_params=auth_params %}"><img src="{% static "index/42_logo.png" %}" id="logo_42"></a>
+		                <a href="{% provider_login_url socialaccount_providers.1.id process='login' scope=scope auth_params=auth_params %}"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="{% provider_login_url socialaccount_providers.0.id process='login' scope=scope auth_params=auth_params %}"><i class="fab fa-facebook-f"></i></a>
+	                </div>
+	            </div>
 
-	<div class="cont_form_forgot">
-	<a href="#" onclick="ocultar_login_sign_up()" ><i class="fas fa-times"></i></a>
-    {% if request.session.lang == 2 %}
-	    <h2>ВОСТАНОВЛЕНИЕ ПАРОЛЯ</h2>
-    {% else %}
-        <h2>FORGOT PASSWORD</h2>
-    {% endif %}
-	<form id="login_forgot" method="POST" action="{% url 'account_reset_password' %}" class="password_reset">
-        {% csrf_token %}
-        {% if request.session.lang == 2 %}
-		    <input class="input_index" type="email" placeholder="Емейл" id="forgot_email" name="email" required/>
-		    <button class="btn_login" type="submit" id="recover_btn">ВОСТАНОВИТЬ</button>
-        {% else %}
-            <input class="input_index" type="email" placeholder="Email" id="forgot_email" name="email" required/>
-		    <button class="btn_login" type="submit" id="recover_btn">RECOVER</button>
-        {% endif %}
-	</form>
-    {% if request.session.lang == 2 %}
-	    <p onclick="return_login()">Вернутся на логин</p>
-    {% else %}
-        <p onclick="return_login()">Return login</p>
-    {% endif %}
-	</div>
+	            <div class="cont_form_forgot">
+	                <a href="#" onclick="ocultar_login_sign_up()" ><i class="fas fa-times"></i></a>
+                    {% if request.session.lang == 2 %}
+                        <h2>ВОСТАНОВЛЕНИЕ ПАРОЛЯ</h2>
+                    {% else %}
+                        <h2>FORGOT PASSWORD</h2>
+                    {% endif %}
+	                <form id="login_forgot" method="POST" action="{% url 'account_reset_password' %}" class="password_reset">
+                        {% csrf_token %}
+                        {% if request.session.lang == 2 %}
+                            <input class="input_index" type="email" placeholder="Емейл" id="forgot_email" name="email" required/>
+                            <button class="btn_login" type="submit" id="recover_btn">ВОСТАНОВИТЬ</button>
+                        {% else %}
+                            <input class="input_index" type="email" placeholder="Email" id="forgot_email" name="email" required/>
+		                    <button class="btn_login" type="submit" id="recover_btn">RECOVER</button>
+                        {% endif %}
+	                </form>
+                    {% if request.session.lang == 2 %}
+                        <p onclick="return_login()">Вернутся на логин</p>
+                    {% else %}
+                        <p onclick="return_login()">Return login</p>
+                    {% endif %}
+	            </div>
   
-	<div class="cont_form_sign_up">
-	<a href="#" onclick="ocultar_login_sign_up()"><i class="fas fa-times"></i></a>
+	            <div class="cont_form_sign_up">
+	                <a href="#" onclick="ocultar_login_sign_up()"><i class="fas fa-times"></i></a>
 
-    {% if request.session.lang == 2 %}
-	    <h2>РЕГИСТРАЦИЯ</h2>
-	<form id="register_form">
-        <input class="input_index" type="text" placeholder="Логин" id="register_login"/>
-        <input class="input_index" type="email" placeholder="Емейл" id="register_email"/>
-        <input class="input_index" type="text" placeholder="Имя" id="register_first_name"/>
-        <input class="input_index" type="text" placeholder="Фамилия" id="register_last_name"/>
-        <input class="input_index" type="password" placeholder="Пароль" id="register_pwd_1"/>
-		<div class="pwd_bar">
-        <p class="pwd_complex">Сложность пароля</p>
-		<span class="pwd_fill"></span>
-		<span class="pwd_over" style="width: 100%"></span>
-		</div>
-	    <input class="input_index" type="password" placeholder="Повторите пароль" id="register_pwd_2"/>
-	    <button class="btn_sign_up" type="submit" id="register_btn">РЕГИСТРАЦИЯ</button>
-	</form>
-    {% else %}
-        <h2>SIGN UP</h2>
-    <form id="register_form">
-        <input class="input_index" type="text" placeholder="Login" id="register_login"/>
-        <input class="input_index" type="email" placeholder="Email" id="register_email"/>
-        <input class="input_index" type="text" placeholder="First Name" id="register_first_name"/>
-        <input class="input_index" type="text" placeholder="Last Name" id="register_last_name"/>
-        <input class="input_index" type="password" placeholder="Password" id="register_pwd_1"/>
-		<div class="pwd_bar">
-        <p class="pwd_complex">Password complexity</p>
-		<span class="pwd_fill"></span>
-		<span class="pwd_over" style="width: 100%"></span>
-		</div>
-	    <input class="input_index" type="password" placeholder="Confirm Password" id="register_pwd_2"/>
-	    <button class="btn_sign_up" type="submit" id="register_btn">SIGN UP</button>
-	</form>
-    {% endif %}
+                    {% if request.session.lang == 2 %}
+	                    <h2>РЕГИСТРАЦИЯ</h2>
+                        <form id="register_form">
+                            <input class="input_index" type="text" placeholder="Логин" id="register_login"/>
+                            <input class="input_index" type="email" placeholder="Емейл" id="register_email"/>
+                            <input class="input_index" type="text" placeholder="Имя" id="register_first_name"/>
+                            <input class="input_index" type="text" placeholder="Фамилия" id="register_last_name"/>
+                            <input class="input_index" type="password" placeholder="Пароль" id="register_pwd_1"/>
+                            <div class="pwd_bar">
+                                <p class="pwd_complex">Сложность пароля</p>
+                                <span class="pwd_fill"></span>
+                                <span class="pwd_over" style="width: 100%"></span>
+                            </div>
+                            <input class="input_index" type="password" placeholder="Повторите пароль" id="register_pwd_2"/>
+                            <button class="btn_sign_up" type="submit" id="register_btn">РЕГИСТРАЦИЯ</button>
+                        </form>
+                    {% else %}
+                        <h2>SIGN UP</h2>
+                        <form id="register_form">
+                            <input class="input_index" type="text" placeholder="Login" id="register_login"/>
+                            <input class="input_index" type="email" placeholder="Email" id="register_email"/>
+                            <input class="input_index" type="text" placeholder="First Name" id="register_first_name"/>
+                            <input class="input_index" type="text" placeholder="Last Name" id="register_last_name"/>
+                            <input class="input_index" type="password" placeholder="Password" id="register_pwd_1"/>
+                            <div class="pwd_bar">
+                                <p class="pwd_complex">Password complexity</p>
+                                <span class="pwd_fill"></span>
+                                <span class="pwd_over" style="width: 100%"></span>
+                            </div>
+                            <input class="input_index" type="password" placeholder="Confirm Password" id="register_pwd_2"/>
+                            <button class="btn_sign_up" type="submit" id="register_btn">SIGN UP</button>
+                        </form>
+                    {% endif %}
 
-  </div>
+                </div>
 
-</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
