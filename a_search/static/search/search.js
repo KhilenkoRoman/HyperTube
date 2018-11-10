@@ -26,7 +26,7 @@ function search(page, search_field, genre, sort_by, order_by){
 						if (response['data']['movies'][i]['upl_cover']) {
 							$(".result").html('' +
 							  '<li class="results-item-wrap">' +
-									'<a href="/player/'+ response['data']['movies'][i]['id'] +'">' +
+									'<a href="/player/'+ response['data']['movies'][i]['id'] +'" title="'+ response['data']['movies'][i]['title_english'] +'">' +
 										'<div class="div_poster">' +
 											'<img src="/media/' + response['data']['movies'][i]['upl_cover'] + '" class="poster">' +
 										'</div>' +
@@ -40,7 +40,7 @@ function search(page, search_field, genre, sort_by, order_by){
 						else {
 							$(".result").html('' +
 						  '<li class="results-item-wrap">' +
-								'<a href="/player/'+ response['data']['movies'][i]['id'] +'">' +
+								'<a href="/player/'+ response['data']['movies'][i]['id'] +'" title="'+ response['data']['movies'][i]['title_english'] +'">' +
 									'<div class="div_poster no_poster"><div>' +
 									'<div class="results-item-title">' + response['data']['movies'][i]['title_english'] + '</div>' +
 									'<span class="results-item-rating">' +
@@ -57,7 +57,7 @@ function search(page, search_field, genre, sort_by, order_by){
 				  	if (response['data']['movies'][i]['upl_cover']) {
 				  		$( ".result").html($( ".result").html() +
 						'<li class="results-item-wrap">' +
-							'<a href="/player/'+ response['data']['movies'][i]['id'] +'">' +
+							'<a href="/player/'+ response['data']['movies'][i]['id'] +'" title="'+ response['data']['movies'][i]['title_english'] +'">' +
 								'<div class="div_poster">' +
 									'<img src="/media/' + response['data']['movies'][i]['upl_cover'] + '" class="poster">' +
 								'</div>' +
@@ -71,7 +71,7 @@ function search(page, search_field, genre, sort_by, order_by){
 					else {
 						$( ".result").html($( ".result").html() +
 						'<li class="results-item-wrap">' +
-							'<a href="/player/'+ response['data']['movies'][i]['id'] +'">' +
+							'<a href="/player/'+ response['data']['movies'][i]['id'] +'" title="'+ response['data']['movies'][i]['title_english'] +'">' +
 								'<div class="div_poster no_poster"></div>' +
 								'<div class="results-item-title">' + response['data']['movies'][i]['title_english'] + '</div>' +
 								'<span class="results-item-rating">' +
@@ -114,8 +114,8 @@ $('#search_form').on('submit', function(e) {
     curLoc = search_field.value + "?genere=" + genre_select.value + "&sort_by=" + sort_by_select.value;
     page = 1;
     const sort = sort_by_select.value.split('_'),
-		sort_by = sort[0],
-		order_by = sort[1];
+		sort_by = sort[0] ? sort[0] : 'rating',
+		order_by = sort[1] ? sort[1] : 'desc';
     search(page, search_field, genre_select.value, sort_by, order_by);
     window.history.pushState("", "Search", "/search/film/" + curLoc);
     page++;

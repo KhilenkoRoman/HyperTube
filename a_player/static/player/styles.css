@@ -13,22 +13,56 @@
 
 #player_wrap{
 	display: flex;
-    margin: 0 auto;
-    width: 90%;
+    /*margin: 0 auto;*/
+    width: 100%;
     justify-content: center;
 }
 
+#player_wrap iframe{
+    border: none;
+}
+
+.download_btn {
+    padding: 10px;
+    margin: 10px auto;
+    border: none;
+    width: 100px;
+    border-radius: 3px;
+    box-shadow: 1px 5px 20px -5px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    -moz-transition: all 0.5s ease-out;
+    -webkit-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+
+#btn_high {
+    background-color: #ef5350;
+}
+
+#btn_low {
+   background-color: #26C6DA;
+}
+
+#torrent_info {
+    display: none;
+    width: 100%;
+}
+
 .info_wrap{
-	width: 90%;
-    margin: 0 auto;
+	width: 100%;
+    /*margin: 30px auto 0;*/
     display: flex;
     padding-bottom: 50px;
-    margin-top: 30px;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .comments_wrap{
-	width: 68%;
+	width: 60%;
+    max-width: 900px;
+    margin-right: 10px;
     background: #dee4e41a;
     border-radius: 3px;
     display: flex;
@@ -36,30 +70,28 @@
 	flex-direction: column;
 }
 
-.film_info{
-	width: 29%;
-    background: #abdcab2e;
-}
-
 .leave_comment{
-	margin: 10px;
+	margin: 10px 0 0;
 	display: flex;
     align-items: center;
-	width: 100%;
+	padding: 10px 0;
+    border-bottom: 2px solid #8199a3;
+    border-radius: 5px;
 }
 
 .leave_comment img{
 	height: 80px;
 	width: 80px;
 	border-radius: 50%;
+    margin: 0 auto;
 }
 
 .leave_comment button {
-	margin-left: 24px;
+	margin: 0 auto;
     background-color: #8199a3;
     border: none;
     padding: 10px;
-    width: 130px;
+    width: 110px;
     border-radius: 3px;
     box-shadow: 1px 5px 20px -5px rgba(0, 0, 0, 0.4);
     color: #fff;
@@ -72,7 +104,7 @@
 }
 
 #comment_text{
-	margin: 0px 20px;
+	margin: 0 auto;
 	resize: none;
     color: #999;
     font-weight: 400;
@@ -98,24 +130,28 @@
 
 .comments{
     list-style: none;
-    padding: 0;
-    width: 80%;
-    margin: 40px auto 40px;
+    /*padding: 0;*/
+    width: 100%;
+    /*margin: 40px auto 40px;*/
+    margin-top: 0;
+    padding-bottom: 10px;
 }
 
 .comment{
 	display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .comment_avatar{
     height: 80px;
     width: 80px;
     border-radius: 50%;
-    right: 40px;
+    left: 10px;
     top: 40px;
     border: 1px solid #8c8a8a3b;
     position: relative;
+    align-self: flex-start;
 }
 
 .comment p{
@@ -128,24 +164,35 @@
     font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
 	color: #3e3e3e;
 	background: #ffffff30;
+    width: 80%;
 }
 
 .com_name {
 	position: relative;
-    text-align: left;
-    left: 60px;
-	bottom: 8px;
+    /*text-align: left;*/
+    left: 100px;
+	bottom: 5px;
+    align-self: flex-start;
 }
 
 .com_name i{
 	margin-right: 10px;
 }
 
+.film_info{
+	width: 30%;
+    max-width: 500px;
+    background: #abdcab2e;
+    display: flex;
+}
+
 .info_list {
-list-style: none;
-    text-align: left;
-    padding-left: 20px;
-    padding-right: 20px;
+    /*list-style: none;*/
+    /*text-align: left;*/
+    /*padding-left: 20px;*/
+    /*padding-right: 20px;*/
+    width: 95%;
+    margin: 0 auto;
 }
 
 .info_label{
@@ -161,9 +208,56 @@ list-style: none;
 
 .info_elem{
     display: flex;
-    margin: 2px;
+    margin: 5px 0;
 }
 
 .info_elem img{
     height: 100px;
+}
+
+#progressbar{
+    height: 26px;
+    position: relative;
+    width: 640px;
+    background: #abdcab2e;
+    border-radius: 10px;
+    margin: 20px auto;
+    /*padding: 2px;*/
+}
+
+#loading{
+    transition: all 500ms ease;
+    height: 20px;
+    width: 0;
+    border-radius: 8px;
+    background: #1a9e1a54;
+    position: absolute;
+    left: 0;
+    margin: 3px;
+    display: inline-block;
+}
+
+@media only screen and (max-width: 700px) {
+    iframe {
+        width: 95%;
+        height: auto;
+    }
+    .info_wrap {
+        flex-direction: column;
+    }
+
+    .film_info {
+        width: 100%;
+        order: -1;
+    }
+
+    .comments_wrap {
+        width: 100%;
+        background: none;
+        /*margin-top: 10px;*/
+    }
+    .leave_comment button {
+        height: 70px;
+        margin: 0 5px 0;
+    }
 }

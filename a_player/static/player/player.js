@@ -1,7 +1,9 @@
 function add_comment() {
-    event.preventDefault();
-    let comment = document.getElementById('comment_text');
-    let imdb_id = document.getElementById('imdb_id');
+	event.preventDefault();
+    let comment = document.getElementById('comment_text'),
+		imdb_id = document.getElementById('imdb_id'),
+    	user_name = document.getElementById('user_info').innerHTML,
+		user_avatar = document.getElementById('user_avatar').innerHTML;
 
 	$.ajax({
     	type:"POST",
@@ -11,14 +13,20 @@ function add_comment() {
                 csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-        	console.log(response)
+    		$(".comments").append(
+    			'<li class="comment">' +
+					'<img class="comment_avatar" src="/media/'+ user_avatar +'">' +
+                	'<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
+                	'<p>' + comment.value + '</p>' +
+				'</li>');
     	}
 	});
 }
 
 function download_torrent(film_id, quality){
 	let myPlayer = videojs("player");
-	let progress = $("#torrent_info p");
+	let progress = $("#loading");
+	console.log(progress);
 	let flag = false;
 	let video = $("#player");
 	// let source = document.createElement('source');
@@ -38,7 +46,7 @@ function download_torrent(film_id, quality){
             success: function (response) {
             	json_resp = JSON.parse(response);
             	console.log(json_resp);
-            	progress.html(json_resp['progress'] * 100 + "%");
+            	progress.css('width', String(json_resp['progress'] * 100) + "%");
 
             	if (json_resp['film_file'] && flag==false){
             	    $('#trailer_player').remove();

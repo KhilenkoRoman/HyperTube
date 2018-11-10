@@ -69,7 +69,7 @@
             {% if data.data.movie_count > 0 %}
                 {% for movie in data.data.movies %}
                     <li class="results-item-wrap">
-                        <a href="/player/{{ movie.id }}">
+                        <a href="/player/{{ movie.id }}" title="{{ movie.title_english }}">
                             {% if movie.upl_cover %}
                                 <div class="div_poster">
                                     <img src="/media/{{ movie.upl_cover }}" class="poster">
