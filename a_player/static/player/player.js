@@ -1,3 +1,6 @@
+// let film = document.getElementById('film').innerHTML;
+// console.log(film);
+
 function add_comment() {
 	event.preventDefault();
     let comment = document.getElementById('comment_text'),

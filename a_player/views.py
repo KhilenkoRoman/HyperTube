@@ -58,7 +58,6 @@ def player(request, film_id):
         return redirect('index')
     film = film[0]
     comments = CommentModel.objects.filter(film=film)
-
     # search for cast
     if not film.cast:
         flag = False
