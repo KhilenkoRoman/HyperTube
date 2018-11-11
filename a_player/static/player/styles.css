@@ -21,7 +21,7 @@
 #film_poster_info {
     display: flex;
     width: 95%;
-    flex-direction: column;
+    /*flex-direction: row;*/
     /*background: #abdcab2e;*/
 }
 
@@ -181,10 +181,23 @@
     width: 80px;
     border-radius: 50%;
     left: 10px;
-    top: 40px;
+    top: 50px;
     border: 1px solid #8c8a8a3b;
     position: relative;
     align-self: flex-start;
+}
+
+.no_avatar {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    left: 10px;
+    top: 50px;
+    border: 1px solid #8c8a8a3b;
+    position: relative;
+    align-self: flex-start;
+    background: url(default_photo.png);
+    background-size: cover;
 }
 
 .comment p{
@@ -200,16 +213,31 @@
     width: 80%;
 }
 
+.com_name_and_del {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    padding-bottom: 5px;
+}
+
 .com_name {
 	position: relative;
-    /*text-align: left;*/
-    left: 100px;
-	bottom: 5px;
-    align-self: flex-start;
+    /*!*text-align: left;*!*/
+    left: 50px;
+	/*bottom: 5px;*/
+    /*align-self: flex-start;*/
 }
 
 .com_name i{
 	margin-right: 10px;
+}
+
+.del_comm {
+    /*position: relative;*/
+    /*right: -10px;*/
+    /*bottom: 5px;*/
+    /*align-self: flex-end;*/
+    cursor: pointer;
 }
 
 .film_info{

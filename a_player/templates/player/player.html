@@ -73,15 +73,29 @@
         <div class="info_wrap">
             <div class="comments_wrap">
                 <form class="leave_comment" onsubmit=add_comment()>
-                    <img src="/media/{{ user.avatar }}">
+                    {% if user.avatar %}
+                        <img src="/media/{{ user.avatar }}">
+                    {% else %}
+                        <img src="{% static "user/default_photo.png" %}">
+                    {% endif %}
+
                     <textarea id="comment_text"></textarea>
                     <button type="submit">Add comment</button>
                 </form>
                 <ul class="comments">
                     {% for comment in comments %}
                     <li class="comment">
-                        <img class="comment_avatar" src="/media/{{ comment.user.avatar }}">
-                        <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>{{ comment.user.first_name }} {{ comment.user.last_name }}</div>
+                        {% if comment.user.avatar %}
+                            <img class="comment_avatar" src="/media/{{ comment.user.avatar }}">
+                        {% else %}
+                            <img class="comment_avatar" src="{% static "user/default_photo.png" %}">
+                        {% endif %}
+                        <div class="com_name_and_del">
+                            <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>{{ comment.user.first_name }} {{ comment.user.last_name }}</div>
+                            {% if comment.user == user %}
+                                <i class="fas fa-times del_comm" onclick="del_comm({{ comment.id }}, this)"></i>
+                            {% endif %}
+                        </div>
                         <p>{{ comment.text }}</p>
                     </li>
                     {% endfor %}
@@ -120,6 +134,7 @@
 <div class="none" id="trailer_code">{{ film_data.yt_trailer_code }}</div>
 <div class="none" id="user_info">{{ user.first_name }} {{ user.last_name }}</div>
 <div class="none" id="user_avatar">{{ user.avatar }}</div>
+
 
 {#<div class="none" id="torrent_downloaded">{{ torrent.downloaded }}</div>#}
 {#<div class="none" id="quality">{{ torrent.quality }}</div>#}
