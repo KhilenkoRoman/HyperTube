@@ -36,7 +36,7 @@
                 <p><span>Release year: </span>{{ film_data.year }}</p>
                 <p><span>Genres: </span>
                     {% for genre in film_data.genres %}
-                        {{ genre }}
+                        {{ genre|lower }}{% if genre != film_data.genres|last %},{% endif %}
                     {% endfor %}
                 </p>
                 <p><span>Runtime: </span>{{ film_data.runtime }}</p>
@@ -76,7 +76,7 @@
                     {% if user.avatar %}
                         <img src="/media/{{ user.avatar }}">
                     {% else %}
-                        <img src="{% static "user/default_photo.png" %}">
+                        <img src="{% static "player/default_photo.png" %}">
                     {% endif %}
 
                     <textarea id="comment_text"></textarea>
@@ -88,7 +88,7 @@
                         {% if comment.user.avatar %}
                             <img class="comment_avatar" src="/media/{{ comment.user.avatar }}">
                         {% else %}
-                            <img class="comment_avatar" src="{% static "user/default_photo.png" %}">
+                            <img class="comment_avatar" src="{% static "player/default_photo.png" %}">
                         {% endif %}
                         <div class="com_name_and_del">
                             <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>{{ comment.user.first_name }} {{ comment.user.last_name }}</div>
@@ -105,13 +105,35 @@
             <div class="film_info">
                 <ul class="info_list">
                     {% for actor in cast %}
-                        {% if actor.cycle_tag == 0 %}
+                        {% if actor.cycle_tag == 0 and actor.profile_path %}
                             <li class="info_elem" style="text-align: left">
-                            <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}" style="margin-right: 10px">
-                            <div>
-                                <p class="info_label">{{ actor.name }}</p>
-                                <p class="info_body">as: {{ actor.character }}</p>
-                            </div>
+                                <div style="margin-right: 10px" class="info_elem_img">
+                                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}" >
+                                </div>
+                                <div>
+                                    <p class="info_label">{{ actor.name }}</p>
+                                    <p class="info_body">as: {{ actor.character }}</p>
+                                </div>
+                            </li>
+                        {% elif actor.cycle_tag != 0 and actor.profile_path %}
+                            <li class="info_elem" style="text-align: right; justify-content: flex-end">
+                                <div>
+                                    <p class="info_label">{{ actor.name }}</p>
+                                    <p class="info_body">as: {{ actor.character }}</p>
+                                </div>
+                                <div class="info_elem_img" style="margin-left: 10px">
+                                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}">
+                                </div>
+                            </li>
+                        {% elif actor.cycle_tag == 0 and not actor.profile_path %}
+                            <li class="info_elem" style="text-align: left">
+                                <div class="info_elem_img" style="margin-right: 10px">
+                                    <img src="{% static "player/no_actor_photo.png" %}">
+                                </div>
+                                <div>
+                                    <p class="info_label">{{ actor.name }}</p>
+                                    <p class="info_body">as: {{ actor.character }}</p>
+                                </div>
                             </li>
                         {% else %}
                             <li class="info_elem" style="text-align: right; justify-content: flex-end">
@@ -119,7 +141,9 @@
                                 <p class="info_label">{{ actor.name }}</p>
                                 <p class="info_body">as: {{ actor.character }}</p>
                             </div>
-                            <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}" style="margin-left: 10px">
+                            <div class="info_elem_img" style="margin-left: 10px">
+                                <img src="{% static "player/no_actor_photo.png" %}">
+                            </div>
                             </li>
                         {% endif %}
                     {% endfor %}

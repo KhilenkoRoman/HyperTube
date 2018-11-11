@@ -272,8 +272,15 @@
     margin: 5px 0;
 }
 
-.info_elem img{
+.info_elem_img{
     height: 100px;
+    width: 70px;
+    overflow: hidden;
+}
+
+.info_elem_img img {
+    width: 100%;
+    overflow: hidden;
 }
 
 #progressbar{
