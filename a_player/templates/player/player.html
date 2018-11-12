@@ -104,13 +104,14 @@
                         </div>
                         {% if comment.user == user %}
                             <form
+                                    id="edit_form_{{ comment.id }}"
                                     class="comm_text edit_comm"
-                                    onclick="edit_form_onclick({{ comment.id }})"
                                     onsubmit="edit_comm({{ comment.id }})"
                             >
                                 <input
+                                        id="edit_input_{{ comment.id }}"
+                                        onfocus="edit_input_onfocus({{ comment.id }})"
                                         value="{{ comment.text }}"
-                                        onblur="comment_onblur(this, {{ comment.id }}, '{{ comment.text }}')"
                                 >
                                 <button
                                         id="edit_comm_{{ comment.id }}"
