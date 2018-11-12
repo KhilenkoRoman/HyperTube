@@ -16,7 +16,7 @@ def save_cover(film, cover_url):
 
     r = settings.SCRAPER_SESION.get(cover_url)
     if r.status_code == 200:
-        print("qweqwe")
+        # print("qweqwe")
         temp_file = NamedTemporaryFile(delete=True)
         temp_file.write(r.content)
         temp_file.flush()
@@ -76,12 +76,12 @@ def search(request):
 def filmSearch(request, film_name=""):
     context = {
         'APP_PATH': settings.APP_PATH,
-        'data': api_request(film_name, 30, request.GET.get('page'), "All", request.GET.get('genre'), request.GET.get('sort_by'))
+        'data': api_request(film_name, 30, request.GET.get('page'), "All", request.GET.get('genre'))
     }
     return render(request, 'search/search.html', context)
 
 
 def ajax_search_request(request):
     data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'),
-                       request.POST.get('sort_by'))
+                       request.POST.get('sort_by'), request.POST.get('order_by'))
     return JsonResponse(data, safe=False)

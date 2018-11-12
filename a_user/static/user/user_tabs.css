@@ -1,7 +1,7 @@
 .edit_tabs {
     /*min-width: 320px;*/
     width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 100px;
     background: #fff;
     height: 465px;
     overflow: hidden;

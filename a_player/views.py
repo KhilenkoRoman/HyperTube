@@ -58,7 +58,6 @@ def player(request, film_id):
         return redirect('index')
     film = film[0]
     comments = CommentModel.objects.filter(film=film)
-
     # search for cast
     if not film.cast:
         flag = False
@@ -116,13 +115,27 @@ def ajax_comment(request):
     film = FilmModel.objects.filter(imdb_id=imdb_id)
     if len(film) == 0:
         return HttpResponse("error4")
-    CommentModel.objects.create(
+    newcomment = CommentModel.objects.create(
         film=film[0],
         user=request.user,
         text=comment,
         date=timezone.now()
     )
-    return HttpResponse("sucsess")
+    return HttpResponse(str(newcomment.id))
+
+
+def ajax_del_comment(request):
+    if request.method != 'POST':
+        return HttpResponse("error1")
+    if not request.user.is_authenticated:
+        return HttpResponse("error2")
+    imdb_id = request.POST.get('imdb_id')
+    commentId = request.POST.get('commentId')
+    film = FilmModel.objects.filter(imdb_id=imdb_id)
+    if len(film) == 0:
+        return HttpResponse("error4")
+    CommentModel.objects.filter(pk=commentId).delete()
+    return HttpResponse("success")
 
 
 def ajax_torr_info(request):
