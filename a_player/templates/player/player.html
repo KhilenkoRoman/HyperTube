@@ -28,9 +28,15 @@
 
     <div id="about_film">
         <div id="film_poster_info">
-            <div id="film_poster">
-                <img src="/media/{{ film.cover }}">
-            </div>
+            {% if film.cover %}
+                <div id="film_poster">
+                    <img src="/media/{{ film.cover }}">
+                </div>
+            {% else %}
+                 <div id="film_poster" style="display: flex; justify-content: center; align-items: center; flex-direction: row">
+                    <img src="{% static "search/nocover.png" %}" style="width: auto">
+                 </div>
+            {% endif %}
             <div id="film_info">
                 <p><span>Rating: </span>{{ film_data.rating }}</p>
                 <p><span>Release year: </span>{{ film_data.year }}</p>
@@ -96,7 +102,26 @@
                                 <i class="fas fa-times del_comm" onclick="del_comm({{ comment.id }}, this)"></i>
                             {% endif %}
                         </div>
-                        <p>{{ comment.text }}</p>
+                        {% if comment.user == user %}
+                            <form
+                                    class="comm_text edit_comm"
+                                    onclick="edit_form_onclick({{ comment.id }})"
+                                    onsubmit="edit_comm({{ comment.id }})"
+                            >
+                                <input
+                                        value="{{ comment.text }}"
+                                        onblur="comment_onblur(this, {{ comment.id }}, '{{ comment.text }}')"
+                                >
+                                <button
+                                        id="edit_comm_{{ comment.id }}"
+                                        type="submit"
+                                >Edit</button>
+                            </form>
+                        {% else %}
+                            <div class="comm_text">
+                                <p>{{ comment.text }}</p>
+                            </div>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
@@ -107,28 +132,12 @@
                     {% for actor in cast %}
                         {% if actor.cycle_tag == 0 and actor.profile_path %}
                             <li class="info_elem" style="text-align: left">
-                                <div style="margin-right: 10px" class="info_elem_img">
-                                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}" >
-                                </div>
-                                <div>
-                                    <p class="info_label">{{ actor.name }}</p>
-                                    <p class="info_body">as: {{ actor.character }}</p>
-                                </div>
-                            </li>
-                        {% elif actor.cycle_tag != 0 and actor.profile_path %}
-                            <li class="info_elem" style="text-align: right; justify-content: flex-end">
-                                <div>
-                                    <p class="info_label">{{ actor.name }}</p>
-                                    <p class="info_body">as: {{ actor.character }}</p>
-                                </div>
-                                <div class="info_elem_img" style="margin-left: 10px">
-                                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}">
-                                </div>
-                            </li>
-                        {% elif actor.cycle_tag == 0 and not actor.profile_path %}
-                            <li class="info_elem" style="text-align: left">
                                 <div class="info_elem_img" style="margin-right: 10px">
-                                    <img src="{% static "player/no_actor_photo.png" %}">
+                                    {% if actor.profile_path %}
+                                        <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}" >
+                                    {% else %}
+                                        <img src="{% static "player/no_actor_photo.png" %}">
+                                    {% endif %}
                                 </div>
                                 <div>
                                     <p class="info_label">{{ actor.name }}</p>
@@ -142,7 +151,11 @@
                                 <p class="info_body">as: {{ actor.character }}</p>
                             </div>
                             <div class="info_elem_img" style="margin-left: 10px">
-                                <img src="{% static "player/no_actor_photo.png" %}">
+                                {% if actor.profile_path %}
+                                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}" >
+                                {% else %}
+                                    <img src="{% static "player/no_actor_photo.png" %}">
+                                {% endif %}
                             </div>
                             </li>
                         {% endif %}

@@ -200,19 +200,6 @@
     background-size: cover;
 }
 
-.comment p{
-	margin: 0;
-    border-radius: 5px;
-    border: 1px solid #c7c7c7;
-    text-align: left;
-	padding: 20px;
-	font-size: 15px;
-    font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
-	color: #3e3e3e;
-	background: #ffffff30;
-    width: 80%;
-}
-
 .com_name_and_del {
     display: flex;
     justify-content: space-between;
@@ -233,11 +220,55 @@
 }
 
 .del_comm {
-    /*position: relative;*/
-    /*right: -10px;*/
-    /*bottom: 5px;*/
-    /*align-self: flex-end;*/
     cursor: pointer;
+}
+
+.comm_text {
+    margin: 0;
+    border-radius: 5px;
+    border: 1px solid #c7c7c7;
+    text-align: left;
+	padding: 10px;
+	font-size: 15px;
+    font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+	color: #3e3e3e;
+	background: #ffffff30;
+    width: 80%;
+}
+
+.comm_text p {
+    padding: 0 10px;
+}
+
+.edit_comm {
+    display: flex;
+    /*padding: 25px 10px;*/
+}
+
+.edit_comm input {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 15px;
+}
+
+.edit_comm button {
+    margin: 0 auto;
+    background-color: #8199a3;
+    border: none;
+    /*padding: 10px;*/
+    width: 110px;
+    height: inherit;
+    border-radius: 3px;
+    box-shadow: 1px 5px 20px -5px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    /*-moz-transition: all 0.5s ease-out;*/
+    /*-webkit-transition: all 0.5s ease-out;*/
+    /*-o-transition: all 0.5s ease-out;*/
+    /*transition: all 0.5s ease-out;*/
+    visibility: hidden;
 }
 
 .film_info{

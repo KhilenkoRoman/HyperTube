@@ -102,3 +102,32 @@ function del_comm(commentId, element) {
     	}
 	});
 }
+
+function comment_onblur(input, id, text) {
+	document.getElementById('edit_comm_' + id).style.visibility = 'hidden';
+	input.value = text;
+}
+
+function edit_form_onclick(id) {
+	let forms = document.getElementsByClassName('edit_comm');
+	for (form of forms) {
+		form.childNodes[3].style.visibility = 'hidden';
+	}
+	document.getElementById('edit_comm_' + id).style.visibility = 'visible';
+}
+
+function edit_comm(commentId) {
+	event.preventDefault();
+	$.ajax({
+    	type:"POST",
+    	url: '/player/ajax_edit_comment',
+		data: {
+    		imdb_id: imdb_id.innerHTML,
+            commentId: commentId,
+            csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+		},
+    	success: function(response){
+
+    	}
+	});
+}
