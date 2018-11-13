@@ -327,10 +327,6 @@ input:checked + label {
     .background img{
         width: 160%;
     }
-
-    /*#content3 {*/
-        /*height: 418px;*/
-    /*}*/
 }
 
 #viewed_films {
@@ -408,13 +404,8 @@ input:checked + label {
         width: auto;
     }
 
-    /*#content3 {*/
-        /*height: 418px;*/
-    /*}*/
+    .tabs label {
+        width: 98px;
+        padding: 9px;
+    }
 }
-
-/*@media screen and (max-width: 600px) {*/
-    /*#content3 {*/
-        /*height: 550px;*/
-    /*}*/
-/*}*/

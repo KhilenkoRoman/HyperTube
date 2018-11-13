@@ -25,13 +25,13 @@
         <div class="tabs">
 
             <input id="tab1" type="radio" name="tabs" {% if not last_social_connect %}checked{% endif %}>
-            <label for="tab1"><i class="fas fa-user-alt"></i> Profile</label>
+            <label for="tab1"><i class="fas fa-user-alt"></i>{% if request.session.lang == 2 %} Профиль{% else %} Profile{% endif %}</label>
 
             <input id="tab2" type="radio" name="tabs" {% if last_social_connect %}checked{% endif %}>
-            <label for="tab2"><i class="fas fa-lock"></i> Accounts</label>
+            <label for="tab2"><i class="fas fa-lock"></i>{% if request.session.lang == 2 %} Аккаунты{% else %} Accounts{% endif %}</label>
 
             <input id="tab3" type="radio" name="tabs">
-            <label for="tab3"><i class="fas fa-video"></i> Viewed films</label>
+            <label for="tab3"><i class="fas fa-video"></i>{% if request.session.lang == 2 %} Фильмы {% else %}Films{% endif %}</label>
 
             <section id="content1">
                 <div id="photo_section">
@@ -42,7 +42,7 @@
                     {% endif %}
 
                     <label for="image_to_upload" class="custom-file-upload" id="image_to_upload_label">
-                    Upload
+                    {% if request.session.lang == 2 %}Загрузить{% else %}Upload{% endif %}
                     </label>
                     <input id="image_to_upload" type="file"/>
 
@@ -51,19 +51,19 @@
                     <form onsubmit="usr_info_change()">
                         <div id="names">
                             <div>
-                                <p>First Name</p>
+                                <p>{% if request.session.lang == 2 %}Имя{% else %}First Name{% endif %}</p>
                                 <input id="f_name" class="input_index" type="text" placeholder="fitst name" value="{{ profile_user.first_name }}" required>
                             </div>
                             <div>
-                                <p>Last Name</p>
+                                <p>{% if request.session.lang == 2 %}Фамилия{% else %}Last Name{% endif %}</p>
                                 <input id="l_name" class="input_index" type="text" placeholder="last name" value="{{ profile_user.last_name }}" required>
                             </div>
                         </div>
                             <div id="email_in">
-                                <p>Email</p>
+                                <p>{% if request.session.lang == 2 %}Почта{% else %}Email{% endif %}</p>
                                 <input id="email" class="input_index" type="email" placeholder="email" value="{{ profile_user.email }}" required>
                             </div>
-                        <button id="change_info_btn">Save</button>
+                        <button id="change_info_btn">{% if request.session.lang == 2 %}Cохранить{% else %}Save{% endif %}</button>
                     </form>
                 </div>
             </section>
@@ -73,20 +73,20 @@
                     <form onsubmit="usr_pwd_change()">
                         <div id="pass">
                             <div>
-                                <p>Password</p>
+                                <p>{% if request.session.lang == 2 %}Пароль{% else %}Password{% endif %}</p>
                                 <input id="usr_pwd1" class="input_index" type="password" placeholder="new password" required>
                             </div>
                             <div>
-                                <p>Onse more</p>
+                                <p>{% if request.session.lang == 2 %}Еще разок{% else %}Onse more{% endif %}</p>
                                 <input id="usr_pwd2" class="input_index" type="password" placeholder="repeat password" required>
                             </div>
                         </div>
-                        <button id="usr_pwd_btn">Save</button>
+                        <button id="usr_pwd_btn">{% if request.session.lang == 2 %}Cохранить{% else %}Save{% endif %}</button>
                     </form>
                 </div>
 
                 <div id="social_section">
-                    <p>Connect social accounts</p>
+                    <p>{% if request.session.lang == 2 %}Социальные сети{% else %}Connect social accounts{% endif %}</p>
                     <table>
                         <tr>
                             {% if "provider42" in active_providers %}
@@ -131,7 +131,7 @@
                         </a>
                         {% endfor %}
                     {% else %}
-                        <p>You have not watched any movie :(</p>
+                        <p>{% if request.session.lang == 2 %}Тут должны быть фильмы, а их нет :({% else %}You have not watched any movie :({% endif %}</p>
                     {% endif %}
                 </div>
             </section>
