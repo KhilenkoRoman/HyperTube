@@ -30,6 +30,8 @@
             <input id="tab2" type="radio" name="tabs" {% if last_social_connect %}checked{% endif %}>
             <label for="tab2"><i class="fas fa-lock"></i> Accounts</label>
 
+            <input id="tab3" type="radio" name="tabs">
+            <label for="tab3"><i class="fas fa-video"></i> Viewed films</label>
 
             <section id="content1">
                 <div id="photo_section">
@@ -112,6 +114,26 @@
                     </table>
                 </div>
 
+            </section>
+
+            <section id="content3">
+                <div id="viewed_films">
+                    {% if viewed_movie_count > 0 %}
+                        {% for movie in viewed_movie %}
+                        <a href="{{ movie.id }}" title="{{ movie.title_english }}">
+                            <div>
+                                {% if movie.poster %}
+                                    <img src="/media/covers/{{ movie.poster }}">
+                                {% else %}
+                                    <img src="{% static "search/nocover.png" %}">
+                                {% endif %}
+                            </div>
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                        <p>You have not watched any movie :(</p>
+                    {% endif %}
+                </div>
             </section>
 
 
