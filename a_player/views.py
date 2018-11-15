@@ -28,9 +28,12 @@ def add_torrent_model(film_id, quality):
         torrent = TorrentModel.objects.create(
             film=film,
             quality=quality,
+            date=timezone.now()
         )
     else:
         torrent = TorrentModel.objects.get(film=film, quality=quality)
+        torrent.date = timezone.now()
+        torrent.save()
 
     # save torrent file
     if not torrent.torrent_file:
