@@ -27,34 +27,34 @@
 <div id="main_search">
 
     <form id="search_form">
-        <input id="head_search_input" type="text" placeholder="film">
-        <button id="head_search_btn" type="submit">SEARCH</button>
+        <input id="head_search_input" type="text" placeholder="{% if request.session.lang == 2 %}Фильм{% else %}Film{% endif %}">
+        <button id="head_search_btn" type="submit">{% if request.session.lang == 2 %}ПОИСК{% else %}SEARCH{% endif %}</button>
     </form>
     <div class="styled-select">
         <select name="genre" form="search_form" id="genre_select">
-            <option value="" selected disabled>Select genre</option>
-            <option value="">All</option>
-            <option value="Comedy">Comedy</option>
-            <option value="Sci-Fi">Sci-Fi</option>
-            <option value="Horror">Horror</option>
-            <option value="Romance">Romance</option>
-            <option value="Action">Action</option>
-            <option value="Thriller">Thriller</option>
-            <option value="Drama">Drama</option>
-            <option value="Crime">Crime</option>
-            <option value="Animation">Animation</option>
-            <option value="Adventure">Adventure</option>
-            <option value="Fantasy">Fantasy</option>
+            <option value="" selected disabled>{% if request.session.lang == 2 %}Жанр{% else %}Select genre{% endif %}</option>
+            <option value="">{% if request.session.lang == 2 %}Все{% else %}All{% endif %}</option>
+            <option value="Comedy">{% if request.session.lang == 2 %}Комедия{% else %}Comedy{% endif %}</option>
+            <option value="Sci-Fi">{% if request.session.lang == 2 %}Научно-фантастический{% else %}Sci-Fi{% endif %}</option>
+            <option value="Horror">{% if request.session.lang == 2 %}Ужасы{% else %}Horror{% endif %}</option>
+            <option value="Romance">{% if request.session.lang == 2 %}Мелодрамма{% else %}Romance{% endif %}</option>
+            <option value="Action">{% if request.session.lang == 2 %}Боевик{% else %}Action{% endif %}</option>
+            <option value="Thriller">{% if request.session.lang == 2 %}Триллер{% else %}Thriller{% endif %}</option>
+            <option value="Drama">{% if request.session.lang == 2 %}Драма{% else %}Drama{% endif %}</option>
+            <option value="Crime">{% if request.session.lang == 2 %}Криминал{% else %}Crime{% endif %}</option>
+            <option value="Animation">{% if request.session.lang == 2 %}Мультфильм{% else %}Animation{% endif %}</option>
+            <option value="Adventure">{% if request.session.lang == 2 %}Приключения{% else %}Adventure{% endif %}</option>
+            <option value="Fantasy">{% if request.session.lang == 2 %}Фантастика{% else %}Fantasy{% endif %}</option>
         </select>
 
         <select name="sort_by" form="search_form" id="sort_by_select">
-            <option value="" selected disabled>Sort by</option>
-            <option value="rating_desc">Rating: from high to low</option>
-            <option value="rating_asc">Rating: from low to high</option>
-            <option value="title_asc">Title: A-Z</option>
-            <option value="title_desc">Title: Z-A</option>
-            <option value="year_desc">Year: from new to old</option>
-            <option value="year_asc">Year: from old to new</option>
+            <option value="" selected disabled>{% if request.session.lang == 2 %}Сортировать  по{% else %}Sort by{% endif %}</option>
+            <option value="rating_desc">{% if request.session.lang == 2 %}Рейтинг: от большего к меньшему{% else %}Rating: from high to low{% endif %}</option>
+            <option value="rating_asc">{% if request.session.lang == 2 %}Рейтинг: от меньшего к большему{% else %}Rating: from low to high{% endif %}</option>
+            <option value="title_asc">{% if request.session.lang == 2 %}Название: А-Я{% else %}Title: A-Z{% endif %}</option>
+            <option value="title_desc">{% if request.session.lang == 2 %}Название: Я-А{% else %}Title: Z-A{% endif %}</option>
+            <option value="year_desc">{% if request.session.lang == 2 %}Год: от новых к старым{% else %}Year: from new to old{% endif %}</option>
+            <option value="year_asc">{% if request.session.lang == 2 %}Год: от старых к новым{% else %}Year: from old to new{% endif %}</option>
 
 {#            <option value="peers">Peers</option>#}
 {#            <option value="seeds">Seeds</option>#}

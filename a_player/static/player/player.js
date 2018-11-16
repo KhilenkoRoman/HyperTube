@@ -1,5 +1,6 @@
 // let film = document.getElementById('film').innerHTML;
 // console.log(film);
+let i = 0;
 
 function add_comment() {
 	event.preventDefault();
@@ -103,20 +104,9 @@ function del_comm(commentId, element) {
 	});
 }
 
-function comment_onblur(input, id, text) {
-	document.getElementById('edit_comm_' + id).style.visibility = 'hidden';
-	input.value = text;
-}
-
-function edit_form_onclick(id) {
-	let forms = document.getElementsByClassName('edit_comm');
-	for (form of forms) {
-		form.childNodes[3].style.visibility = 'hidden';
-	}
-	document.getElementById('edit_comm_' + id).style.visibility = 'visible';
-}
-
 function edit_comm(commentId) {
+	let comm = document.getElementById('edit_input_' + commentId),
+		imdb_id = document.getElementById('imdb_id');
 	event.preventDefault();
 	$.ajax({
     	type:"POST",
@@ -124,10 +114,26 @@ function edit_comm(commentId) {
 		data: {
     		imdb_id: imdb_id.innerHTML,
             commentId: commentId,
+			commentText: comm.value,
             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-
+    		let form = document.getElementById('edit_form_' + commentId),
+				button = document.getElementById('edit_comm_' + commentId);
+			comm.defaultValue = comm.value;
+			form.style.background = '#ffffff30';
+			button.style.visibility = 'hidden';
     	}
 	});
+}
+
+function edit_input_onfocus(id) {
+	let forms = document.getElementsByClassName('edit_comm');
+	for (form of forms) {
+		form.style.background = '#ffffff30';
+		form.childNodes[3].style.visibility = 'hidden';
+		form.childNodes[1].value = form.childNodes[1].defaultValue;
+	}
+	document.getElementById('edit_form_' + id).style.background = 'white';
+	document.getElementById('edit_comm_' + id).style.visibility = 'visible';
 }
