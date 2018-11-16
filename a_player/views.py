@@ -13,20 +13,27 @@ from a_player.torrent_handler import add_torrent, torrent_info, torrent_status
 import cfscrape
 from django.conf import settings
 import os
+import webvtt
+
 
 # https://localhost:8000/player/3175
 # https://localhost:8000/player/7893
 # https://localhost:8000/player/3709
 
 
-def get_torrent_model(film, quality):
+def add_torrent_model(film_id, quality):
+    quality = int(quality)
+    film = FilmModel.objects.get(film_id=film_id)
     if len(TorrentModel.objects.filter(film=film, quality=quality)) == 0:
         torrent = TorrentModel.objects.create(
             film=film,
             quality=quality,
+            date=timezone.now()
         )
     else:
         torrent = TorrentModel.objects.get(film=film, quality=quality)
+        torrent.date = timezone.now()
+        torrent.save()
 
     # save torrent file
     if not torrent.torrent_file:
@@ -49,7 +56,38 @@ def get_torrent_model(film, quality):
     if not settings.TORRENTS.get(film.film_id + str(quality)):
         add_torrent(torrent)
 
-    return torrent
+
+def search_subs(film, lang):
+    url = 'https://subtitle-api.org/videos/{}/subtitles'.format(film.imdb_id)
+    params = dict(
+        lang=lang,
+        format="SUBRIP",
+    )
+    r = requests.get(url=url, params=params)
+    if r.status_code != 200:
+        return
+    resp = json.loads(r.text)
+
+    for item in resp['items']:
+        url = 'https://subtitle-api.org/videos/{}/subtitles/{}'.format(film.imdb_id, item['id'])
+        r = requests.get(url=url, params=params)
+        if r.status_code != 200:
+            continue
+        temp_file = NamedTemporaryFile(delete=True)
+        temp_file.write(r.content)
+        temp_file.flush()
+
+        if lang == "ru":
+            film.ru_sub_srt.save(film.imdb_id + "_ru.srt", File(temp_file), save=True)
+            webvtt.from_srt(settings.MEDIA_ROOT + '/' + str(film.ru_sub_srt)).save()
+            film.ru_sub_vtt = film.imdb_id + "_ru.vtt"
+            film.save()
+        else:
+            film.en_sub_srt.save(film.imdb_id + "_en.srt", File(temp_file), save=True)
+            webvtt.from_srt(settings.MEDIA_ROOT + '/' + str(film.en_sub_srt)).save()
+            film.en_sub_vtt = film.imdb_id + "_en.vtt"
+            film.save()
+        return
 
 
 def player(request, film_id):
@@ -81,6 +119,7 @@ def player(request, film_id):
                 cast = r.json()['cast']
                 flag = True
         if flag:
+            cycle_tag = 0
             cast_len = len(cast)
             if cast_len > 10:
                 cast_len = 10
@@ -89,6 +128,11 @@ def player(request, film_id):
                 cast[i]["cycle_tag"] = i % 2
             film.cast = json.dumps(cast)
             film.save()
+
+    if not film.en_sub_vtt:
+        search_subs(film, 'en')
+    if not film.ru_sub_vtt:
+        search_subs(film, 'ru')
 
     if film.cast:
         cast = json.loads(film.cast)
@@ -116,13 +160,27 @@ def ajax_comment(request):
     film = FilmModel.objects.filter(imdb_id=imdb_id)
     if len(film) == 0:
         return HttpResponse("error4")
-    CommentModel.objects.create(
+    newcomment = CommentModel.objects.create(
         film=film[0],
         user=request.user,
         text=comment,
         date=timezone.now()
     )
-    return HttpResponse("sucsess")
+    return HttpResponse(str(newcomment.id))
+
+
+def ajax_del_comment(request):
+    if request.method != 'POST':
+        return HttpResponse("error1")
+    if not request.user.is_authenticated:
+        return HttpResponse("error2")
+    imdb_id = request.POST.get('imdb_id')
+    comment_id = request.POST.get('commentId')
+    film = FilmModel.objects.filter(imdb_id=imdb_id)
+    if len(film) == 0:
+        return HttpResponse("error4")
+    CommentModel.objects.filter(pk=comment_id).delete()
+    return HttpResponse("success")
 
 
 def ajax_torr_info(request):
@@ -133,6 +191,10 @@ def ajax_torr_info(request):
     quality = request.POST.get('quality')
 
     response = torrent_status(film_id, quality)
+    if response['error'] == 1:
+        add_torrent_model(film_id, quality)
+        response = torrent_status(film_id, quality)
+
     film = FilmModel.objects.get(film_id=film_id)
     torrent = TorrentModel.objects.get(film=film, quality=quality)
 
@@ -166,64 +228,37 @@ def ajax_torr_info(request):
 
 
 def test(request):
-    # query_term=""
-    # limit=30
-    # page=1
-    # quality="All"
-    # genre=""
-    # sort_by="rating"
-    # order_by="desc"
-    #
-    #
-    #
-    # url = "https://yts.am/api/v2/list_movies.json"
+    imdb_id = 'tt0468569'
+
+    path = settings.MEDIA_ROOT + '/subtitles/The.Dark.Knight.DVDRip.XviD-DoNE.1.srt'
+
+    webvtt.from_srt(path).save()
+
+    # tmd_id = r.json()['movie_results'][0]['id']
+    # url = 'https://subtitle-api.org/videos/{}/subtitles'.format(imdb_id)
     # params = dict(
-    #     query_term=query_term,
-    #     limit=limit,
-    #     page=page,
-    #     quality=quality,
-    #     genre=genre,
-    #     sort_by=sort_by,
-    #     order_by=order_by,
-    #     with_rt_ratings=1,
+    #     lang='ru',
     # )
-    #
-    # scraper = cfscrape.create_scraper()
-    # resp = scraper.get(url=url, params=params)
-    # data = resp.json()
-    # print(data)
+    # r = requests.get(url=url, params=params)
+    # if r.status_code == 200:
+    #     cast = r.json()['cast']
+    #     flag = True
+    # resp = json.loads(r.text)
+    # print(resp)
+    # print(resp['items'][0])
 
-    # https: // localhost: 8000 / player / 3175
+    sub_id = '70996799305168132214078791094'
 
-    # imdb_id = 'tt0468569'
-    # url = 'https://api.themoviedb.org/3/find/{}?api_key={}&language=en-US&external_source=imdb_id'.format(imdb_id, settings.TMD_API_KEY)
-
-    # url = 'https://api.themoviedb.org/3/movie/155/credits?api_key={}&language=ru'.format(settings.TMD_API_KEY)
-    #
-    # print(requests.get(url).content)
-
-    # print(torrent_status(7893, 0))
-    # print(torrent_status(789113, 1))
-    # print(requests.get("https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8"))
-
-    # scraper = cfscrape.create_scraper()
-    # print(scraper.get("https://yts.am/api/v2/list_movies.json").content)
-
-    # r = requests.get('http://en.wikipedia.org/wiki/Monty_Python')
-    # print(requests.get('http://en.wikipedia.org/wiki/Monty_Python'))
-    # data = resp.json()
-    # print(data)
-    # movie_count = len(data['data']['movies'])
-    # if movie_count > 0:
-    #     for i in range(movie_count):
-    #         if len(FilmModel.objects.filter(imdb_id=data['data']['movies'][i]['imdb_code'])) == 0:
-    #             FilmModel.objects.create(
-    #                 name=data['data']['movies'][i]['title'],
-    #                 imdb_id=data['data']['movies'][i]['imdb_code'],
-    #                 film_id=data['data']['movies'][i]['id'],
-    #                 data=json.dumps(data['data']['movies'][i]))
-    #
-    # # print(data['data']['movies'][3])
-    # return data
+    # url = 'https://subtitle-api.orgGET /videos/{}/subtitles/{}'.format(imdb_id, sub_id)
+    # params = dict(
+    #     lang='ru',
+    # )
+    # r = requests.get(url=url)
+    # # if r.status_code == 200:
+    # #     cast = r.json()['cast']
+    # #     flag = True
+    # resp = json.loads(r.text)
+    # print(resp)
+    # # print(len(resp['items']))
 
     return HttpResponse("qweqwe")

@@ -6,12 +6,13 @@ $(window).scroll(function () {
         $("#header-scroll").addClass("small");
         $("#sub_header").addClass("small");
         $("#head_logout_btn").addClass("small");
-
+        $("#menu").addClass("small");
     }
     else {
         $("#header-scroll").removeClass("small");
         $("#sub_header").removeClass("small");
         $("#head_logout_btn").removeClass("small");
+        $("#menu").removeClass("small");
     }
 });
 

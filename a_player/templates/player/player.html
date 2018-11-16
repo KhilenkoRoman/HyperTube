@@ -2,105 +2,175 @@
 {% load static %}
 {% block title %}{{ film.name }}{% endblock %}
 {% block styles %}
-
-
     <link rel="stylesheet" href="{% static "player/styles.css" %}" />
     <link rel="stylesheet" href="{% static "player/video-js.css" %}" />
     <link rel="stylesheet" href="{% static "search/styles.css" %}" />
 {% endblock %}
-{% block script %}
 
+{% block script %}
     <script src="{% static "player/video.js" %}"></script>
     <script src="{% static "player/player.js" %}"></script>
-
 {% endblock %}
 
 {% block main %}
-
 <div class="main_player">
 {% csrf_token %}
 
-{#popup#}
-<div class="b-container invisible">
-    <div class="b-popup-content">
-        <p id="popup_text">Text in Popup</p>
-        <button id="popup_ok">OK</button>
+    {#popup#}
+    <div class="b-container invisible">
+        <div class="b-popup-content">
+            <p id="popup_text">Text in Popup</p>
+            <button id="popup_ok">OK</button>
+        </div>
     </div>
-</div>
-<div class="b-popup invisible"></div>
-{#popup end#}
+    <div class="b-popup invisible"></div>
+    {#popup end#}
 
-<div id="main_player">
-<div id="ytplayer"></div>
-<div id="player_wrap">
-
-<video id="player" class="video-js none" controls preload="auto" poster="{% static "player/iron_man.jpg" %}" data-setup="{}">
-{#    {% if torrent.downloaded %}#}
-{#        <source src="/media{{ torrent.film_file }}" type='video/mp4'/>#}
-{#    {% endif %}#}
-{#    <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/eng/vtt' srclang='en' label='English' />#}
-{#    <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/spa/vtt' srclang='es' label='Spanish' />#}
-</video>
-</div>
-
-<div id="torrent_info">
-    {% if torrent.downloaded %}
-        <p>ready</p>
-    {% else %}
-        <p>starting download</p>
-    {% endif %}
-</div>
-
-<div class="info_wrap">
-    <div class="comments_wrap">
-        <form class="leave_comment" onsubmit=add_comment()>
-            <img src="{% static "user/default_photo.png" %}">
-            <textarea id="comment_text"></textarea>
-            <button type="submit">add comment</button>
-        </form>
-        <ul class="comments">
-            {% for comment in comments %}
-            <li class="comment">
-            <img class="comment_avatar" src="/media/{{ comment.user.avatar }}">
-            <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>{{ comment.user.first_name }} {{ comment.user.last_name }}</div>
-            <p>{{ comment.text }}</p>
-            </li>
-            {% endfor %}
-        </ul>
+    <div id="about_film">
+        <div id="film_poster_info">
+            {% if film.cover %}
+                <div id="film_poster">
+                    <img src="/media/{{ film.cover }}">
+                </div>
+            {% else %}
+                 <div id="film_poster" style="display: flex; justify-content: center; align-items: center; flex-direction: row">
+                    <img src="{% static "search/nocover.png" %}" style="width: auto">
+                 </div>
+            {% endif %}
+            <div id="film_info">
+                <p><span>Rating: </span>{{ film_data.rating }}</p>
+                <p><span>Release year: </span>{{ film_data.year }}</p>
+                <p><span>Genres: </span>
+                    {% for genre in film_data.genres %}
+                        {{ genre|lower }}{% if genre != film_data.genres|last %},{% endif %}
+                    {% endfor %}
+                </p>
+                <p><span>Runtime: </span>{{ film_data.runtime }}</p>
+                <p><span>What is the movie "{{ film_data.title }}" about:</span></p>
+                <p>{{ film_data.description_full }}</p>
+            </div>
+        </div>
     </div>
-    <div class="film_info">
-        <ul class="info_list">
-            {% for actor in cast %}
-                {% if actor.cycle_tag == 0 %}
-                    <li class="info_elem">
-                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}">
-                    <div>
-                        <p class="info_label">{{ actor.name }}</p>
-                        <p class="info_body">as: {{ actor.character }}</p>
-                    </div>
+
+    <div id="main_player">
+
+        <div id="player_wrap">
+            <iframe width="640" height="480" id="trailer_player" src="https://www.youtube.com/embed/{{ film_data.yt_trailer_code }}"></iframe>
+            <video id="player" class="video-js none" controls preload="auto" poster="{% static "player/iron_man.jpg" %}" data-setup="{}">
+                {% if film.en_sub_vtt %}<track kind='captions' src='/media/subtitles/{{ film.en_sub_vtt }}'  srclang='en' label='English' /> {% endif %}
+                {% if film.en_sub_vtt %}<track kind='captions' src='/media/subtitles/{{ film.ru_sub_vtt }}' srclang='ru' label='Russian' /> {% endif %}
+            </video>
+        </div>
+
+        <button class="download_btn" id="btn_low" onclick="download_torrent({{ film.film_id }}, '0'); document.getElementById('torrent_info').style.display = 'block'">Load 720</button>
+        <button class="download_btn" id="btn_high" onclick="download_torrent({{ film.film_id }}, '1'); document.getElementById('torrent_info').style.display = 'block'">Load 1080</button>
+
+        <div id="torrent_info">
+        {#    {% if torrent.downloaded %}#}
+        {#        <p>ready</p>#}
+        {#    {% else %}#}
+        {#        <p>starting download</p>#}
+        {#    {% endif %}#}
+            <div id="progressbar">
+                <span id="loading"></span>
+            </div>
+        </div>
+
+        <div class="info_wrap">
+            <div class="comments_wrap">
+                <form class="leave_comment" onsubmit=add_comment()>
+                    {% if user.avatar %}
+                        <img src="/media/{{ user.avatar }}">
+                    {% else %}
+                        <img src="{% static "player/default_photo.png" %}">
+                    {% endif %}
+
+                    <textarea id="comment_text"></textarea>
+                    <button type="submit">Add comment</button>
+                </form>
+                <ul class="comments">
+                    {% for comment in comments %}
+                    <li class="comment">
+                        {% if comment.user.avatar %}
+                            <img class="comment_avatar" src="/media/{{ comment.user.avatar }}">
+                        {% else %}
+                            <img class="comment_avatar" src="{% static "player/default_photo.png" %}">
+                        {% endif %}
+                        <div class="com_name_and_del">
+                            <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>{{ comment.user.first_name }} {{ comment.user.last_name }}</div>
+                            {% if comment.user == user %}
+                                <i class="fas fa-times del_comm" onclick="del_comm({{ comment.id }}, this)"></i>
+                            {% endif %}
+                        </div>
+                        {% if comment.user == user %}
+                            <form
+                                    class="comm_text edit_comm"
+                                    onclick="edit_form_onclick({{ comment.id }})"
+                                    onsubmit="edit_comm({{ comment.id }})">
+                                <input
+                                        value="{{ comment.text }}"
+                                        onblur="comment_onblur(this, {{ comment.id }}, '{{ comment.text }}')">
+                                <button
+                                        id="edit_comm_{{ comment.id }}"
+                                        type="submit"
+                                >Edit</button>
+                            </form>
+                        {% else %}
+                            <div class="comm_text">
+                                <p>{{ comment.text }}</p>
+                            </div>
+                        {% endif %}
                     </li>
-                {% else %}
-                    <li class="info_elem">
-                    <div>
-                        <p class="info_label">{{ actor.name }}</p>
-                        <p class="info_body">as: {{ actor.character }}</p>
-                    </div>
-                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}">
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="film_info">
+                <ul class="info_list">
+                    {% for actor in cast %}
+                        {% if actor.cycle_tag == 0 and actor.profile_path %}
+                            <li class="info_elem" style="text-align: left">
+                                <div class="info_elem_img" style="margin-right: 10px">
+                                    {% if actor.profile_path %}
+                                        <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}" >
+                                    {% else %}
+                                        <img src="{% static "player/no_actor_photo.png" %}">
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <p class="info_label">{{ actor.name }}</p>
+                                    <p class="info_body">as: {{ actor.character }}</p>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="info_elem" style="text-align: right; justify-content: flex-end">
+                            <div>
+                                <p class="info_label">{{ actor.name }}</p>
+                                <p class="info_body">as: {{ actor.character }}</p>
+                            </div>
+                            <div class="info_elem_img" style="margin-left: 10px">
+                                {% if actor.profile_path %}
+                                    <img src="https://image.tmdb.org/t/p//w185{{ actor.profile_path }}" >
+                                {% else %}
+                                    <img src="{% static "player/no_actor_photo.png" %}">
+                                {% endif %}
+                            </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
-</div>
-</div>
 <div class="none" id="film_id">{{ film.film_id }}</div>
 <div class="none" id="imdb_id">{{ film.imdb_id }}</div>
 <div class="none" id="trailer_code">{{ film_data.yt_trailer_code }}</div>
+<div class="none" id="user_info">{{ user.first_name }} {{ user.last_name }}</div>
+<div class="none" id="user_avatar">{{ user.avatar }}</div>
+
+
 {#<div class="none" id="torrent_downloaded">{{ torrent.downloaded }}</div>#}
 {#<div class="none" id="quality">{{ torrent.quality }}</div>#}
-
-
 {% endblock %}
-
