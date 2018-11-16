@@ -57,8 +57,8 @@
         <div id="player_wrap">
             <iframe width="640" height="480" id="trailer_player" src="https://www.youtube.com/embed/{{ film_data.yt_trailer_code }}"></iframe>
             <video id="player" class="video-js none" controls preload="auto" poster="{% static "player/iron_man.jpg" %}" data-setup="{}">
-            {#    <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/eng/vtt' srclang='en' label='English' />#}
-            {#    <track kind='captions' src='https://dotsub.com/media/5d5f008c-b5d5-466f-bb83-2b3cfa997992/c/spa/vtt' srclang='es' label='Spanish' />#}
+                {% if film.en_sub_vtt %}<track kind='captions' src='/media/subtitles/{{ film.en_sub_vtt }}'  srclang='en' label='English' /> {% endif %}
+                {% if film.en_sub_vtt %}<track kind='captions' src='/media/subtitles/{{ film.ru_sub_vtt }}' srclang='ru' label='Russian' /> {% endif %}
             </video>
         </div>
 
@@ -106,13 +106,13 @@
                             <form
                                     id="edit_form_{{ comment.id }}"
                                     class="comm_text edit_comm"
-                                    onsubmit="edit_comm({{ comment.id }})"
-                            >
+                                    onclick="edit_form_onclick({{ comment.id }})"
+                                    onsubmit="edit_comm({{ comment.id }})">
                                 <input
                                         id="edit_input_{{ comment.id }}"
                                         onfocus="edit_input_onfocus({{ comment.id }})"
                                         value="{{ comment.text }}"
-                                >
+                                        onblur="comment_onblur(this, {{ comment.id }}, '{{ comment.text }}')">
                                 <button
                                         id="edit_comm_{{ comment.id }}"
                                         type="submit"
@@ -177,4 +177,3 @@
 {#<div class="none" id="torrent_downloaded">{{ torrent.downloaded }}</div>#}
 {#<div class="none" id="quality">{{ torrent.quality }}</div>#}
 {% endblock %}
-

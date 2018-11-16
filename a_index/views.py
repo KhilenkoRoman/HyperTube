@@ -235,3 +235,7 @@ def change_lang(request, lang):
         request.session["lang"] = 2
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def eror_404(request):
+    return render(request, '404.html')

@@ -20,6 +20,8 @@ import allauth
 from django.views.static import serve
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.defaults import page_not_found
+import a_index.views as index_vievs
 
 admin.autodiscover()
 
@@ -35,3 +37,7 @@ urlpatterns = [
 
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [
+    re_path(r'.*', index_vievs.eror_404, name='eror_404'),
+]

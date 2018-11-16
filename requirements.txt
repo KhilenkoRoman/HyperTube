@@ -20,3 +20,4 @@ six==1.11.0
 urllib3==1.23
 Werkzeug==0.14.1
 cfscrape==1.9.5
+webvtt-py==0.4.2
