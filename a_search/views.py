@@ -46,22 +46,23 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
     data = resp.json()
 
     # save films to db
-    movie_count = len(data['data']['movies'])
-    if movie_count > 0:
-        for i in range(movie_count):
-            if len(FilmModel.objects.filter(imdb_id=data['data']['movies'][i]['imdb_code'])) == 0:
-                film = FilmModel.objects.create(
-                    name=data['data']['movies'][i]['title'],
-                    imdb_id=data['data']['movies'][i]['imdb_code'],
-                    film_id=data['data']['movies'][i]['id'],
-                    data=json.dumps(data['data']['movies'][i]))
-                save_cover(film, data['data']['movies'][i]['medium_cover_image'])
+    for element in data['data']:
+        if element == 'movies':
+            movie_count = len(data['data']['movies'])
+            if movie_count > 0:
+                for i in range(movie_count):
+                    if len(FilmModel.objects.filter(imdb_id=data['data']['movies'][i]['imdb_code'])) == 0:
+                        film = FilmModel.objects.create(
+                            name=data['data']['movies'][i]['title'],
+                            imdb_id=data['data']['movies'][i]['imdb_code'],
+                            film_id=data['data']['movies'][i]['id'],
+                            data=json.dumps(data['data']['movies'][i]))
+                        save_cover(film, data['data']['movies'][i]['medium_cover_image'])
 
-    # adding saved covers to response
-    for i in range(movie_count):
-        film = FilmModel.objects.get(imdb_id=data['data']['movies'][i]['imdb_code'])
-        data['data']['movies'][i]['upl_cover'] = str(film.cover)
-
+            # adding saved covers to response
+            for i in range(movie_count):
+                film = FilmModel.objects.get(imdb_id=data['data']['movies'][i]['imdb_code'])
+                data['data']['movies'][i]['upl_cover'] = str(film.cover)
     return data
 
 
