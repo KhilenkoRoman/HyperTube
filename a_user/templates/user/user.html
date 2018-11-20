@@ -137,6 +137,7 @@
             </section>
 
 
+
         </div>
         <div class="background">
             <img src="{% static "user/user_back.jpg" %}">
@@ -144,5 +145,8 @@
 
     </div>
 </div>
+    {% for film in film_history %}
+        {{ film.film }}<br>
+    {% endfor %}
 
 {% endblock %}
