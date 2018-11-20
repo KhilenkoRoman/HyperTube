@@ -5,7 +5,7 @@ import json
 import re
 from django.core.files import File
 from django.utils import timezone
-from a_player.models import FilmModel, CommentModel, TorrentModel
+from a_player.models import FilmModel, CommentModel, TorrentModel, FilmHistoryModel
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, render_to_response, redirect
 from django.core.files.temp import NamedTemporaryFile
@@ -90,44 +90,78 @@ def search_subs(film, lang):
         return
 
 
+def get_tmd_id(film):
+    if film.tmd_id:
+        return film.tmd_id
+    url = 'https://api.themoviedb.org/3/find/{}'.format(film.imdb_id)
+    params = dict(
+        api_key=settings.TMD_API_KEY,
+        language='en-US',
+        external_source='imdb_id',
+    )
+    r = requests.get(url=url, params=params)
+    if r.status_code == 200:
+        tmd_id = r.json()['movie_results'][0]['id']
+        film.tmd_id = tmd_id
+        film.save()
+        return tmd_id
+    else:
+        return None
+
+
+def seach_cast(film):
+    tmd_id = get_tmd_id(film)
+    if not tmd_id:
+        return None
+
+    url = 'https://api.themoviedb.org/3/movie/{}/credits?'.format(tmd_id)
+    params = dict(
+        api_key=settings.TMD_API_KEY,
+        language='en-US',
+    )
+    r = requests.get(url=url, params=params)
+    if r.status_code == 200:
+        cast = r.json()['cast']
+        cast_len = len(cast)
+        if cast_len > 10:
+            cast_len = 10
+        cast = cast[:cast_len]
+        for i in range(len(cast)):
+            cast[i]["cycle_tag"] = i % 2
+        film.cast = json.dumps(cast)
+        film.save()
+        return cast
+    else:
+        return None
+
+
+def rus_info_search(film):
+    tmd_id = get_tmd_id(film)
+    if not tmd_id:
+        return None
+
+    url = 'https://api.themoviedb.org/3/movie/{}?'.format(tmd_id)
+    params = dict(
+        api_key=settings.TMD_API_KEY,
+        language='ru',
+    )
+    r = requests.get(url=url, params=params)
+    if r.status_code == 200:
+        ru_info = r.json()
+        film.ru_info = json.dumps(ru_info)
+        film.save()
+        return ru_info
+    return None
+
+
 def player(request, film_id):
+    if request.user.id is None:
+        return redirect('index')
     film = FilmModel.objects.filter(film_id=film_id)
     if len(film) == 0:
         return redirect('index')
     film = film[0]
     comments = CommentModel.objects.filter(film=film)
-
-    # search for cast
-    if not film.cast:
-        flag = False
-        url = 'https://api.themoviedb.org/3/find/{}'.format(film.imdb_id)
-        params = dict(
-            api_key=settings.TMD_API_KEY,
-            language='en-US',
-            external_source='imdb_id',
-        )
-        r = requests.get(url=url, params=params)
-        if r.status_code == 200:
-            tmd_id = r.json()['movie_results'][0]['id']
-            url = 'https://api.themoviedb.org/3/movie/{}/credits?'.format(tmd_id)
-            params = dict(
-                api_key=settings.TMD_API_KEY,
-                language='en-US',
-            )
-            r = requests.get(url=url, params=params)
-            if r.status_code == 200:
-                cast = r.json()['cast']
-                flag = True
-        if flag:
-            cycle_tag = 0
-            cast_len = len(cast)
-            if cast_len > 10:
-                cast_len = 10
-            cast = cast[:cast_len]
-            for i in range(len(cast)):
-                cast[i]["cycle_tag"] = i % 2
-            film.cast = json.dumps(cast)
-            film.save()
 
     if not film.en_sub_vtt:
         search_subs(film, 'en')
@@ -137,13 +171,31 @@ def player(request, film_id):
     if film.cast:
         cast = json.loads(film.cast)
     else:
-        cast = None
+        cast = seach_cast(film)
 
+    if request.session["lang"] == 2:
+        if film.ru_info:
+            ru_info = json.loads(film.ru_info)
+        else:
+            ru_info = rus_info_search(film)
+
+    film_data = json.loads(film.data)
+    get_720p = False
+    get_1080p = False
+    if film_data.get('torrents'):
+        for i in film_data['torrents']:
+            if i.get('quality') == '720p':
+                get_720p = True
+            if i.get('quality') == '1080p':
+                get_1080p = True
     context = {'film_id': film_id,
                'comments': comments,
                'film': film,
                'cast': cast,
-               'film_data': json.loads(film.data)
+               'film_data': film_data,
+               'get_720p': get_720p,
+               'get_1080p': get_1080p,
+               'ru_info': ru_info,
                }
     return render(request, 'player/player.html', context)
 
@@ -198,7 +250,14 @@ def ajax_torr_info(request):
     film = FilmModel.objects.get(film_id=film_id)
     torrent = TorrentModel.objects.get(film=film, quality=quality)
 
-    if response.get("progress") > 0.2 and not torrent.film_file:
+    if len(FilmHistoryModel.objects.filter(film=film, user=request.user)) == 0:
+        FilmHistoryModel.objects.create(film=film, user=request.user)
+
+    thr = settings.TORRENT_DOWNLOAD_THRETHOSLD
+    if type(thr) != float or thr > 1 or thr < 0.05:
+        thr = 0.05
+
+    if response.get("progress") > thr and not torrent.film_file:
         if torrent.quality == 0:
             folder_name = "/video/" + torrent.film.name + "_720p"
         else:

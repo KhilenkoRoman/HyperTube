@@ -66,6 +66,8 @@ def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_b
 
 
 def search(request):
+    if request.user.id is None:
+        return redirect('index')
     context = {
         'APP_PATH': settings.APP_PATH,
         'data': api_request()
@@ -74,6 +76,8 @@ def search(request):
 
 
 def filmSearch(request, film_name=""):
+    if request.user.id is None:
+        return redirect('index')
     context = {
         'APP_PATH': settings.APP_PATH,
         'data': api_request(film_name, 30, request.GET.get('page'), "All", request.GET.get('genre'))
@@ -82,6 +86,8 @@ def filmSearch(request, film_name=""):
 
 
 def ajax_search_request(request):
+    if request.method != 'POST':
+        return JsonResponse(json.dumps(["error: request type not POST"]), safe=False)
     data = api_request(request.POST.get('search_field'), 30, request.POST.get('page'), "All", request.POST.get('genre'),
                        request.POST.get('sort_by'), request.POST.get('order_by'))
     return JsonResponse(data, safe=False)

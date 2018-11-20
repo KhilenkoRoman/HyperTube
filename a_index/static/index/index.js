@@ -208,7 +208,8 @@ $(document).on('submit', '#register_form', function(e){
                 $(".col_md_sign_up").addClass("none");
                 const col_md_succses = $(".col_md_succses");
                 col_md_succses.removeClass("none");
-                $("#go_to_email_btn").attr('href', response[1]);
+                // $("#go_to_email_btn").attr('href', response[1]);
+                $("#go_to_email_btn").attr('href', '/');
                 ocultar_login_sign_up();
 
                 setTimeout(function(){
