@@ -173,6 +173,7 @@ def player(request, film_id):
     else:
         cast = seach_cast(film)
 
+    ru_info = None
     if request.session["lang"] == 2:
         if film.ru_info:
             ru_info = json.loads(film.ru_info)
