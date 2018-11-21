@@ -51,14 +51,15 @@ class TorrentModel(models.Model):
     quality = models.DecimalField(max_digits=1, decimal_places=0, choices=quality_choises)
     downloaded = models.BooleanField(default=False)
 
-    @receiver(post_delete)
-    def handle_files_on_delete(sender, instance, **kwargs):
-        dirpath = os.path.join(settings.MEDIA_ROOT, 'video', instance.film.name + ("_720p" if instance.quality == 0 else "_1080p"))
-        if os.path.exists(dirpath) and os.path.isdir(dirpath):
-            shutil.rmtree(dirpath)
-
     def __str__(self):
         return self.film.name
+
+
+@receiver(post_delete, sender=TorrentModel)
+def handle_files_on_delete(sender, instance, **kwargs):
+    dirpath = os.path.join(settings.MEDIA_ROOT, 'video', instance.film.name + ("_720p" if instance.quality == 0 else "_1080p"))
+    if os.path.exists(dirpath) and os.path.isdir(dirpath):
+        shutil.rmtree(dirpath)
 
 
 class CommentModel(models.Model):
