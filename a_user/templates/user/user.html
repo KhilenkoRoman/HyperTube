@@ -118,7 +118,7 @@
 
             <section id="content3">
                 <div id="viewed_films">
-                    {% if viewed_movie_count > 0 %}
+                    {% if film_history > 0 %}
                         {% for movie in viewed_movie %}
                         <a href="{{ movie.id }}" title="{{ movie.title_english }}">
                             <div>
