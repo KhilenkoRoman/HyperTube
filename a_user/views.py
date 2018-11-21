@@ -5,12 +5,12 @@ from django.contrib.auth import update_session_auth_hash
 from a_index.views import html_escape
 from django.core.files.images import get_image_dimensions
 from a_user.models import CustomUserModel
+from a_player.models import FilmHistoryModel
 from django.contrib.auth import logout
 import re
 import os
 from django.conf import settings
 from PIL import Image
-
 from PIL import ImageFilter
 
 
@@ -26,12 +26,13 @@ def user_profile(request):
 
     last_social_connect = request.session.get('last_social_connect', None)
     request.session['last_social_connect'] = None
+    film_history = FilmHistoryModel.objects.filter(user=request.user)
 
     context = {'profile_user': user,
                'active_providers': active_providers,
                'last_social_connect': last_social_connect,
+               'film_history': film_history,
                }
-    print(user.avatar)
 
     return render(request, 'user/user.html', context)
 

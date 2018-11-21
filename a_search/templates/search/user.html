@@ -31,7 +31,7 @@
             <label for="tab2"><i class="fas fa-lock"></i>{% if request.session.lang == 2 %} Аккаунты{% else %} Accounts{% endif %}</label>
 
             <input id="tab3" type="radio" name="tabs">
-            <label for="tab3"><i class="fas fa-video"></i>{% if request.session.lang == 2 %} Фильмы {% else %} Films{% endif %}</label>
+            <label for="tab3"><i class="fas fa-video"></i>{% if request.session.lang == 2 %} Фильмы {% else %}Films{% endif %}</label>
 
             <section id="content1">
                 <div id="photo_section">
@@ -137,6 +137,7 @@
             </section>
 
 
+
         </div>
         <div class="background">
             <img src="{% static "user/user_back.jpg" %}">
@@ -144,8 +145,8 @@
 
     </div>
 </div>
-{% for film in film_history %}
+    {% for film in film_history %}
         {{ film.film }}<br>
-{% endfor %}
+    {% endfor %}
 
 {% endblock %}

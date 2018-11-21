@@ -12,8 +12,10 @@ class FilmModel(models.Model):
     name = models.CharField(max_length=200)
     film_id = models.CharField(max_length=32, unique=True)
     imdb_id = models.CharField(max_length=32, unique=True)
+    tmd_id = models.CharField(max_length=64, blank=True, null=True)
     data = models.TextField()
     cast = models.TextField(blank=True, null=True)
+    ru_info = models.TextField(blank=True, null=True)
     cover = models.ImageField(upload_to="covers", blank=True, null=True)
     en_sub_srt = models.FileField(upload_to="subtitles", blank=True, null=True)
     ru_sub_srt = models.FileField(upload_to="subtitles", blank=True, null=True)
@@ -29,7 +31,7 @@ class FilmHistoryModel(models.Model):
     user = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
 
     def __str__(self):
-        return user.name + " history"
+        return str(self.user) + "_history"
 
 
 def torrent_path(instance, filename):
