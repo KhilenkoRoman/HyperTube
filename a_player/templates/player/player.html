@@ -27,6 +27,14 @@
     {#popup end#}
 
     <div id="about_film">
+
+
+
+
+
+
+
+
         <div id="film_poster_info">
             {% if film.cover %}
                 <div id="film_poster">
@@ -47,7 +55,11 @@
                 </p>
                 <p><span>Runtime: </span>{{ film_data.runtime }}</p>
                 <p><span>What is the movie "{{ film_data.title }}" about:</span></p>
-                <p>{{ film_data.description_full }}</p>
+                {% if request.session.lang == 2 %}
+                    <p>{{ ru_info.overview }}</p>
+                {% else %}
+                    <p>{{ film_data.description_full }}</p>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -57,13 +69,13 @@
         <div id="player_wrap">
             <iframe width="640" height="480" id="trailer_player" src="https://www.youtube.com/embed/{{ film_data.yt_trailer_code }}"></iframe>
             <video id="player" class="video-js none" controls preload="auto" poster="{% static "player/iron_man.jpg" %}" data-setup="{}">
-                {% if film.en_sub_vtt %}<track kind='captions' src='/media/subtitles/{{ film.en_sub_vtt }}'  srclang='en' label='English' /> {% endif %}
-                {% if film.en_sub_vtt %}<track kind='captions' src='/media/subtitles/{{ film.ru_sub_vtt }}' srclang='ru' label='Russian' /> {% endif %}
+                {% if film.en_sub_vtt%}<track kind='captions' src='/media/subtitles/{{ film.en_sub_vtt }}'  srclang='en' label='English' /> {% endif %}
+                {% if film.ru_sub_vtt%}<track kind='captions' src='/media/subtitles/{{ film.ru_sub_vtt }}' srclang='ru' label='Russian' /> {% endif %}
             </video>
         </div>
 
-        <button class="download_btn" id="btn_low" onclick="download_torrent({{ film.film_id }}, '0'); document.getElementById('torrent_info').style.display = 'block'">Load 720</button>
-        <button class="download_btn" id="btn_high" onclick="download_torrent({{ film.film_id }}, '1'); document.getElementById('torrent_info').style.display = 'block'">Load 1080</button>
+        {% if get_720p == True%}<button class="download_btn" id="btn_low" onclick="download_torrent({{ film.film_id }}, '0'); document.getElementById('torrent_info').style.display = 'block'">Load 720</button>{% endif %}
+        {% if get_1080p == True%}<button class="download_btn" id="btn_high" onclick="download_torrent({{ film.film_id }}, '1'); document.getElementById('torrent_info').style.display = 'block'">Load 1080</button>{% endif %}
 
         <div id="torrent_info">
         {#    {% if torrent.downloaded %}#}
@@ -131,7 +143,7 @@
             <div class="film_info">
                 <ul class="info_list">
                     {% for actor in cast %}
-                        {% if actor.cycle_tag == 0 and actor.profile_path %}
+                        {% if actor.cycle_tag == 0%}
                             <li class="info_elem" style="text-align: left">
                                 <div class="info_elem_img" style="margin-right: 10px">
                                     {% if actor.profile_path %}
