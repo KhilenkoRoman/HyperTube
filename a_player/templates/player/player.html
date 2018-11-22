@@ -28,13 +28,6 @@
 
     <div id="about_film">
 
-
-
-
-
-
-
-
         <div id="film_poster_info">
             {% if film.cover %}
                 <div id="film_poster">
@@ -46,17 +39,21 @@
                  </div>
             {% endif %}
             <div id="film_info">
-                <p><span>Rating: </span>{{ film_data.rating }}</p>
-                <p><span>Release year: </span>{{ film_data.year }}</p>
-                <p><span>Genres: </span>
+                <p><span>{% if request.session.lang == 2 %}Рейтинг: {% else %}Rating: {% endif %}</span>{{ film_data.rating }}</p>
+                <p><span>{% if request.session.lang == 2 %}Год: {% else %}Release year: {% endif %}</span>{{ film_data.year }}</p>
+                <p><span>{% if request.session.lang == 2 %}Жанры: {% else %}Genres: {% endif %}</span>
                     {% for genre in film_data.genres %}
                         {{ genre|lower }}{% if genre != film_data.genres|last %},{% endif %}
                     {% endfor %}
                 </p>
-                <p><span>Runtime: </span>{{ film_data.runtime }}</p>
-                <p><span>What is the movie "{{ film_data.title }}" about:</span></p>
+                <p><span>{% if request.session.lang == 2 %}Длительность: {% else %}Runtime: {% endif %}</span>{{ film_data.runtime }}</p>
+                <p><span>{% if request.session.lang == 2 %}О чем "{{ film_data.title }}":{% else %}What is the movie "{{ film_data.title }}" about:{% endif %}</span></p>
                 {% if request.session.lang == 2 %}
-                    <p>{{ ru_info.overview }}</p>
+                    {% if ru_info.overview %}
+                        <p>{{ ru_info.overview }}</p>
+                    {% else %}
+                        <p>Очень интересный фильм.</p>
+                    {% endif %}
                 {% else %}
                     <p>{{ film_data.description_full }}</p>
                 {% endif %}
@@ -74,15 +71,10 @@
             </video>
         </div>
 
-        {% if get_720p == True%}<button class="download_btn" id="btn_low" onclick="download_torrent({{ film.film_id }}, '0'); document.getElementById('torrent_info').style.display = 'block'">Load 720</button>{% endif %}
-        {% if get_1080p == True%}<button class="download_btn" id="btn_high" onclick="download_torrent({{ film.film_id }}, '1'); document.getElementById('torrent_info').style.display = 'block'">Load 1080</button>{% endif %}
+        {% if get_720p == True%}<button class="download_btn" id="btn_low" onclick="download_torrent({{ film.film_id }}, '0'); document.getElementById('torrent_info').style.display = 'block'">{% if request.session.lang == 2 %}Загрузить 720{% else %}Load 720{% endif %}</button>{% endif %}
+        {% if get_1080p == True%}<button class="download_btn" id="btn_high" onclick="download_torrent({{ film.film_id }}, '1'); document.getElementById('torrent_info').style.display = 'block'">{% if request.session.lang == 2 %}Загрузить 1080{% else %}Load 1080{% endif %}</button>{% endif %}
 
         <div id="torrent_info">
-        {#    {% if torrent.downloaded %}#}
-        {#        <p>ready</p>#}
-        {#    {% else %}#}
-        {#        <p>starting download</p>#}
-        {#    {% endif %}#}
             <div id="progressbar">
                 <span id="loading"></span>
             </div>
@@ -98,7 +90,7 @@
                     {% endif %}
 
                     <textarea id="comment_text"></textarea>
-                    <button type="submit">Add comment</button>
+                    <button type="submit">{% if request.session.lang == 2 %}Добавить комментарий{% else %}Add comment{% endif %}</button>
                 </form>
                 <ul class="comments">
                     {% for comment in comments %}

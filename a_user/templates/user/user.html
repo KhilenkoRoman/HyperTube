@@ -74,11 +74,11 @@
                         <div id="pass">
                             <div>
                                 <p>{% if request.session.lang == 2 %}Пароль{% else %}Password{% endif %}</p>
-                                <input id="usr_pwd1" class="input_index" type="password" placeholder="new password" required>
+                                <input id="usr_pwd1" class="input_index" type="password" placeholder="{% if request.session.lang == 2 %}новый пароль{% else %}new password{% endif %}" required>
                             </div>
                             <div>
                                 <p>{% if request.session.lang == 2 %}Еще разок{% else %}Onse more{% endif %}</p>
-                                <input id="usr_pwd2" class="input_index" type="password" placeholder="repeat password" required>
+                                <input id="usr_pwd2" class="input_index" type="password" placeholder="{% if request.session.lang == 2 %}повторить{% else %}repeat password{% endif %}" required>
                             </div>
                         </div>
                         <button id="usr_pwd_btn">{% if request.session.lang == 2 %}Cохранить{% else %}Save{% endif %}</button>
