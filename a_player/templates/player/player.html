@@ -90,7 +90,7 @@
 
         <div class="info_wrap">
             <div class="comments_wrap">
-                <form class="leave_comment" onsubmit=add_comment()>
+                <form class="leave_comment" onsubmit="add_comment({{ request.session.lang }})">
                     {% if user.avatar %}
                         <img src="/media/{{ user.avatar }}">
                     {% else %}
@@ -128,7 +128,7 @@
                                 <button
                                         id="edit_comm_{{ comment.id }}"
                                         type="submit"
-                                >Edit</button>
+                                >{% if request.session.lang == 2 %}Исправить{% else %}Edit{% endif %}</button>
                             </form>
                         {% else %}
                             <div class="comm_text">

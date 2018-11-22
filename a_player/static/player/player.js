@@ -2,7 +2,7 @@
 // console.log(film);
 let i = 0;
 
-function add_comment() {
+function add_comment(lang) {
 	event.preventDefault();
     let comment = document.getElementById('comment_text'),
 		imdb_id = document.getElementById('imdb_id'),
@@ -17,28 +17,27 @@ function add_comment() {
                 csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-    		if (user_avatar) {
-    			$(".comments").append(
-    			'<li class="comment">' +
-					'<img class="comment_avatar" src="/media/'+ user_avatar +'">' +
-                	'<div class="com_name_and_del">' +
-						'<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
-						'<i class="fas fa-times del_comm" onclick="del_comm('+ response +', this)"></i>' +
-					'</div>' +
-                	'<p>' + comment.value + '</p>' +
-				'</li>');
-			}
-			else {
-				$(".comments").append(
-    			'<li class="comment">' +
-					'<div class="no_avatar"></div>' +
-                	'<div class="com_name_and_del">' +
-						'<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
-						'<i class="fas fa-times del_comm" onclick="del_comm('+ response +', this)"></i>' +
-					'</div>' +
-                	'<p>' + comment.value + '</p>' +
-				'</li>');
-			}
+            $(".comments").append(
+            '<li class="comment">' +
+                (user_avatar ? '<img class="comment_avatar" src="/media/'+ user_avatar +'">' : '<div class="no_avatar"></div>') +
+                '<div class="com_name_and_del">' +
+                    '<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
+                    '<i class="fas fa-times del_comm" onclick="del_comm(' + response + ', this)"></i>' +
+                '</div>' +
+                '<form id="edit_form_' + response + '" class="comm_text edit_comm" onclick="edit_form_onclick(' + response + ')"'+
+                    'onsubmit="edit_comm(' + response +')">' +
+                    '<input '+
+                        'id="edit_input_'+ response +'"'+
+                        'onfocus="edit_input_onfocus('+ response + ')"' +
+                        'value="' + comment.value + '"'+
+                        'onblur="comment_onblur(this, ' + response + ', '+ comment.value + ')">' +
+                    '<button ' +
+                        'id="edit_comm_'+ response + '"'+
+                        'type="submit"'+
+                    '>' + (lang === 2 ? 'Исправить' : 'Edit') + '</button>'+
+                '</form>' +
+            '</li>');
+			comment.value = '';
     	}
 	});
 }
