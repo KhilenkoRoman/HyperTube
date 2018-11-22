@@ -41,13 +41,21 @@
             <div id="film_info">
                 <p><span>{% if request.session.lang == 2 %}Рейтинг: {% else %}Rating: {% endif %}</span>{{ film_data.rating }}</p>
                 <p><span>{% if request.session.lang == 2 %}Год: {% else %}Release year: {% endif %}</span>{{ film_data.year }}</p>
-                <p><span>{% if request.session.lang == 2 %}Жанры: {% else %}Genres: {% endif %}</span>
-                    {% for genre in film_data.genres %}
-                        {{ genre|lower }}{% if genre != film_data.genres|last %},{% endif %}
-                    {% endfor %}
-                </p>
+                {% if request.session.lang == 2 %}
+                    <p><span>Жанры: </span>
+                        {% for genre in ru_info.genres %}
+                            {{ genre.name|lower }}{% if genre != ru_info.genres|last %},{% endif %}
+                        {% endfor %}
+                    </p>
+                {% else %}
+                    <p><span>Genres: </span>
+                        {% for genre in film_data.genres %}
+                            {{ genre|lower }}{% if genre != film_data.genres|last %},{% endif %}
+                        {% endfor %}
+                    </p>
+                {% endif %}
                 <p><span>{% if request.session.lang == 2 %}Длительность: {% else %}Runtime: {% endif %}</span>{{ film_data.runtime }}</p>
-                <p><span>{% if request.session.lang == 2 %}О чем "{{ film_data.title }}":{% else %}What is the movie "{{ film_data.title }}" about:{% endif %}</span></p>
+                <p><span>{% if request.session.lang == 2 %}О чем "{{ ru_info.title }}":{% else %}What is the movie "{{ film_data.title }}" about:{% endif %}</span></p>
                 {% if request.session.lang == 2 %}
                     {% if ru_info.overview %}
                         <p>{{ ru_info.overview }}</p>
