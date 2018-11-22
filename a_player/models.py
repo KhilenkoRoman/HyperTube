@@ -39,16 +39,16 @@ def torrent_path(instance, filename):
 
 
 class TorrentModel(models.Model):
-    quality_choises = (
+    QUALITY = (
         (0, '720p'),
-        (1, '1080p'),
-    )
+        (1, '1080p'),)
+
     file_name = models.CharField(max_length=200, null=True)
-    film = models.ForeignKey(FilmModel, on_delete=models.CASCADE)
+    film = models.ForeignKey(FilmModel, related_name='torrents', on_delete=models.CASCADE)
     date = models.DateTimeField(blank=True, null=True)
     torrent_file = models.FileField(upload_to=torrent_path, blank=True, null=True)
     film_file = models.CharField(max_length=420, blank=True, null=True)
-    quality = models.DecimalField(max_digits=1, decimal_places=0, choices=quality_choises)
+    quality = models.DecimalField(max_digits=1, decimal_places=0, choices=QUALITY)
     downloaded = models.BooleanField(default=False)
 
     def __str__(self):

@@ -22,6 +22,8 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.defaults import page_not_found
 import a_index.views as index_vievs
+from a_rest_api import views
+from rest_framework.urlpatterns import format_suffix_patterns
 
 admin.autodiscover()
 
@@ -32,11 +34,14 @@ urlpatterns = [
     path('search/', include('a_search.urls')),
     path('user/', include('a_user.urls')),
     path('player/', include('a_player.urls')),
+    path('api/', include('a_rest_api.urls')),
     path('', include('a_index.urls')),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = format_suffix_patterns(urlpatterns)
 
 urlpatterns += [
     re_path(r'.*', index_vievs.eror_404, name='eror_404'),
