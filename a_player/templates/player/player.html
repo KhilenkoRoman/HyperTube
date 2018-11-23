@@ -154,14 +154,14 @@
                                 </div>
                                 <div>
                                     <p class="info_label">{{ actor.name }}</p>
-                                    <p class="info_body">as: {{ actor.character }}</p>
+                                    <p class="info_body">{% if request.session.lang == 2 %}в роли: {% else %}as: {% endif %}{{ actor.character }}</p>
                                 </div>
                             </li>
                         {% else %}
                             <li class="info_elem" style="text-align: right; justify-content: flex-end">
                             <div>
                                 <p class="info_label">{{ actor.name }}</p>
-                                <p class="info_body">as: {{ actor.character }}</p>
+                                <p class="info_body">{% if request.session.lang == 2 %}в роли: {% else %}as: {% endif %}{{ actor.character }}</p>
                             </div>
                             <div class="info_elem_img" style="margin-left: 10px">
                                 {% if actor.profile_path %}
