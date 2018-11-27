@@ -64,7 +64,7 @@ $( "#change_pwd_btn" ).on( "click", function() {
 	});
 });
 
-function usr_pwd_change(){
+function usr_pwd_change(event){
     event.preventDefault();
     const pwd1 = document.getElementById('usr_pwd1');
     const pwd2 = document.getElementById('usr_pwd2');
@@ -81,7 +81,7 @@ function usr_pwd_change(){
 			csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-    	    console.log(response);
+    	    // console.log(response);
 
             if (response === "error"){
                 change_pwd_btn.disabled = false;
@@ -93,6 +93,8 @@ function usr_pwd_change(){
                 change_pwd_btn.style.backgroundColor = "#00800069";
                 pwd1.value = "";
                 pwd2.value = "";
+                pwd1.classList.remove('unvalid');
+                pwd2.classList.remove('unvalid');
 
                 setTimeout(function(){
 
@@ -105,7 +107,7 @@ function usr_pwd_change(){
 	});
 }
 
-function usr_info_change(){
+function usr_info_change(event){
     event.preventDefault();
     const first_name = document.getElementById('f_name');
     const last_name = document.getElementById('l_name');
@@ -189,11 +191,6 @@ $('#popup_ok').on( "click", function() {
   popup_active = false;
 });
 
-function info_change() {
-    event.preventDefault();
-    console.log("asd");
-}
-
 
 $("#image_to_upload").on("change", function() {
     let formdata = new FormData();
@@ -242,7 +239,7 @@ $("#image_to_upload").on("change", function() {
 	                }, 2000);
                 }
                 else {
-                    console.log(response);
+                    // console.log(response);
                     img.src=response;
                     label.innerHTML = "Done";
                     label.style.backgroundColor = "#00800069";

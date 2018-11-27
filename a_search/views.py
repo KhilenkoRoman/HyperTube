@@ -16,7 +16,6 @@ def save_cover(film, cover_url):
 
     r = settings.SCRAPER_SESION.get(cover_url)
     if r.status_code == 200:
-        # print("qweqwe")
         temp_file = NamedTemporaryFile(delete=True)
         temp_file.write(r.content)
         temp_file.flush()
@@ -25,7 +24,6 @@ def save_cover(film, cover_url):
         fname = film.name + name.strip('/')
         film.cover.save(fname, File(temp_file), save=True)
         film.save()
-
 
 
 def api_request(query_term="", limit=30, page=1, quality="All", genre="", sort_by="rating", order_by="desc"):

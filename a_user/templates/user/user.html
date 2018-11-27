@@ -48,7 +48,7 @@
 
                 </div>
                 <div id="info_section">
-                    <form onsubmit="usr_info_change()">
+                    <form onsubmit="usr_info_change(event)">
                         <div id="names">
                             <div>
                                 <p>{% if request.session.lang == 2 %}Имя{% else %}First Name{% endif %}</p>
@@ -70,7 +70,7 @@
 
             <section id="content2">
                 <div id="acc_section">
-                    <form onsubmit="usr_pwd_change()">
+                    <form onsubmit="usr_pwd_change(event)">
                         <div id="pass">
                             <div>
                                 <p>{% if request.session.lang == 2 %}Пароль{% else %}Password{% endif %}</p>

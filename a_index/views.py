@@ -46,8 +46,6 @@ def activation(request):
         return render(request, 'index/activation.html', context)
 
     user = CustomUserModel.objects.get(username=a_login)
-    print(user.activation_key)
-    print(activation_key)
     a_response = "111"
     if not user:
         a_response = "No such a_user"
