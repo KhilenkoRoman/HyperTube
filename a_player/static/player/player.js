@@ -22,15 +22,14 @@ function add_comment(event, lang) {
                 (user_avatar ? '<img class="comment_avatar" src="/media/'+ user_avatar +'">' : '<div class="no_avatar"></div>') +
                 '<div class="com_name_and_del">' +
                     '<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
-                    '<i class="fas fa-times del_comm" onclick="del_comm(' + response + ', this)"></i>' +
+                    '<i class="fas fa-times del_comm" onclick="del_comm(event, ' + response + ', this)"></i>' +
                 '</div>' +
-                '<form id="edit_form_' + response + '" class="comm_text edit_comm" onclick="edit_form_onclick(' + response + ')"'+
-                    'onsubmit="edit_comm(' + response +')">' +
+                '<form id="edit_form_' + response + '" class="comm_text edit_comm"'+
+                    'onsubmit="edit_comm(event, ' + response +')">' +
                     '<input '+
                         'id="edit_input_'+ response +'"'+
                         'onfocus="edit_input_onfocus('+ response + ')"' +
-                        'value="' + comment.value + '"'+
-                        'onblur="comment_onblur(this, ' + response + ', '+ comment.value + ')">' +
+                        'value="' + comment.value + '">' +
                     '<button ' +
                         'id="edit_comm_'+ response + '"'+
                         'type="submit"'+
@@ -86,7 +85,7 @@ function download_torrent(film_id, quality){
 
 }
 
-function del_comm(commentId, element) {
+function del_comm(event, commentId, element) {
     event.preventDefault();
     let imdb_id = document.getElementById('imdb_id');
 	$.ajax({
@@ -103,7 +102,7 @@ function del_comm(commentId, element) {
 	});
 }
 
-function edit_comm(commentId) {
+function edit_comm(event, commentId) {
 	let comm = document.getElementById('edit_input_' + commentId),
 		imdb_id = document.getElementById('imdb_id');
 	event.preventDefault();
@@ -128,10 +127,10 @@ function edit_comm(commentId) {
 
 function edit_input_onfocus(id) {
 	let forms = document.getElementsByClassName('edit_comm');
-	for (form of forms) {
+	for (let form of forms) {
 		form.style.background = '#ffffff30';
-		form.childNodes[3].style.visibility = 'hidden';
-		form.childNodes[1].value = form.childNodes[1].defaultValue;
+		form.children[1].style.visibility = 'hidden';
+		form.children[0].value = form.children[0].defaultValue;
 	}
 	document.getElementById('edit_form_' + id).style.background = 'white';
 	document.getElementById('edit_comm_' + id).style.visibility = 'visible';

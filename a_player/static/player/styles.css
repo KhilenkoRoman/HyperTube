@@ -144,7 +144,6 @@
     font-size: 15px;
     font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
     width: 60%;
-    background: #ffffff47;
     border-radius: 3px;
     line-height: 2em;
     border: none;
@@ -242,6 +241,8 @@
 
 .edit_comm {
     display: flex;
+    background: #ffffff47;
+    /*background: inherit;*/
     /*padding: 25px 10px;*/
 }
 
