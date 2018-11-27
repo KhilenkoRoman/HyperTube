@@ -235,6 +235,22 @@ def ajax_del_comment(request):
     CommentModel.objects.filter(pk=comment_id).delete()
     return HttpResponse("success")
 
+def ajax_edit_comment(request):
+    if request.method != 'POST':
+        return HttpResponse("error1")
+    if not request.user.is_authenticated:
+        return HttpResponse("error2")
+    imdb_id = request.POST.get('imdb_id')
+    commentId = request.POST.get('commentId')
+    commentText = request.POST.get('commentText')
+    film = FilmModel.objects.filter(imdb_id=imdb_id)
+    if len(film) == 0:
+        return HttpResponse("error4")
+    comm = CommentModel.objects.get(pk=commentId)
+    comm.text = commentText
+    comm.save()
+    return HttpResponse("success")
+
 
 def ajax_torr_info(request):
     if request.method != 'POST':

@@ -30,8 +30,8 @@
 {#                    <p>{{ user.first_name }}</p>#}
 {#                    <p>{{ user.last_name }}</p>#}
                     <div id="menu">
-                        <a href="/user/"><i class="fas fa-user-alt"></i>Profile</a>
-                        <a href="/search/"><i class="fas fa-search"></i>Search</a>
+                        <a href="/user/"><i class="fas fa-user-alt"></i>{% if request.session.lang == 2 %}Профайл{% else %}Profile{% endif %}</a>
+                        <a href="/search/"><i class="fas fa-search"></i>{% if request.session.lang == 2 %}Поиск{% else %}Search{% endif %}</a>
                     </div>
 
                     <a id="head_logout_btn" href="/user/logout"><i class="fas fa-sign-out-alt"></i></a>

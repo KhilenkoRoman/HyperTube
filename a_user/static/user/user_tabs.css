@@ -51,6 +51,10 @@ input:checked + label {
     display: flex;
 }
 
+.tabs label {
+    width: 130px;
+}
+
 #content2{
     flex-direction: column;
 }
@@ -325,6 +329,42 @@ input:checked + label {
     }
 }
 
+#viewed_films {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+#viewed_films::-webkit-scrollbar {
+    width: 8px;
+}
+
+#viewed_films::-webkit-scrollbar-thumb {
+    background: #c5bebd;
+    border-radius: 10px;
+}
+
+#viewed_films div {
+    width: 122px;
+    margin: 10px;
+}
+
+#viewed_films div img {
+    width: 100%;
+    overflow: hidden;
+}
+
+#viewed_films p {
+    font-weight: 900;
+    /*color: white;*/
+}
+
 @media screen and (max-width: 600px) {
     .edit_tabs {
         height: 700px;
@@ -362,5 +402,10 @@ input:checked + label {
     .background img{
         height: 100%;
         width: auto;
+    }
+
+    .tabs label {
+        width: 98px;
+        padding: 9px;
     }
 }

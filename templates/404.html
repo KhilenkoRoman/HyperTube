@@ -45,7 +45,7 @@
     <body>
         <div class="code-area">
             <span style="color: #777;font-style:italic;">
-            // 404 page not found.
+            // 404 {% if request.session.lang == 2 %}страница не найдена{% else %}page not found{% endif %}.
             </span>
             <span>
                 <span style="color:#d65562;">
@@ -64,7 +64,7 @@
             </span>
             <span style="display:block">}</span>
             <span style="color: #777;font-style:italic;">
-                // <a href="/">Go home!</a>
+                // <a href="/">{% if request.session.lang == 2 %}Домой{% else %}Go home{% endif %}!</a>
             </span>
             </span>
         </div>

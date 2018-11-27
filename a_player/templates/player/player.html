@@ -39,17 +39,29 @@
                  </div>
             {% endif %}
             <div id="film_info">
-                <p><span>Rating: </span>{{ film_data.rating }}</p>
-                <p><span>Release year: </span>{{ film_data.year }}</p>
-                <p><span>Genres: </span>
-                    {% for genre in film_data.genres %}
-                        {{ genre|lower }}{% if genre != film_data.genres|last %},{% endif %}
-                    {% endfor %}
-                </p>
-                <p><span>Runtime: </span>{{ film_data.runtime }}</p>
-                <p><span>What is the movie "{{ film_data.title }}" about:</span></p>
+                <p><span>{% if request.session.lang == 2 %}Рейтинг: {% else %}Rating: {% endif %}</span>{{ film_data.rating }}</p>
+                <p><span>{% if request.session.lang == 2 %}Год: {% else %}Release year: {% endif %}</span>{{ film_data.year }}</p>
                 {% if request.session.lang == 2 %}
-                    <p>{{ ru_info.overview }}</p>
+                    <p><span>Жанры: </span>
+                        {% for genre in ru_info.genres %}
+                            {{ genre.name|lower }}{% if genre != ru_info.genres|last %},{% endif %}
+                        {% endfor %}
+                    </p>
+                {% else %}
+                    <p><span>Genres: </span>
+                        {% for genre in film_data.genres %}
+                            {{ genre|lower }}{% if genre != film_data.genres|last %},{% endif %}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+                <p><span>{% if request.session.lang == 2 %}Длительность: {% else %}Runtime: {% endif %}</span>{{ film_data.runtime }}</p>
+                <p><span>{% if request.session.lang == 2 %}О чем "{{ ru_info.title }}":{% else %}What is the movie "{{ film_data.title }}" about:{% endif %}</span></p>
+                {% if request.session.lang == 2 %}
+                    {% if ru_info.overview %}
+                        <p>{{ ru_info.overview }}</p>
+                    {% else %}
+                        <p>Очень интересный фильм.</p>
+                    {% endif %}
                 {% else %}
                     <p>{{ film_data.description_full }}</p>
                 {% endif %}
@@ -67,15 +79,10 @@
             </video>
         </div>
 
-        {% if get_720p == True%}<button class="download_btn" id="btn_low" onclick="download_torrent({{ film.film_id }}, '0'); document.getElementById('torrent_info').style.display = 'block'">Load 720</button>{% endif %}
-        {% if get_1080p == True%}<button class="download_btn" id="btn_high" onclick="download_torrent({{ film.film_id }}, '1'); document.getElementById('torrent_info').style.display = 'block'">Load 1080</button>{% endif %}
+        {% if get_720p == True%}<button class="download_btn" id="btn_low" onclick="download_torrent({{ film.film_id }}, '0'); document.getElementById('torrent_info').style.display = 'block'">{% if request.session.lang == 2 %}Загрузить 720{% else %}Load 720{% endif %}</button>{% endif %}
+        {% if get_1080p == True%}<button class="download_btn" id="btn_high" onclick="download_torrent({{ film.film_id }}, '1'); document.getElementById('torrent_info').style.display = 'block'">{% if request.session.lang == 2 %}Загрузить 1080{% else %}Load 1080{% endif %}</button>{% endif %}
 
         <div id="torrent_info">
-        {#    {% if torrent.downloaded %}#}
-        {#        <p>ready</p>#}
-        {#    {% else %}#}
-        {#        <p>starting download</p>#}
-        {#    {% endif %}#}
             <div id="progressbar">
                 <span id="loading"></span>
             </div>
@@ -83,7 +90,7 @@
 
         <div class="info_wrap">
             <div class="comments_wrap">
-                <form class="leave_comment" onsubmit=add_comment()>
+                <form class="leave_comment" onsubmit="add_comment({{ request.session.lang }})">
                     {% if user.avatar %}
                         <img src="/media/{{ user.avatar }}">
                     {% else %}
@@ -91,7 +98,7 @@
                     {% endif %}
 
                     <textarea id="comment_text"></textarea>
-                    <button type="submit">Add comment</button>
+                    <button type="submit">{% if request.session.lang == 2 %}Добавить комментарий{% else %}Add comment{% endif %}</button>
                 </form>
                 <ul class="comments">
                     {% for comment in comments %}
@@ -109,16 +116,19 @@
                         </div>
                         {% if comment.user == user %}
                             <form
+                                    id="edit_form_{{ comment.id }}"
                                     class="comm_text edit_comm"
                                     onclick="edit_form_onclick({{ comment.id }})"
                                     onsubmit="edit_comm({{ comment.id }})">
                                 <input
+                                        id="edit_input_{{ comment.id }}"
+                                        onfocus="edit_input_onfocus({{ comment.id }})"
                                         value="{{ comment.text }}"
                                         onblur="comment_onblur(this, {{ comment.id }}, '{{ comment.text }}')">
                                 <button
                                         id="edit_comm_{{ comment.id }}"
                                         type="submit"
-                                >Edit</button>
+                                >{% if request.session.lang == 2 %}Исправить{% else %}Edit{% endif %}</button>
                             </form>
                         {% else %}
                             <div class="comm_text">
@@ -144,14 +154,14 @@
                                 </div>
                                 <div>
                                     <p class="info_label">{{ actor.name }}</p>
-                                    <p class="info_body">as: {{ actor.character }}</p>
+                                    <p class="info_body">{% if request.session.lang == 2 %}в роли: {% else %}as: {% endif %}{{ actor.character }}</p>
                                 </div>
                             </li>
                         {% else %}
                             <li class="info_elem" style="text-align: right; justify-content: flex-end">
                             <div>
                                 <p class="info_label">{{ actor.name }}</p>
-                                <p class="info_body">as: {{ actor.character }}</p>
+                                <p class="info_body">{% if request.session.lang == 2 %}в роли: {% else %}as: {% endif %}{{ actor.character }}</p>
                             </div>
                             <div class="info_elem_img" style="margin-left: 10px">
                                 {% if actor.profile_path %}
