@@ -88,6 +88,7 @@ function download_torrent(film_id, quality){
 }
 
 function del_comm(event, commentId, element) {
+	console.log("commentId " + commentId);
     event.preventDefault();
     let imdb_id = document.getElementById('imdb_id');
 	$.ajax({
@@ -99,7 +100,9 @@ function del_comm(event, commentId, element) {
             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-    		element.parentElement.parentElement.remove();
+    		if (response === 'success') {
+    			element.parentElement.parentElement.remove();
+    		}
     	}
 	});
 }
@@ -119,12 +122,14 @@ function edit_comm(event, commentId) {
             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
 			success: function(response){
-				let form = document.getElementById('edit_form_' + commentId),
-					button = document.getElementById('edit_comm_' + commentId);
-				comm.defaultValue = comm.value;
-				form.style.background = '#ffffff30';
-				button.style.visibility = 'hidden';
-			}
+				if (response === 'success') {
+					let form = document.getElementById('edit_form_' + commentId),
+						button = document.getElementById('edit_comm_' + commentId);
+					comm.defaultValue = comm.value;
+					form.style.background = '#ffffff30';
+					button.style.visibility = 'hidden';
+				}
+    		}
 		});
 	}
 	else {
