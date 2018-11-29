@@ -27,7 +27,6 @@ def user_profile(request):
     last_social_connect = request.session.get('last_social_connect', None)
     request.session['last_social_connect'] = None
     film_history = FilmHistoryModel.objects.filter(user=request.user)
-    print(film_history[0].film.cover)
 
     context = {'profile_user': user,
                'active_providers': active_providers,
