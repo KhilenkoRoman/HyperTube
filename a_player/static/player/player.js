@@ -44,7 +44,7 @@ function add_comment(event, lang) {
 function download_torrent(film_id, quality){
 	let myPlayer = videojs("player");
 	let progress = $("#loading");
-	console.log(progress);
+	// console.log(progress);
 	let flag = false;
 	let video = $("#player");
 	// let source = document.createElement('source');
@@ -63,7 +63,7 @@ function download_torrent(film_id, quality){
             },
             success: function (response) {
             	json_resp = JSON.parse(response);
-            	console.log(json_resp);
+            	// console.log(json_resp);
             	progress.css('width', String(json_resp['progress'] * 100) + "%");
 
             	if (json_resp['film_file'] && flag==false){
@@ -75,7 +75,7 @@ function download_torrent(film_id, quality){
 				}
 
                 if (json_resp['error'] == 0 && json_resp['progress'] != 1){
-                	console.log("request in 2 sec");
+                	// console.log("request in 2 sec");
                 	timer = setTimeout(get_torrent_info, 2000);
 				}
 

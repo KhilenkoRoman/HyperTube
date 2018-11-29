@@ -61,7 +61,14 @@ INSTALLED_APPS = [
     'a_index',
     'a_search',
     'a_player',
+    'a_rest_api',
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 LOGIN_REDIRECT_URL = '/user/'
@@ -176,7 +183,7 @@ STATICFILES_DIRS = [
 TORRENT_SESION = None
 TORRENTS = {}
 SCRAPER_SESION = None
-TORRENT_DOWNLOAD_THRETHOSLD = 0.05 #float beetwen 1 and 0.05
+TORRENT_DOWNLOAD_THRETHOSLD = 0.2 #float beetwen 1 and 0.05
 
 TMD_API_KEY = "eea706492c53f7f2c1f750564baee937"
 # load https server

@@ -1,6 +1,3 @@
-/* ------------------------------------ Click on login and Sign Up to  changue and view the effect
----------------------------------------
-*/
 
 function actvate_login()
 {
@@ -116,7 +113,7 @@ $(document).on('submit', '#login_form', function(e){
             if (response.includes("error_password"))
                 password.classList.add('unvalid');
             if (response.includes("success")){
-        		window.location.replace("/user");
+        		window.location.replace("/user/");
             }
     	}
 	});
