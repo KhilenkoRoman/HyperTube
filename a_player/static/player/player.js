@@ -8,37 +8,39 @@ function add_comment(event, lang) {
 		imdb_id = document.getElementById('imdb_id'),
     	user_name = document.getElementById('user_info').innerHTML,
 		user_avatar = document.getElementById('user_avatar').innerHTML;
-
-	$.ajax({
+	if (comment.value !== '') {
+		$.ajax({
     	type:"POST",
     	url: '/player/ajax_comment',
 		data: {imdb_id: imdb_id.innerHTML,
                 comment: comment.value,
                 csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
-    	success: function(response){
-            $(".comments").append(
-            '<li class="comment">' +
-                (user_avatar ? '<img class="comment_avatar" src="/media/'+ user_avatar +'">' : '<div class="no_avatar"></div>') +
-                '<div class="com_name_and_del">' +
-                    '<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
-                    '<i class="fas fa-times del_comm" onclick="del_comm(event, ' + response + ', this)"></i>' +
-                '</div>' +
-                '<form id="edit_form_' + response + '" class="comm_text edit_comm"'+
-                    'onsubmit="edit_comm(event, ' + response +')">' +
-                    '<input '+
-                        'id="edit_input_'+ response +'"'+
-                        'onfocus="edit_input_onfocus('+ response + ')"' +
-                        'value="' + comment.value + '">' +
-                    '<button ' +
-                        'id="edit_comm_'+ response + '"'+
-                        'type="submit"'+
-                    '>' + (lang === 2 ? 'Исправить' : 'Edit') + '</button>'+
-                '</form>' +
-            '</li>');
-			comment.value = '';
-    	}
-	});
+			success: function(response){
+				$(".comments").append(
+				'<li class="comment">' +
+					(user_avatar ? '<img class="comment_avatar" src="/media/'+ user_avatar +'">' : '<div class="no_avatar"></div>') +
+					'<div class="com_name_and_del">' +
+						'<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
+						'<i class="fas fa-times del_comm" onclick="del_comm(event, ' + response + ', this)"></i>' +
+					'</div>' +
+					'<form id="edit_form_' + response + '" class="comm_text edit_comm"'+
+						'onsubmit="edit_comm(event, ' + response +')">' +
+						'<input '+
+							'id="edit_input_'+ response +'"'+
+							'onfocus="edit_input_onfocus('+ response + ')"' +
+							'value="' + comment.value + '">' +
+						'<button ' +
+							'id="edit_comm_'+ response + '"'+
+							'type="submit"'+
+						'>' + (lang === 2 ? 'Исправить' : 'Edit') + '</button>'+
+					'</form>' +
+				'</li>');
+				comment.value = '';
+			}
+		});
+	}
+
 }
 
 function download_torrent(film_id, quality){

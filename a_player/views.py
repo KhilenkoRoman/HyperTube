@@ -230,8 +230,11 @@ def ajax_del_comment(request):
     imdb_id = request.POST.get('imdb_id')
     comment_id = request.POST.get('commentId')
     film = FilmModel.objects.filter(imdb_id=imdb_id)
+    # user = CommentModel.objects.filter(pk=comment_id, user=request.user)
+    # if len(user) == 0:
+    #     return HttpResponse("error4")
     if len(film) == 0:
-        return HttpResponse("error4")
+        return HttpResponse("error5")
     CommentModel.objects.filter(pk=comment_id).delete()
     return HttpResponse("success")
 
