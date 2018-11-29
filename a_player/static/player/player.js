@@ -108,7 +108,8 @@ function edit_comm(event, commentId) {
 	let comm = document.getElementById('edit_input_' + commentId),
 		imdb_id = document.getElementById('imdb_id');
 	event.preventDefault();
-	$.ajax({
+	if (comm.value !== '') {
+		$.ajax({
     	type:"POST",
     	url: '/player/ajax_edit_comment',
 		data: {
@@ -117,14 +118,18 @@ function edit_comm(event, commentId) {
 			commentText: comm.value,
             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
-    	success: function(response){
-    		let form = document.getElementById('edit_form_' + commentId),
-				button = document.getElementById('edit_comm_' + commentId);
-			comm.defaultValue = comm.value;
-			form.style.background = '#ffffff30';
-			button.style.visibility = 'hidden';
-    	}
-	});
+			success: function(response){
+				let form = document.getElementById('edit_form_' + commentId),
+					button = document.getElementById('edit_comm_' + commentId);
+				comm.defaultValue = comm.value;
+				form.style.background = '#ffffff30';
+				button.style.visibility = 'hidden';
+			}
+		});
+	}
+	else {
+		comm.value = comm.defaultValue;
+	}
 }
 
 function edit_input_onfocus(id) {
