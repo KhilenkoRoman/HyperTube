@@ -111,20 +111,18 @@
                         <div class="com_name_and_del">
                             <div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>{{ comment.user.first_name }} {{ comment.user.last_name }}</div>
                             {% if comment.user == user %}
-                                <i class="fas fa-times del_comm" onclick="del_comm({{ comment.id }}, this)"></i>
+                                <i class="fas fa-times del_comm" onclick="del_comm(event, {{ comment.id }}, this)"></i>
                             {% endif %}
                         </div>
                         {% if comment.user == user %}
                             <form
                                     id="edit_form_{{ comment.id }}"
                                     class="comm_text edit_comm"
-                                    onclick="edit_form_onclick({{ comment.id }})"
-                                    onsubmit="edit_comm({{ comment.id }})">
+                                    onsubmit="edit_comm(event, {{ comment.id }})">
                                 <input
                                         id="edit_input_{{ comment.id }}"
                                         onfocus="edit_input_onfocus({{ comment.id }})"
-                                        value="{{ comment.text }}"
-                                        onblur="comment_onblur(this, {{ comment.id }}, '{{ comment.text }}')">
+                                        value="{{ comment.text }}">
                                 <button
                                         id="edit_comm_{{ comment.id }}"
                                         type="submit"
