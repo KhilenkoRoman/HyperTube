@@ -40,7 +40,7 @@
 
 
 
-        <div id="activation_text_box">
+        <div id="recover_text_box">
             {% if response == "sucsess" %}
                 <div id="recover_wrap">
                     <p>{% if request.session.lang == 2 %}Новый пароль{% else %}New password{% endif %}</p>
@@ -60,7 +60,7 @@
 
             {% else %}
                 <div id="responce_wrap">
-                    <p>{% if request.session.lang == 2 %}Какая то беда{% else %}{{ response }}, procede to index page{% endif %}</p>
+                    <p>{% if request.session.lang == 2 %}{% if response == 'sucsess' %}Пароль изменен{% else %}Какая то беда{% endif %}{% else %}{{ response }}, procede to index page{% endif %}</p>
                     <a class="btn_sign_up" href="{% url 'index' %}" id="go_home_btn">{% if request.session.lang == 2 %}Домой{% else %}GO HOME{% endif %}</a>
                 </div>
             {% endif %}
