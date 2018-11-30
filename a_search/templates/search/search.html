@@ -88,7 +88,7 @@
                         </a>
                 {% endfor %}
             {% else %}
-                 <p>Тhere must be films</p>
+                 <p>{% if request.session.lang == 2 %}Тут должны были быть киношки{% else %}Тhere must be films{% endif %}</p>
             {% endif %}
         </ul>
     </div>

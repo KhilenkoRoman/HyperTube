@@ -61,13 +61,21 @@ INSTALLED_APPS = [
     'a_index',
     'a_search',
     'a_player',
+    'a_rest_api',
+    'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 LOGIN_REDIRECT_URL = '/user/'
 # SOCIALACCOUNT_AUTO_SIGNUP = False
 SOCIALACCOUNT_ADAPTER = 'a_user.socialaccount_adapter.MySocialAccountAdapter'
 SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_EMAIL_VERIFICATION = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -176,11 +184,7 @@ STATICFILES_DIRS = [
 TORRENT_SESION = None
 TORRENTS = {}
 SCRAPER_SESION = None
-TORRENT_DOWNLOAD_THRETHOSLD = 0.05 #float beetwen 1 and 0.05
+TORRENT_DOWNLOAD_THRETHOSLD = 0.2 #float beetwen 1 and 0.05
 
 TMD_API_KEY = "eea706492c53f7f2c1f750564baee937"
-# load https server
-# runserver_plus localhost:8000 --cert-file /tmp/cer
 
-# install libtorrent on mac
-# brew install libtorrent-rasterbar --build-from-source --with-python --universal

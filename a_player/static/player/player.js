@@ -2,7 +2,7 @@
 // console.log(film);
 let i = 0;
 
-function add_comment() {
+function add_comment(event, lang) {
 	event.preventDefault();
     let comment = document.getElementById('comment_text'),
 		imdb_id = document.getElementById('imdb_id'),
@@ -17,28 +17,26 @@ function add_comment() {
                 csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
 		},
     	success: function(response){
-    		if (user_avatar) {
-    			$(".comments").append(
-    			'<li class="comment">' +
-					'<img class="comment_avatar" src="/media/'+ user_avatar +'">' +
-                	'<div class="com_name_and_del">' +
-						'<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
-						'<i class="fas fa-times del_comm" onclick="del_comm('+ response +', this)"></i>' +
-					'</div>' +
-                	'<p>' + comment.value + '</p>' +
-				'</li>');
-			}
-			else {
-				$(".comments").append(
-    			'<li class="comment">' +
-					'<div class="no_avatar"></div>' +
-                	'<div class="com_name_and_del">' +
-						'<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
-						'<i class="fas fa-times del_comm" onclick="del_comm('+ response +', this)"></i>' +
-					'</div>' +
-                	'<p>' + comment.value + '</p>' +
-				'</li>');
-			}
+            $(".comments").append(
+            '<li class="comment">' +
+                (user_avatar ? '<img class="comment_avatar" src="/media/'+ user_avatar +'">' : '<div class="no_avatar"></div>') +
+                '<div class="com_name_and_del">' +
+                    '<div class="com_name"><i class="fas fa-long-arrow-alt-right"></i>'+ user_name +'</div>' +
+                    '<i class="fas fa-times del_comm" onclick="del_comm(event, ' + response + ', this)"></i>' +
+                '</div>' +
+                '<form id="edit_form_' + response + '" class="comm_text edit_comm"'+
+                    'onsubmit="edit_comm(event, ' + response +')">' +
+                    '<input '+
+                        'id="edit_input_'+ response +'"'+
+                        'onfocus="edit_input_onfocus('+ response + ')"' +
+                        'value="' + comment.value + '">' +
+                    '<button ' +
+                        'id="edit_comm_'+ response + '"'+
+                        'type="submit"'+
+                    '>' + (lang === 2 ? 'Исправить' : 'Edit') + '</button>'+
+                '</form>' +
+            '</li>');
+			comment.value = '';
     	}
 	});
 }
@@ -46,7 +44,7 @@ function add_comment() {
 function download_torrent(film_id, quality){
 	let myPlayer = videojs("player");
 	let progress = $("#loading");
-	console.log(progress);
+	// console.log(progress);
 	let flag = false;
 	let video = $("#player");
 	// let source = document.createElement('source');
@@ -65,7 +63,7 @@ function download_torrent(film_id, quality){
             },
             success: function (response) {
             	json_resp = JSON.parse(response);
-            	console.log(json_resp);
+            	// console.log(json_resp);
             	progress.css('width', String(json_resp['progress'] * 100) + "%");
 
             	if (json_resp['film_file'] && flag==false){
@@ -77,7 +75,7 @@ function download_torrent(film_id, quality){
 				}
 
                 if (json_resp['error'] == 0 && json_resp['progress'] != 1){
-                	console.log("request in 2 sec");
+                	// console.log("request in 2 sec");
                 	timer = setTimeout(get_torrent_info, 2000);
 				}
 
@@ -87,7 +85,7 @@ function download_torrent(film_id, quality){
 
 }
 
-function del_comm(commentId, element) {
+function del_comm(event, commentId, element) {
     event.preventDefault();
     let imdb_id = document.getElementById('imdb_id');
 	$.ajax({
@@ -104,7 +102,7 @@ function del_comm(commentId, element) {
 	});
 }
 
-function edit_comm(commentId) {
+function edit_comm(event, commentId) {
 	let comm = document.getElementById('edit_input_' + commentId),
 		imdb_id = document.getElementById('imdb_id');
 	event.preventDefault();
@@ -129,10 +127,10 @@ function edit_comm(commentId) {
 
 function edit_input_onfocus(id) {
 	let forms = document.getElementsByClassName('edit_comm');
-	for (form of forms) {
+	for (let form of forms) {
 		form.style.background = '#ffffff30';
-		form.childNodes[3].style.visibility = 'hidden';
-		form.childNodes[1].value = form.childNodes[1].defaultValue;
+		form.children[1].style.visibility = 'hidden';
+		form.children[0].value = form.children[0].defaultValue;
 	}
 	document.getElementById('edit_form_' + id).style.background = 'white';
 	document.getElementById('edit_comm_' + id).style.visibility = 'visible';

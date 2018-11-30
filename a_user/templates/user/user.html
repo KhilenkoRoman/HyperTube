@@ -31,7 +31,7 @@
             <label for="tab2"><i class="fas fa-lock"></i>{% if request.session.lang == 2 %} Аккаунты{% else %} Accounts{% endif %}</label>
 
             <input id="tab3" type="radio" name="tabs">
-            <label for="tab3"><i class="fas fa-video"></i>{% if request.session.lang == 2 %} Фильмы {% else %}Films{% endif %}</label>
+            <label for="tab3"><i class="fas fa-video"></i>{% if request.session.lang == 2 %} Фильмы {% else %} Films{% endif %}</label>
 
             <section id="content1">
                 <div id="photo_section">
@@ -48,7 +48,7 @@
 
                 </div>
                 <div id="info_section">
-                    <form onsubmit="usr_info_change()">
+                    <form onsubmit="usr_info_change(event)">
                         <div id="names">
                             <div>
                                 <p>{% if request.session.lang == 2 %}Имя{% else %}First Name{% endif %}</p>
@@ -70,15 +70,15 @@
 
             <section id="content2">
                 <div id="acc_section">
-                    <form onsubmit="usr_pwd_change()">
+                    <form onsubmit="usr_pwd_change(event)">
                         <div id="pass">
                             <div>
                                 <p>{% if request.session.lang == 2 %}Пароль{% else %}Password{% endif %}</p>
-                                <input id="usr_pwd1" class="input_index" type="password" placeholder="new password" required>
+                                <input id="usr_pwd1" class="input_index" type="password" placeholder="{% if request.session.lang == 2 %}новый пароль{% else %}new password{% endif %}" required>
                             </div>
                             <div>
                                 <p>{% if request.session.lang == 2 %}Еще разок{% else %}Onse more{% endif %}</p>
-                                <input id="usr_pwd2" class="input_index" type="password" placeholder="repeat password" required>
+                                <input id="usr_pwd2" class="input_index" type="password" placeholder="{% if request.session.lang == 2 %}повторить{% else %}repeat password{% endif %}" required>
                             </div>
                         </div>
                         <button id="usr_pwd_btn">{% if request.session.lang == 2 %}Cохранить{% else %}Save{% endif %}</button>
@@ -118,12 +118,12 @@
 
             <section id="content3">
                 <div id="viewed_films">
-                    {% if viewed_movie_count > 0 %}
-                        {% for movie in viewed_movie %}
-                        <a href="{{ movie.id }}" title="{{ movie.title_english }}">
+                    {% if film_history %}
+                        {% for film in film_history %}
+                        <a href="/player/{{ film.film.film_id }}" title="{{ film.film }}">
                             <div>
-                                {% if movie.poster %}
-                                    <img src="/media/covers/{{ movie.poster }}">
+                                {% if film.film.cover %}
+                                    <img src="/media/{{ film.film.cover }}">
                                 {% else %}
                                     <img src="{% static "search/nocover.png" %}">
                                 {% endif %}
@@ -145,8 +145,5 @@
 
     </div>
 </div>
-    {% for film in film_history %}
-        {{ film.film }}<br>
-    {% endfor %}
 
 {% endblock %}
