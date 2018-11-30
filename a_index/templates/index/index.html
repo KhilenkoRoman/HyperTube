@@ -52,12 +52,12 @@
                             <h2>РЕГИСТРАЦИЯ ЗАВЕРШЕНА ... ну почти</h2>
                             <p>Продолжение истории на почте</p>
                             <a href=""></a>
-                            <a class="btn_sign_up" href="" id="go_to_email_btn">ЗДЕСЬ наверно</a>
+                            <a class="btn_sign_up" href="{% url 'index' %}" id="go_to_email_btn">НАЗАД</a>
                         {% else %}
                             <h2>REGISTRATION COMPLETE allmost ...</h2>
                             <p>Go and check for activation email</p>
                             <a href=""></a>
-                            <a class="btn_sign_up" href="" id="go_to_email_btn">BACK</a>
+                            <a class="btn_sign_up" href="{% url 'index' %}" id="go_to_email_btn">GO BACK</a>
                         {% endif %}
 	                </div>
 	            </div>
@@ -68,12 +68,12 @@
                             <h2>ВОСТАНОВЛЕНИЕ ПАРОЛЯ</h2>
                             <p>Инструкции как обычно на почте</p>
                             <a href=""></a>
-                            <a class="btn_sign_up" href="" id="go_to_recover_btn">ТУДА</a>
+                            <a class="btn_sign_up" href="{% url 'index' %}" id="go_to_recover_btn">НАЗАД</a>
                         {% else %}
                             <h2>PASSWORD RECOVERY INITIALIZED</h2>
                             <p>Go and check email</p>
                             <a href=""></a>
-                            <a class="btn_sign_up" href="" id="go_to_recover_btn">GO TO EMAIL</a>
+                            <a class="btn_sign_up" href="{% url 'index' %}" id="go_to_recover_btn">GO BACK</a>
                         {% endif %}
 	                </div>
 	            </div>
@@ -129,7 +129,7 @@
 	                <form id="login_forgot" method="POST" action="{% url 'account_reset_password' %}" class="password_reset">
                         {% csrf_token %}
                         {% if request.session.lang == 2 %}
-                            <input class="input_index" type="email" placeholder="Емейл" id="forgot_email" name="email" required/>
+                            <input class="input_index" type="email" placeholder="Email" id="forgot_email" name="email" required/>
                             <button class="btn_login" type="submit" id="recover_btn">ВОСТАНОВИТЬ</button>
                         {% else %}
                             <input class="input_index" type="email" placeholder="Email" id="forgot_email" name="email" required/>

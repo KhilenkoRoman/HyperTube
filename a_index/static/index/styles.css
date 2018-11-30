@@ -751,20 +751,18 @@ textarea:focus, input:focus {
 
 #activation_text_box {
 	z-index: 1;
-	margin: 0 auto;
+	margin: 200px auto 0;
 	left: 0;
 	right: 0;
     border-radius: 5px;
 	position: absolute;
-	/*!*float: left;*!*/
 	width: 940px;
 	height: 280px;
 	overflow: hidden;
-	/*background-color: #fff;*/
 	box-shadow: 1px 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
-#activation_text_box p {
+#activation_text_box p, #recover_text_box p {
 	font-weight: 400;
 	font-size: 28px;
 	position: relative;
@@ -777,17 +775,28 @@ textarea:focus, input:focus {
 	min-height: 38px;
 }
 
-#activation_text_box::after {
+#activation_text_box::after, #recover_text_box::after {
 	content: "";
 	background: rgba(255,255,255, .1);
 	width: 940px;
 	height: 280px;
 	border-radius: 10px;
 	position: absolute;
-	right: -30px;
-	top: 167px;
 	transform: translateY(-50%);
 	z-index: -1;
+}
+
+#recover_text_box {
+	z-index: 1;
+	margin: auto;
+	left: 0;
+	right: 0;
+    border-radius: 5px;
+	position: absolute;
+	width: 940px;
+	height: 280px;
+	overflow: hidden;
+	box-shadow: 1px 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
 .padding{
@@ -975,14 +984,18 @@ textarea:focus, input:focus {
         max-width: 100%;
     }
 
-    #activation_text_box {
+    #activation_text_box, #recover_text_box {
         max-width: 90%;
 		height: 530px;
     }
 
-	#activation_text_box::after {
+	#activation_text_box::after, #recover_text_box::after {
 		top: 300px;
 		height: 530px;
+	}
+
+	#recover_text_box::after {
+		left: 0;
 	}
 
 	#menu a{

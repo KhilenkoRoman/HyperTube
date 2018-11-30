@@ -138,7 +138,6 @@ $(document).on('submit', '#login_forgot', function(e){
                 $(".col_md_sign_up").addClass("none");
                 const col_md_recover = $(".col_md_recover");
                 col_md_recover.removeClass("none");
-                $("#go_to_recover_btn").attr('href', response);
                 ocultar_login_sign_up();
 
                 setTimeout(function(){
