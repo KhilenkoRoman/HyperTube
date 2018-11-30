@@ -29,7 +29,7 @@ function add_comment(event, lang) {
 						'<input '+
 							'id="edit_input_'+ response +'"'+
 							'onfocus="edit_input_onfocus('+ response + ')"' +
-							'value="' + comment.value + '">' +
+							'value="' + replace(comment.value) + '">' +
 						'<button ' +
 							'id="edit_comm_'+ response + '"'+
 							'type="submit"'+
@@ -146,4 +146,11 @@ function edit_input_onfocus(id) {
 	}
 	document.getElementById('edit_form_' + id).style.background = 'white';
 	document.getElementById('edit_comm_' + id).style.visibility = 'visible';
+}
+
+function replace(text) {
+	while (text.match(/"/)) {
+		text = text.replace(/"/, "&quot;");
+	}
+    return text;
 }
