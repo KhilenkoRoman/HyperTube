@@ -1,5 +1,0 @@
-load https server
-runserver_plus localhost:8000 --cert-file /tmp/cer
-
-install libtorrent on mac
-brew install libtorrent-rasterbar --build-from-source --with-python --universal
